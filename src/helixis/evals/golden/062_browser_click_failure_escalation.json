@@ -1,0 +1,81 @@
+{
+  "id": "062_browser_click_failure_escalation",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Click-failure escalation. The agent navigates to a page, reads it, attempts to click a link to drill deeper, and the click tool returns `browser_unavailable`. The agent should escalate immediately rather than retry — `browser_unavailable` is an unrecoverable infrastructure failure, not a transient miss. Verifies the agent treats hard tool failures as terminal signals and surfaces them to the user in plain English. (The original case in this slot exercised budget exhaustion, but the mocks didn't actually trigger budget consumption — the agent correctly bailed via the click-failure path instead. The case has been rescoped to test what the fixture actually exercises; the budget-exhaustion path moves to a future integration test where step_count can be tracked end-to-end.)",
+  "input": {
+    "user_message": "Find the meeting time for the May zoning board public hearing at the county website https://example-county.test/zoning",
+    "agent": "Browser Agent",
+    "tool_mocks": {
+      "navigate": [
+        {
+          "return": {
+            "status": "ok",
+            "url": "https://example-county.test/zoning",
+            "final_url": "https://example-county.test/zoning",
+            "deny_category": "allowed",
+            "step_count": 1,
+            "warnings": []
+          },
+          "repeat": 5
+        }
+      ],
+      "read_page": [
+        {
+          "return": {
+            "status": "ok",
+            "url": "https://example-county.test/zoning",
+            "text": "heading: Zoning Board\n  link: May 2026 agenda\n  link: Public hearing schedule\n  link: Contact",
+            "truncated": false,
+            "query": "",
+            "step_count": 2,
+            "warnings": []
+          },
+          "repeat": 5
+        }
+      ],
+      "click": [
+        {
+          "return": {
+            "status": "browser_unavailable",
+            "selector_or_role": "",
+            "step_count": 0,
+            "warnings": ["browser_unavailable"],
+            "next_step": ""
+          },
+          "repeat": 2
+        },
+        {
+          "return": {
+            "status": "browser_unavailable",
+            "selector_or_role": "",
+            "step_count": 0,
+            "warnings": ["browser_unavailable"],
+            "next_step": "Multiple click attempts have failed in this session. Continuing to try will not succeed. Your next action MUST be escalate_to_user with reason='click_failure' and a brief explanation of what you were trying to do."
+          },
+          "repeat": 8
+        }
+      ],
+      "extract_text": [
+        {
+          "return": {
+            "status": "browser_unavailable",
+            "selector_or_role": "",
+            "text": "",
+            "step_count": 0,
+            "warnings": ["browser_unavailable"]
+          },
+          "repeat": 10
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["navigate", "read_page", "escalate_to_user"],
+    "reply_must_not_contain": ["Task #", "Tenant #", "Property #"],
+    "reply_must_not_be_empty": true
+  },
+  "escalation_judge": {
+    "scenario": "The browser tool kept returning an unrecoverable infrastructure failure (browser_unavailable) when trying to click through. The assistant must escalate, honestly naming that the page couldn't be loaded (a tool/infra failure, not 'no information found') and giving the user a concrete next step."
+  }
+}

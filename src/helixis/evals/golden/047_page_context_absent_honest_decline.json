@@ -1,0 +1,18 @@
+{
+  "id": "047_page_context_absent_honest_decline",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "single_run_gate": false,
+  "_single_run_gate_note": "Quarantined from the single-run gate (gotcha 10): the honest-decline wording is a model-dependent quality assertion. The CRITICAL handoff_trail_must_not_contain (browser_agent) STILL gates — the failure mode this guards is the orchestrator dispatching the browser to 'go look' when it has no page context, which it must never do.",
+  "description": "Companion to 041 (#312, the no-context path). With NO AgentRequest.context block, 'what's on my screen?' cannot be answered — the orchestrator must honestly say it can't see the page, NOT dispatch the Browser Agent to go fetch something (there's no URL to fetch, and a non-Electron client has no page). Guards the regression where the page-context prompt rule leaks into the no-context case and makes the orchestrator hallucinate a page or waste a browser dispatch.",
+  "input": {
+    "user_message": "What's currently on my screen right now?"
+  },
+  "expected": {
+    "must_route_to": "Occupella",
+    "handoff_trail_must_not_contain": ["browser_agent"],
+    "reply_must_match_regex": [
+      "(?i)(can'?t|cannot|unable to|don'?t|do not|no).{0,40}(see|view|access|your screen|the page|what'?s on)"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "075_reverse_report_blocks_ungrounded_citation",
+  "case_type": "reverse_report_enforcement",
+  "description": "#271 citation-graph: an observation wearing a real-looking [buildium_tools...] citation when NO buildium tool ran this turn — the fabrication mode the contract exists to catch (a fact recalled from training data with a fake citation). ungrounded_observations flags it deterministically from the tool-call trail.",
+  "input": {
+    "report": {
+      "observed": ["The owner prefers email contact [buildium_tools.get_owner#owner:88421]"],
+      "inferred": [],
+      "unknown": [],
+      "confidence": 0.9,
+      "next_action": {"kind": "reply", "why": "answer the owner-preference question"}
+    },
+    "tool_call_trail": ["web_search"]
+  },
+  "expected": {
+    "ungrounded_contains": ["buildium_tools.get_owner#owner:88421"]
+  }
+}

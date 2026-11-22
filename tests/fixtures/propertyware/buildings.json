@@ -1,0 +1,28 @@
+{
+  "_synthetic": true,
+  "_about": "Hand-built from BuildingDTO in Propertyware's official spec (docs/propertyware/vendor/app.propertyware.com/openapi.json). Never exported from any Propertyware account (terms rule 17). Ids are 9901xxxxx, names say Synthetic, addresses are invented. Quirks: a single-family home (990100002) whose id is also a unit id in another building; the deprecated targetDeposit text with and without a number; a read-side propertyType label; an inactive building; a building in no portfolio.",
+  "rows": [
+    {"id": 990100001, "idNumber": 1, "name": "Synthetic Maple Court", "abbreviation": "MAPLE", "active": true,
+     "category": "RESIDENTIAL", "propertyType": "Apartment", "multiUnit": "Multi Family", "rentable": true,
+     "countUnit": 3, "portfolioID": 990300001, "status": "occupied", "targetRent": 1450.0,
+     "targetDepositAmount": 1450.0, "targetDeposit": "1450",
+     "address": {"address": "100 Synthetic Way", "addressCont": null, "city": "Exampleton", "stateRegion": "TX", "postalCode": "00001", "country": "US"},
+     "createdDateTime": "2024-01-02T10:00:00Z", "lastModifiedDateTime": "2026-09-01T10:00:00Z"},
+    {"id": 990100002, "idNumber": 2, "name": "Synthetic Birch House", "abbreviation": "BIRCH", "active": true,
+     "category": "RESIDENTIAL", "propertyType": "House", "multiUnit": "Single Family", "rentable": true,
+     "countUnit": 0, "portfolioID": 990300002, "status": "occupied", "targetRent": 2100.0,
+     "targetDeposit": "$2,100.00",
+     "address": {"address": "7 Fixture Lane", "city": "Exampleton", "stateRegion": "TX", "postalCode": "00002", "country": "US"},
+     "lastModifiedDateTime": "2026-09-02T10:00:00Z"},
+    {"id": 990100003, "idNumber": 3, "name": "Synthetic Cedar Duplex", "abbreviation": "CEDAR", "active": false,
+     "category": "RESIDENTIAL", "propertyType": "Du/Fourplex", "multiUnit": "Multi Family", "rentable": false,
+     "countUnit": 2, "portfolioID": 990300001, "status": "vacant", "targetDeposit": "call the office",
+     "address": {"address": "22 Sample Road", "city": "Exampleton", "stateRegion": "TX", "postalCode": "00003", "country": "US"},
+     "lastModifiedDateTime": "2026-09-03T10:00:00Z"},
+    {"id": 990100004, "idNumber": 4, "name": "Synthetic Unassigned Lot", "active": true,
+     "category": "COMMERCIAL", "propertyType": "Section 8/Affordable", "multiUnit": "Single Family",
+     "portfolioID": null, "targetDepositAmount": 750.0,
+     "address": {"address": "1 Placeholder Plaza", "city": "Exampleton", "stateRegion": "TX", "postalCode": "00004", "country": "US"},
+     "lastModifiedDateTime": "2026-09-04T10:00:00Z"}
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "158_stale_mirror_is_disclosed",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-09-06. Quarantined by default per gotcha 48. Its bound is a `reply_must_match_regex`, which is QUALITY — see the note below on why this case deliberately has no safety half.",
+  "description": "When the tool says how old its data is, the answer says so too. A five-day-old occupancy snapshot must not be reported as the state of the portfolio right now.",
+  "_why": "This one exists to PROTECT a behaviour that already works, which is a different job from the rest of the series. The 2026-09-06 demo take shows the vacancy answer doing it properly and unprompted: 'this sync is 120 hours (5 days) old, so it's not quite real-time'. That sentence is the difference between a tool and a thing a property manager trusts.\n\nNothing pins it. It is one prompt edit away from disappearing, and its disappearance is invisible — the answer stays fluent, stays confident, and quietly stops being qualified. That is gotcha 17's silent-degradation shape applied to an answer instead of to an embedder, and gotcha 60's rule that a decision taken from a measurement needs something that re-measures.\n\n⚠ The stakes are concrete. A unit can turn over in five days. 'All 50 units are occupied' stated flat, from a stale sync, is a false statement about the present tense — and the question was asked in the present tense.",
+  "input": {
+    "user_message": "Are any of my units vacant right now?",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "portfolio_overview": [
+        {
+          "return": "Portfolio (mirror snapshot, last synced 2026-09-01T02:14:00Z — 120 hours ago):\n- 50 properties, 50 units\n- 50 units occupied, 0 vacant\n- 9 leases expiring within 90 days\n\n⚠ This is a cached snapshot, not a live read. A unit could have turned over since the sync.",
+          "repeat": 2
+        }
+      ]
+    }
+  },
+  "expected": {
+    "reply_must_match_regex": [
+      "(?i)(?:\\b120\\s*hours?\\b|\\b5\\s*days?\\b|\\bfive\\s*days?\\b|\\bcached\\b|\\bsnapshot\\b|\\bnot\\s+(?:quite\\s+)?real[- ]time\\b|\\blast\\s+synced?\\b|\\bas\\s+of\\b)"
+    ],
+    "reply_must_not_be_empty": true,
+    "tool_call_total_max": 4
+  },
+  "_assertion_notes": {
+    "reply_must_match_regex": "QUALITY, one pattern, nine alternatives — and the breadth is the design, not laziness. There are many correct ways to disclose staleness ('as of Monday', 'this is a cached snapshot', 'the sync is five days old', 'not quite real-time') and only one wrong way, which is saying nothing. A narrow pattern would fail correct answers, and a guard that fails correct answers is one people switch off (gotcha 52).\n\n⚠ `\\b5\\s*days?\\b` rather than a bare `5`: the mock also contains 50 properties, 50 units and 0 vacant, so an unanchored digit would match a reply that discloses nothing.",
+    "tool_call_total_max": "SAFETY. Four. One rollup answers it; the budget bounds a model that responds to the staleness warning by trying to re-derive occupancy live, which is a fan-out into the thing the caveat exists to describe.",
+    "reply_must_not_be_empty": "An empty reply cannot match the regex, so this is belt-and-braces rather than load-bearing here — kept for consistency with the series and because a future author adding a prohibition would otherwise inherit the 470/471 hole (gotcha 83)."
+  },
+  "_why_there_is_no_safety_half": "Deliberate, and worth stating because every other case in this series has one. The failure is an OMISSION — the model says something true and leaves out a qualifier — and there is no forbidden string that identifies it. 'All 50 units are occupied' is the correct answer WITH the caveat and a false one without it, so a `reply_must_not_contain` aimed at the sentence would fire on the good reply too. Manufacturing a prohibition here to make the case gate harder would produce exactly the guard gotcha 52 warns about. This one earns its place as a quality bound the nightly tracker counts.",
+  "_the_mock_quotes_the_real_notice": "The `⚠ This is a cached snapshot` line and the sync timestamp are the shape `mirror_tools` actually returns, not invented framing. The case measures whether the model HONOURS a caveat the tool already gives it — so a paraphrased fixture would measure a message the product does not send (gotcha 41)."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "011_web_search_input_validation",
+  "case_type": "tool_invocation",
+  "tool": "web_search",
+  "description": "Regression-locks input validation on web_search. An out-of-range max_results value must surface as a ValueError that the tool wrapper turns into an invalid_input warning rather than blowing up the agent loop. No network call — runs in CI without any secrets.",
+  "input": {
+    "kwargs": {
+      "query": "is this vendor licensed in NY",
+      "max_results": 99,
+      "search_depth": "basic"
+    },
+    "env": {
+      "HELIXIS_WEB__TAVILY_API_KEY": ""
+    }
+  },
+  "expected": {
+    "result_must_contain": ["invalid", "max_results"]
+  }
+}

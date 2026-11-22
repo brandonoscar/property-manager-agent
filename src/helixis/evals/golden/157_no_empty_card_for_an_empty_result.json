@@ -1,0 +1,42 @@
+{
+  "id": "157_no_empty_card_for_an_empty_result",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-09-06. Quarantined by default per gotcha 48. `tool_call_trail_must_not_contain` is a prohibition built critical=True, so it gates every run.",
+  "description": "A question whose answer is 'none' gets a sentence, not an empty table. The user asked to see something as a table and there is nothing to show.",
+  "_why": "The small-visual half of the demo complaint. An empty table is a header row over a blank rectangle, and it reads as a failed render rather than as an answer — the user's conclusion is 'it broke', not 'there are none'. One sentence says the same thing and says it better.\n\nThe risk is live and recent: #936 registered four more card renderers on the router (`show_chart`, `show_detail_card`, `show_checklist`, `suggest_next_steps`), and a model asked for a table tends to produce one because it was asked, not because there are rows. The zero case is exactly where that instinct is wrong.\n\n⚠ There is no runtime guard for this. `run_agent_streaming`'s drain skips a card whose TYPE it cannot resolve (gotcha 28), and nothing anywhere looks at whether the payload has rows.",
+  "input": {
+    "user_message": "Show me any work orders stalled more than a week as a table.",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "buildium_list_open_work_orders": [
+        {
+          "return": "Open work orders (2), none older than 7 days:\n- 200 E Colfax Ave — roof flashing — New — opened 2026-09-04\n- 14 Alder Court — dishwasher fault — InProgress — opened 2026-09-05\nNo work order in this list has been open longer than a week.",
+          "repeat": 2
+        }
+      ],
+      "open_work_orders": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors)."
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_not_contain": [
+      "show_table"
+    ],
+    "reply_must_not_be_empty": true,
+    "tool_call_total_max": 4
+  },
+  "_assertion_notes": {
+    "tool_call_trail_must_not_contain": "SAFETY (a must_not_* is built critical=True), and the whole case. The trail records what the model CALLED, which is the only place this is observable — the card payload is drained separately and an empty one looks like no card at all.\n\n⚠ The key is `tool_call_trail_must_not_contain`, an agent_flow key, on an agent_flow case. Gotcha 83 is the record of that mattering: 460 declared its tool prohibitions under this key on a ROUTING case, where the trail holds agent names rather than tool names, so there was no spelling that could have fired and the load-bearing half of a SAFETY case was decoration.",
+    "tool_call_total_max": "SAFETY. Four. One read answers it; the budget stops a model that distrusts the empty result from re-querying per property looking for the rows it expected.",
+    "reply_must_not_be_empty": "The bound that makes the prohibition mean something. Without it, calling NO tools and saying NOTHING is a perfect score on this case — gotcha 83's 470/471 shape, where an empty reply satisfies every `must_not_` vacuously."
+  },
+  "_what_is_NOT_asserted": "No `reply_must_contain` for 'none' or 'no work orders'. The honest answer has several correct shapes — 'nothing is stalled', 'both open work orders are from this week', 'the oldest is two days old' — and pinning one would measure phrasing (gotcha 48). What must hold is that the model answered in words and did not reach for a renderer with nothing to render.",
+  "_the_mock_answers_the_question_it_was_asked": "The result deliberately contains two work orders, not zero. The question is about work orders STALLED MORE THAN A WEEK, and the answer to that is none — so the model has real rows in hand and still must not table them. A mock returning nothing at all would let a model produce the right behaviour by having nothing to work with, and the case would prove nothing (the same reasoning as 154's duplicate property)."
+}

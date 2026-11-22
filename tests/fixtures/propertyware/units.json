@@ -1,0 +1,21 @@
+{
+  "_synthetic": true,
+  "_about": "Hand-built from UnitDTO in Propertyware's official spec. Never exported from any Propertyware account (terms rule 17). Quirks: unit 990100002 shares its id with building 990100002 (the Birch House) but belongs to building 990100003 (the two id sequences can share numbers); a target rent per square foot; a unit with no rent units; occupancy words outside occupied/vacant.",
+  "rows": [
+    {"id": 990200001, "buildingID": 990100001, "portfolioID": 990300001, "name": "M-101", "abbreviation": "M101",
+     "active": true, "status": "Occupied", "leaseID": 990600001, "targetRent": 1450.0, "targetRentUnits": "DOLLAR_PER_MONTH",
+     "targetDepositAmount": 1450.0, "lastModifiedDateTime": "2026-09-05T10:00:00Z"},
+    {"id": 990200002, "buildingID": 990100001, "portfolioID": 990300001, "name": "M-102", "abbreviation": "M102",
+     "active": true, "status": "Vacant", "leaseID": null, "targetRent": 1475.55, "targetRentUnits": "DOLLAR_PER_MONTH",
+     "targetDeposit": "1,475.55", "lastModifiedDateTime": "2026-09-05T10:00:00Z"},
+    {"id": 990200003, "buildingID": 990100001, "portfolioID": 990300001, "name": "M-103", "abbreviation": "M103",
+     "active": true, "status": "Notice Given", "targetRent": 2.1, "targetRentUnits": "DOLLAR_PER_SQ_FT_MONTH",
+     "targetDeposit": "one month", "lastModifiedDateTime": "2026-09-05T10:00:00Z"},
+    {"id": 990100002, "buildingID": 990100003, "portfolioID": 990300001, "name": null, "abbreviation": "C-A",
+     "active": true, "status": "occupied", "targetRent": 1100.0, "targetRentUnits": "DOLLAR_PER_MONTH",
+     "lastModifiedDateTime": "2026-09-06T10:00:00Z"},
+    {"id": 990200005, "buildingID": 990100003, "portfolioID": 990300001, "name": "C-B",
+     "active": true, "status": null, "targetRent": 1050.0, "targetDepositAmount": 900.0,
+     "lastModifiedDateTime": "2026-09-06T10:00:00Z"}
+  ]
+}

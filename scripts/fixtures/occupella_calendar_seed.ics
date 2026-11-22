@@ -1,0 +1,104 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Occupella//Cross-source test corpus//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Occupella test seed
+
+BEGIN:VEVENT
+UID:occupella-seed-01@occupella.com
+DTSTAMP:20260825T120000Z
+DTSTART:20260820T160000Z
+DTEND:20260820T163000Z
+SUMMARY:Ceiling stain work orders - closed out
+DESCRIPTION:Marcus confirmed all six ceiling stain work orders at Riversid
+ e Townhomes were completed and closed out. Nothing outstanding on that ba
+ tch\, no further follow-up scheduled.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:occupella-seed-02@occupella.com
+DTSTAMP:20260825T120000Z
+DTSTART:20260903T130000Z
+DTEND:20260903T140000Z
+SUMMARY:Premier Restoration - 2C ceiling follow-up
+LOCATION:Riverside Townhomes\, Unit 2C
+DESCRIPTION:Premier returning to finish the 2C ceiling repair. Confirmed w
+ ith their scheduler by phone.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:occupella-seed-03@occupella.com
+DTSTAMP:20260825T120000Z
+DTSTART:20260915T150000Z
+DTEND:20260915T160000Z
+SUMMARY:74 Grove - renewal decision review
+DESCRIPTION:Sit down with the renewal terms for 74 Grove and decide whethe
+ r to offer\, raise\, or let it go month-to-month. Plenty of runway before
+  the lease turns over.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:occupella-seed-04@occupella.com
+DTSTAMP:20260825T120000Z
+DTSTART:20260826T120000Z
+DTEND:20260826T130000Z
+SUMMARY:Garden Row 1C - entry for water heater inspection
+LOCATION:Garden Row\, Unit 1C
+DESCRIPTION:Booked this afternoon for tomorrow morning. Tech entering to i
+ nspect the water heater. Tenant notified by voicemail.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:occupella-seed-05@occupella.com
+DTSTAMP:20260825T120000Z
+DTSTART:20260827T140000Z
+DTEND:20260827T150000Z
+SUMMARY:Maple Court 12 - hot water diagnostic
+LOCATION:Maple Court\, Unit 12
+DESCRIPTION:Following up on Dana Whitlock's report of no hot water since F
+ riday. Plumber meeting us on site.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:occupella-seed-06@occupella.com
+DTSTAMP:20260825T120000Z
+DTSTART:20260909T130000Z
+DTEND:20260909T170000Z
+SUMMARY:Brightline Roofing - roof section replacement
+DESCRIPTION:Brightline on site for the roof work Tom quoted at $2\,400. He
+  said the verbal go-ahead came through\, so putting it on the calendar.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:occupella-seed-07@occupella.com
+DTSTAMP:20260825T120000Z
+DTSTART:20260826T180000Z
+DTEND:20260826T190000Z
+SUMMARY:Owner call - Riverside quarterly
+DESCRIPTION:Quarterly check-in with the Riverside ownership group. Walk th
+ rough maintenance spend and the delinquency picture.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:occupella-seed-08@occupella.com
+DTSTAMP:20260825T120000Z
+DTSTART:20260826T180000Z
+DTEND:20260826T193000Z
+SUMMARY:Property inspection - Garden Row exterior
+LOCATION:Garden Row
+DESCRIPTION:Annual exterior walk with the insurance adjuster. Needs someon
+ e on site for the full window.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:occupella-seed-09@occupella.com
+DTSTAMP:20260825T120000Z
+DTSTART:20260831T130000Z
+DTEND:20260831T140000Z
+SUMMARY:Aged work order review
+DESCRIPTION:Go through the aged work order list Marcus is pulling together
+  and decide what to escalate.
+END:VEVENT
+
+END:VCALENDAR

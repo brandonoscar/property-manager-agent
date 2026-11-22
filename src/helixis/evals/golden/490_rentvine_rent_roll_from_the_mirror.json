@@ -1,0 +1,47 @@
+{
+  "id": "490_rentvine_rent_roll_from_the_mirror",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-10-03. Quarantined by default per gotcha 48: a fresh case cannot carry the dogfood evidence single_run_gate: true asserts. Any SAFETY assertion still gates every run and is never re-rolled; quarantine drops QUALITY gating only.",
+  "description": "Opens the 49x family: a Rentvine WORKSPACE. Until 2026-10-03 no golden case could run as one, so nothing in CI saw a Rentvine answer. The 2026-10-02 sandbox run failed 'Show me the rent roll.' there because no tool listed the active leases with their rent (gotcha 184); rent_roll is that tool. input.pms is 'rentvine', so the harness binds the run as run_agent_streaming does: bind_run_pms before the agent is built, the specialist reworded to the Rentvine Agent, RENTVINE_RUN_NOTE on the input, the live Buildium tools hidden and the Rentvine-only tools shown (agent_flow.run_agent_flow_case, test_agent_flow_rentvine_runs.py). Synthetic fixture only (Rentvine terms rules 17-19, evals/CLAUDE.md): invented names, 990000xxx-style ids, no sandbox export, no recorded response.",
+  "input": {
+    "user_message": "Show me the rent roll.",
+    "agent": "Buildium Agent",
+    "pms": "rentvine",
+    "tool_mocks": {
+      "rent_roll": [
+        {
+          "return": "Rent roll: 3 active leases, $4,975 a month in rent:\n- Avery Example — Redbud · Unit 101: $1,850/mo, lease ends 2027-03-18\n- Jordan Sample — Redbud · Unit 102: $1,675/mo, lease ends 2026-12-31, owes $200\n- Riley Placeholder — Maple Court · Unit 3: $1,450/mo, past its 2026-08-31 end date and still active\nNo amount owed means the lease is not in the synced balance snapshot, i.e. it owes nothing.\n(Synced from Rentvine 2 hours ago.)",
+          "repeat": 3
+        }
+      ],
+      "portfolio_overview": [
+        {
+          "return": "Portfolio: 2 properties, 5 units (3 occupied, 2 vacant), 3 active leases. Rent due this month $4,975; $200 outstanding across 1 lease. (Synced from Rentvine 2 hours ago.)",
+          "repeat": 2
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "rent_roll"
+    ],
+    "reply_must_match_regex": [
+      "4,975"
+    ],
+    "reply_should_not_contain": [
+      "Buildium"
+    ],
+    "reply_must_not_be_empty": true
+  },
+  "_assertion_notes": {
+    "tool_call_trail_must_contain": "QUALITY. The rent roll comes from the one tool that has it on a Rentvine run.",
+    "reply_must_match_regex": "QUALITY. The monthly total from the tool reached the answer.",
+    "reply_should_not_contain": "QUALITY, non-gating. A Rentvine run never names the other PMS (run_pms.RENTVINE_RUN_NOTE); a slip is worth counting, not red-gating CI.",
+    "why_portfolio_overview_is_mocked": "A model that orients itself first must find the company: an unmocked mirror read has no memory context in evals and stops at 'which company?', which would fail the case for a reason it does not measure."
+  }
+}

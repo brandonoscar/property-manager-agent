@@ -1,0 +1,310 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "helixis"
+version = "0.1.0"
+description = "Helixis — AI-native agent system for property managers"
+requires-python = ">=3.11"
+license = "AGPL-3.0-only"
+dependencies = [
+    # API framework
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "sse-starlette>=2.0.0",
+    "websockets>=13.0",
+
+    # Settings & config
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "pyyaml>=6.0",
+
+    # HTTP client
+    "httpx>=0.27.0",
+
+    # Database
+    "asyncpg>=0.29.0",
+    "sqlalchemy[asyncio]>=2.0.30",
+
+    # Auth
+    "pyjwt[crypto]>=2.8.0",
+    # Direct floor — pyjwt[crypto]/presidio-anonymizer pull cryptography
+    # transitively; pin past GHSA-537c-gmf6-5ccf (#397).
+    #
+    # Raised 48.0.1 -> 50.0.0 (2026-08-24, issue #811). The old floor WAS the
+    # vulnerable version: pip-audit reports PYSEC-2026-3552 (fixed 50.0.0) and
+    # -3553/-3554 (fixed 49.0.0) against 48.0.1 exactly, so a fresh install
+    # satisfying the floor installed a flagged build. 50.0.0 clears all three.
+    #
+    # ⚠ This is the package behind Fernet (security/fernet.py), so read gotcha
+    # 11 before touching it — but a LIBRARY bump is not a KEY rotation. The
+    # Fernet token format is stable across these versions; nothing needs
+    # re-encrypting, and the fernet round-trip tests pin that.
+    "cryptography>=50.0.0",
+
+    # Agent orchestration.
+    # PINNED (P0, 2026-07-09): openai-agents 0.18.0 made
+    # InputTokensDetails.cache_write_tokens a REQUIRED field, but litellm's
+    # gemini usage mapping only emits {'cached_tokens': 0} — so under the
+    # unpinned ">=" range every Gemini agent run ValidationErrors
+    # ("cache_write_tokens Field required"), taking down CI evals AND prod on
+    # redeploy. Pin to the verified-good pair the gemini-3.5-flash migration was
+    # dogfooded on. See the [deps] follow-up to re-evaluate + add a lockfile.
+    "openai-agents[litellm]==0.19.1",
+
+    # PINNED with openai-agents/litellm: the openai package is the ACTUAL source
+    # of the InputTokensDetails breakage. openai 2.45.0 added a REQUIRED
+    # `cache_write_tokens` field to InputTokensDetails, but litellm's gemini
+    # usage mapping only emits `{'cached_tokens': 0}` → every Gemini agent run
+    # ValidationErrors. openai comes in transitively (unpinned), so a fresh
+    # install grabbed 2.45.0. 2.16.0 is the verified-good version (only
+    # `cached_tokens`). Bump alongside the [deps] follow-up, not under P0.
+    "openai==2.51.0",
+
+    # LLM routing (pinned with openai-agents above — same InputTokensDetails
+    # incompatibility; 1.83.0 is the verified-good version).
+    "litellm==1.100.4",
+
+    # Utilities
+    "structlog>=24.0.0",
+    "python-dotenv>=1.0.0",
+    # litellm 1.92.0's completion() path imports its proxy/MCP handler chain
+    # (litellm/responses/mcp/... -> litellm/proxy/common_utils/http_parsing_utils.py),
+    # which does an unconditional `import orjson`. litellm only declares orjson
+    # under its own `[proxy]` extra, which we don't install — so every real LLM
+    # call raised `APIConnectionError: No module named 'orjson'` and red-gated
+    # the eval suite (test_evals_pass) across all PRs. Declare it directly.
+    "orjson>=3.9.7",
+
+    # Observability — LiteLLM has a native callback for the v2 SDK.
+    # ⚠ Hard-pinned below 3: the v3+ SDK (OTel rewrite) drops the
+    # ``langfuse.version`` module LiteLLM's callback reads, which crashed
+    # every prod /agent/run with AttributeError the first time an image
+    # rebuild resolved 3.x (Sentry PYTHON-FASTAPI-2W/2X, 2026-07-24).
+    # Local/CI never caught it: Langfuse keys exist only in prod, so the
+    # logger never initializes elsewhere. Moving to v3 is a deliberate
+    # migration (new SDK surface), not a pin bump.
+    # ⚠ REGRESSED ONCE: Dependabot #737 (2026-08-07) widened this to <5.0.0,
+    # silently reverting the #713 fix — nothing caught it for the same
+    # prod-only reason. The pin is now guarded by
+    # tests/unit/test_dependency_pins.py AND a dependabot.yml ignore rule;
+    # do not widen past <3 without actually migrating the LiteLLM callback.
+    "langfuse>=2.0.0,<3.0.0",
+
+    # Static chat maps, self-rendered over OSM tiles (MIT). Replaces the
+    # Google Static Maps dependency (2026-08-17 Google-Maps-exit): the
+    # /maps/static route renders PNGs itself on the keyless census provider.
+    "py-staticmaps>=0.4.0",
+
+    # EXIF orientation on photos headed for a vision model
+    # (agents/image_orientation.py). DECLARED EXPLICITLY rather than left to
+    # arrive with py-staticmaps above: a session assumed that provenance and
+    # was wrong — nothing in a fresh install here declared Pillow at all, so
+    # the whole feature would have gone dark on a py-staticmaps release that
+    # dropped it, silently, in the gotcha-17 way. `upright_image_bytes`
+    # degrades to sending the photo as it arrived if this is ever missing, so
+    # a bad install costs the rotation and never the assessment.
+    "pillow>=10.0",
+
+    # US federal + state holiday calendars for jurisdiction deadline math
+    # (geo/deadline_math.py). MIT — verified via the wheel's
+    # ``License-Expression: MIT`` metadata (holidays 0.103, 2026-08).
+    # Imported lazily + failure-tolerantly; business-day math degrades to
+    # weekend-only with a flag if it's ever missing.
+    "holidays>=0.100",
+
+    # Product analytics
+    "posthog>=7.0.0",
+
+    # Error tracking. Capped below 3: 3.0 removes push_scope and Hub, and the
+    # image installs fresh on every deploy, so an unbounded spec would have
+    # silently stopped bug-report notices (tests/unit/test_sentry_real_sdk.py).
+    "sentry-sdk[fastapi]>=2.0.0,<3",
+]
+
+[project.optional-dependencies]
+browser = [
+    # NOTE: ``browser-use`` was removed (PR — posthog conflict). It hard-pins
+    # ``posthog==7.7.0``, which is irreconcilable with mem0ai's
+    # ``posthog>=7.14.0`` (the [memory] extra) — so a clean install of
+    # [browser]+[memory] together (what the prod image does) can't resolve and
+    # pip leaves an inconsistent posthog. browser-use was used ONLY by the dead
+    # legacy ``browser/automation.py`` (deleted 2026-10-02 with its
+    # ``langchain-openai`` dependency); the live ``browser_agent`` specialist
+    # uses Browserbase below.
+    "playwright>=1.40.0",
+    # Browserbase managed-headless-Chrome runtime for the read-only
+    # browser_agent specialist. Apache-2.0 licensed (verified PyPI
+    # metadata as of PR #153). Optional extra so CI's lean install
+    # doesn't pull it — production deploys that run browser_agent
+    # install via ``pip install -e ".[browser]"``.
+    "browserbase>=1.0.0",
+]
+connectors = [
+    # ``composio-core`` is the deprecated legacy SDK (no ``toolkits.authorize``
+    # surface; Composio retired its legacy ``initiate()`` endpoint for managed
+    # OAuth on 2026-05-08 → all new-org initiations 400/502 against the old
+    # entity API). The new ``composio`` package (v3 SDK) has the
+    # ``Composio.toolkits.authorize(user_id, toolkit)`` wrapper our connector
+    # init path expects.
+    "composio>=0.13.0",
+    # Provider plugin that turns Composio tools into ``FunctionTool``s the
+    # openai-agents SDK can consume. Without it, ``client.tools.get(...)``
+    # returns objects in Composio's neutral shape and the agent can't call
+    # them (Gmail/Calendar/Drive tools show up as zero usable tools).
+    "composio-openai-agents>=0.1.0",
+]
+memory = [
+    # Pinned to a bounded range: the previous ``>=0.1.40`` was unbounded, so
+    # the prod image resolved a mem0 version where ``from mem0 import
+    # AsyncMemory`` failed and memory silently disabled. 2.x exports
+    # AsyncMemory and matches the dict result-shape this module parses.
+    # EXACT pin (was >=2.0,<3) for determinism: re-embed run #4 resolved
+    # 2.0.13 while the integration was verified on 2.0.12 — surprise resolver
+    # drift mid-migration. NOTE the version was NOT the bug: BOTH versions
+    # carry a pydantic EmbedderConfig validator with a hardcoded provider
+    # allowlist that rejects our registered "voyage" provider; the manager
+    # bypasses it via ``EmbedderConfig.model_construct`` (see
+    # memory/manager.py::initialize). Bump deliberately: re-verify that
+    # bypass + the factory seam against the new version first.
+    "mem0ai==2.0.14",
+    # mem0's pgvector vector store driver. The rest of Helixis uses asyncpg,
+    # so psycopg isn't otherwise installed — without it Mem0 raises "Neither
+    # 'psycopg' nor 'psycopg2' library is available" and disables memory.
+    # [binary] ships the prebuilt driver (no libpq-dev in the slim image);
+    # [pool] is what mem0's pgvector connection pool imports.
+    "psycopg[binary,pool]>=3.1",
+    # Anthropic SDK — Mem0's fact-extraction LLM provider (Gemini exit,
+    # gotcha 18). The Voyage EMBEDDER needs no SDK: it's our own httpx-based
+    # provider (memory/voyage_embedder.py). google-genai was removed with
+    # the dead Gemini account.
+    "anthropic>=0.40",
+]
+document = [
+    # Lean, programmatic-PDF text extraction for the document specialist's
+    # PDF pre-parse stage (better lease / owner-doc / policy extraction than
+    # sending a base64 image to Gemini multimodal). We pin ``docling-parse``
+    # — the standalone PDF primitive — NOT the full ``docling`` package: the
+    # latter pulls torch + heavy OCR/VLM stacks (and fails to build wheels in
+    # lean CI), which programmatic-PDF text does not need. Optional extra so
+    # base install + CI stay lean; document_tools lazy-imports it and falls
+    # back to the existing multimodal path when it's absent.
+    "docling-parse>=6.0.0",
+]
+codeexec = [
+    # E2B (Firecracker microVM) — the ISOLATED substrate for agent-authored
+    # Python. Not a nicety: the local-subprocess fallback runs on the same
+    # container and uid as the API process and a run can read HELIXIS_DATA_KEY
+    # out of /proc (gotcha 33), so HELIXIS_CODEEXEC__ENABLED may only be true
+    # with HELIXIS_CODEEXEC__SUBSTRATE=e2b, which needs this installed.
+    # Live-probed 2026-08-22 against 2.9.1.
+    "e2b-code-interpreter>=2.9.0",
+]
+security = [
+    # Microsoft Presidio (MIT) backs helixis.security.pii.redact — the single
+    # identity/PII redactor for logs/telemetry/agent-visible text. Used in
+    # PATTERN-ONLY mode (no spaCy model, no torch, no network): custom +
+    # built-in pattern recognizers called with nlp_artifacts=None. ``spacy`` is
+    # pulled as a presidio dependency but no model is loaded. Optional extra:
+    # without it, ``redact`` falls back to an equivalent pure-regex pass, so the
+    # base install stays lean and behavior degrades gracefully.
+    "presidio-analyzer>=2.2",
+    "presidio-anonymizer>=2.2",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.5.0",
+    "mypy>=1.10.0",
+    "types-PyYAML>=6.0.0",
+    # Exercise the real Presidio redaction path in CI (the prod-deploy engine),
+    # not just the regex fallback. Mirror of the [security] extra.
+    "presidio-analyzer>=2.2",
+    "presidio-anonymizer>=2.2",
+]
+
+[project.scripts]
+helixis = "helixis.main:cli"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/helixis"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+# Integration tests need real credentials and external services. They
+# are excluded from the default run (`pytest tests/`) and only execute
+# when invoked explicitly: `pytest -m integration` or `make langfuse-smoke`.
+markers = [
+    "integration: requires real credentials + network (Langfuse, LLM provider). Skipped by default.",
+    "rentvine_rate_limit: use the REAL Rentvine request-rate limiter (conftest turns it off otherwise).",
+    "pms_rate_limit: use the REAL pms.rate request-rate limiter (conftest turns it off otherwise).",
+]
+addopts = "-m 'not integration'"
+
+[tool.mypy]
+python_version = "3.11"
+# Resolve type stubs via the ``python`` on PATH so ``mypy src/helixis/``
+# behaves identically locally and in CI. Locally PATH resolves to the
+# venv / system Python that has fastapi / pydantic / litellm installed
+# (with their py.typed markers); CI's ``actions/setup-python@v5`` puts
+# its 3.11 toolchain on PATH first and ``pip install -e ".[dev]"``
+# installs the project deps there. Without this, local mypy uses the
+# Python whose site-packages contains mypy itself (a separate user
+# install) and surfaces phantom ``import-not-found`` errors that CI
+# doesn't see — the workaround was the ``--python-executable`` flag
+# we resorted to during the PR #89 hotfix.
+python_executable = "python"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+
+# ── Mypy overrides ──────────────────────────────────────────────
+# Third-party libraries without bundled type stubs. We don't fight
+# upstream typing; we just stop mypy from blocking CI on imports it
+# can't resolve. Real type errors in OUR code are still reported.
+
+[[tool.mypy.overrides]]
+module = [
+    "composio",
+    "composio.*",
+    "composio_openai_agents",
+    "composio_openai_agents.*",
+    "mem0",
+    "mem0.*",
+    "asyncpg",
+    "asyncpg.*",
+    "langfuse",
+    "langfuse.*",
+    "staticmaps",
+    "staticmaps.*",
+    "docling_core",
+    "docling_core.*",
+    "docling_parse",
+    "docling_parse.*",
+    "e2b_code_interpreter",
+    "e2b_code_interpreter.*",
+    "presidio_analyzer",
+    "presidio_analyzer.*",
+    "presidio_anonymizer",
+    "presidio_anonymizer.*",
+]
+ignore_missing_imports = true
+
+# ── Issue #9: mypy type-debt quarantine — FULLY PAID DOWN ────────
+# Every module that once carried suppressed type debt (rate_limit,
+# middleware, webhooks.queue, db.engine, settings, buildium.endpoints.*,
+# buildium.api, db.repositories.*, memory.manager, connectors.composio_client,
+# browser.automation, browser.rpc, agents.orchestrator) has been un-quarantined
+# and fixed — `mypy src/helixis/` is now clean with no per-module overrides.
+# DO NOT reintroduce an `ignore_errors` override to silence a new error;
+# fix the type or file a fresh issue.

@@ -1,0 +1,53 @@
+{
+  "_synthetic": true,
+  "_about": "Hand-built from LeaseDTO and LeaseContactDTO in Propertyware's official spec, as GET /leases?includeOtherBalances=true returns it. Never exported from any Propertyware account (terms rule 17). Quirks: a single-family lease whose unitID is its building id while a unit elsewhere has that same id (990600002); a lease naming a unit that is in another building (990600003); a lease naming no unit (990600006); status in the customer's own words, beside the typed active flag that decides it (an active lease whose word is Current, an inactive lease whose word is Active, a lease with no active flag); no baseRent; a lease that owes with aging that adds up, one with a hidden recharge, one whose charges do not add up, one paid up, one in credit; move-outs recent, upcoming and old.",
+  "rows": [
+    {"id": 990600001, "idNumber": 101, "leaseName": "Synthetic Maple M-101", "buildingID": 990100001, "unitID": 990200001,
+     "portfolioID": 990300001, "status": "Current", "active": true, "startDate": "2025-11-01", "endDate": "2026-10-31",
+     "moveInDate": "2025-11-01", "scheduleMoveOutDate": "2026-10-31", "moveOutDate": null, "baseRent": 1450.0,
+     "arBalance": 1600.0, "leaseBalance": 1600.0,
+     "contacts": [
+       {"id": 990400001, "firstName": "Jordan", "lastName": "Example", "primary": true, "role": "Tenant", "namedOnLease": true},
+       {"id": 990400002, "firstName": "Riley", "lastName": "Sample", "primary": false, "role": "Co-Tenant", "namedOnLease": true}
+     ],
+     "lastModifiedDateTime": "2026-10-01T08:00:00Z"},
+    {"id": 990600002, "idNumber": 102, "leaseName": "Synthetic Birch House", "buildingID": 990100002, "unitID": 990100002,
+     "portfolioID": 990300002, "status": "Active - Notice Given", "active": true, "startDate": "2024-10-01", "endDate": "2026-09-30",
+     "noticeGivenDate": "2026-08-15", "moveOutDate": "2026-09-20", "baseRent": 2100.0, "arBalance": 0.0,
+     "contacts": [
+       {"id": 990400003, "firstName": "Casey", "lastName": "Fixture", "primary": true, "role": "Tenant", "namedOnLease": true}
+     ],
+     "lastModifiedDateTime": "2026-09-20T08:00:00Z"},
+    {"id": 990600003, "idNumber": 103, "leaseName": "Synthetic Maple misfiled", "buildingID": 990100001, "unitID": 990100002,
+     "portfolioID": 990300001, "status": "Active", "active": true, "startDate": "2026-01-01", "endDate": "2026-12-31",
+     "arBalance": 275.25, "contacts": [], "lastModifiedDateTime": "2026-09-15T08:00:00Z"},
+    {"id": 990600004, "idNumber": 104, "leaseName": "Synthetic Cedar C-B (past)", "buildingID": 990100003, "unitID": 990200005,
+     "portfolioID": 990300001, "status": "Inactive", "active": false, "startDate": "2023-01-01", "endDate": "2024-12-31",
+     "moveOutDate": "2024-12-31", "baseRent": 1050.0, "arBalance": 480.0, "contacts": [],
+     "lastModifiedDateTime": "2025-01-05T08:00:00Z"},
+    {"id": 990600005, "idNumber": 105, "leaseName": "Synthetic Maple M-102", "buildingID": 990100001, "unitID": 990200002,
+     "portfolioID": 990300001, "status": "Pending", "active": false, "startDate": "2026-11-01", "endDate": "2027-10-31",
+     "moveInDate": "2026-11-01", "baseRent": 1475.55, "arBalance": 300.0,
+     "contacts": [
+       {"id": 990400002, "firstName": "Riley", "lastName": "Sample", "primary": true, "role": "Tenant", "namedOnLease": true}
+     ],
+     "lastModifiedDateTime": "2026-09-25T08:00:00Z"},
+    {"id": 990600006, "idNumber": 106, "leaseName": "Synthetic Lot lease", "buildingID": 990100004, "unitID": null,
+     "status": "Active", "active": true, "startDate": "2026-03-01", "endDate": "2027-02-28", "baseRent": 500.0,
+     "arBalance": -50.0, "contacts": [], "lastModifiedDateTime": "2026-09-26T08:00:00Z"},
+    {"id": 990600007, "idNumber": 107, "leaseName": "Synthetic Maple M-103 (contradicts itself)", "buildingID": 990100001,
+     "unitID": 990200003, "portfolioID": 990300001, "status": "Active", "active": false, "startDate": "2024-06-01",
+     "endDate": "2025-05-31", "baseRent": 1400.0, "arBalance": 0.0,
+     "contacts": [
+       {"id": 990400001, "firstName": "Jordan", "lastName": "Example", "primary": true, "role": "Tenant", "namedOnLease": true}
+     ],
+     "lastModifiedDateTime": "2025-06-02T08:00:00Z"},
+    {"id": 990600008, "idNumber": 108, "leaseName": "Synthetic Cedar C-B (no active flag)", "buildingID": 990100003,
+     "unitID": 990200005, "portfolioID": 990300001, "status": "Active", "startDate": "2025-02-01",
+     "endDate": "2026-01-31", "baseRent": 1050.0, "arBalance": 0.0,
+     "contacts": [
+       {"id": 990400003, "firstName": "Casey", "lastName": "Fixture", "primary": true, "role": "Tenant", "namedOnLease": true}
+     ],
+     "lastModifiedDateTime": "2026-02-02T08:00:00Z"}
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "155_correction_mid_thread_wins",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-09-06, multi-turn. Quarantined by default per gotcha 48. The forbidden-property prohibition is prose-shaped and re-rolls under gotcha 65's split; the call cap gates every run.",
+  "description": "The user corrects the entity mid-thread. Everything after the correction is about the new property, and the old one must not reappear in the answer.",
+  "_why": "The cheapest thing a user does and the one with no coverage at all. Property managers work from memory and get an address wrong constantly — the correction is the normal case, not the edge case.\n\nThe failure is specific and dangerous: a model that keeps the first entity in context answers about the WRONG PROPERTY while sounding perfectly confident, which is gotcha 41's shape (the agent said 'Marcus Whitfield … at 1700 W Washington St, Phoenix' — three fields from three different records, stated as one fact). There the mis-join was across two tool results; here it is across two turns, and the corpus could not express it until `input.history` landed.\n\n⚠ 500 Woodlane is deliberately the WRONG one. It is the retired write-harness fixture (gotcha 70) — a property that accumulated six runs of residue and now carries extra work orders, an extra task and a shortened lease. If a stale entity survives a correction, this is the address most likely to produce a plausible-looking wrong answer.",
+  "input": {
+    "user_message": "Sorry — I meant 200 E Colfax Ave, not 500 Woodlane. What's the open maintenance there?",
+    "agent": "Buildium Agent",
+    "history": [
+      {
+        "role": "user",
+        "content": "What's the story at 500 Woodlane St?"
+      },
+      {
+        "role": "assistant",
+        "content": "500 Woodlane St has two open work orders and one open task. The lease runs to 2026-08-30."
+      }
+    ],
+    "tool_mocks": {
+      "property_snapshot": [
+        {
+          "return": "200 E Colfax Ave (Denver, CO) — 1 unit, 1 active lease to 2027-03-18, tenant Aaron Tillman.\nOpen maintenance: 1 work order (roof flashing, New), 1 task (annual furnace service, New).",
+          "repeat": 3
+        }
+      ]
+    }
+  },
+  "expected": {
+    "reply_must_contain": [
+      "Colfax"
+    ],
+    "reply_must_not_contain": [
+      "Woodlane"
+    ],
+    "reply_must_not_be_empty": true,
+    "tool_call_total_max": 4
+  },
+  "_assertion_notes": {
+    "reply_must_not_contain": "The bound the case exists for. 'Woodlane' appears nowhere in the mocked result, so any occurrence is the stale entity surviving the correction.\n\n⚠ Prose-shaped, so `_forbidden_prohibition_criticality` (gotcha 65) lets a DISOWNED mention re-roll — which is right and was checked deliberately. A reply that opens 'Switching from 500 Woodlane to 200 E Colfax' has understood the correction perfectly and names the old address to acknowledge it; treating that as a safety failure would be the 414/416 false positive, and it is a genuinely likely phrasing here because the user's own message names both. What must never happen is Woodlane's DATA in the answer, and that shows up as an undisowned mention.\n\n⚠ This is why the mock returns different numbers for Colfax (1 work order, 1 task) than the history gave for Woodlane (2 work orders, 1 task). A model reciting the previous turn's figures is caught by the numbers even if it never types the address.",
+    "reply_must_contain": "QUALITY. The corrected property, named. Not asserting the counts: whether the model says '1 work order and 1 task' or 'one of each' is presentation.",
+    "tool_call_total_max": "SAFETY. Four. One snapshot answers it. The budget also bounds the other failure this shape produces — a model that hedges by looking up BOTH properties, which doubles the cost and puts the wrong one back on screen.",
+    "reply_must_not_be_empty": "Two prohibitions and a cap, all vacuously satisfied by silence (gotcha 83)."
+  },
+  "_what_a_stricter_version_would_cost": "A tempting stronger bound is `reply_must_not_match_regex` on '2 open' / '2026-08-30' — Woodlane's figures. Not shipped: those numbers are legitimate in a reply that explicitly contrasts the two properties, which is a reasonable thing for the model to do when the user names both in one sentence. The address is the cleaner signal, and over-tightening a guard until correct answers fail is how it gets switched off (gotcha 52)."
+}

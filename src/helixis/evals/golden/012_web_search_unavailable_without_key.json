@@ -1,0 +1,21 @@
+{
+  "id": "012_web_search_unavailable_without_key",
+  "case_type": "tool_invocation",
+  "tool": "web_search",
+  "description": "Regression-locks graceful degradation. When the Tavily key is unset, web_search must return a structured result with warnings=['search_unavailable'] and zero sources — never raise, never invent. Fully deterministic, no network call.",
+  "input": {
+    "kwargs": {
+      "query": "average HVAC service call cost in 10128",
+      "max_results": 5,
+      "search_depth": "basic"
+    },
+    "env": {
+      "HELIXIS_WEB__TAVILY_API_KEY": ""
+    }
+  },
+  "expected": {
+    "warnings_must_include": ["search_unavailable"],
+    "sources_min_count": 0,
+    "sources_max_count": 0
+  }
+}

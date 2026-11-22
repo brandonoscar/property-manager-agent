@@ -1,0 +1,51 @@
+{
+  "id": "150_followup_resolves_those_from_history",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-09-06, and the FIRST multi-turn case in the corpus. Quarantined by default per gotcha 48 — no dogfood evidence exists for a shape that has never run. The SAFETY half (tool_call_total_max, built critical=True) still gates every run.",
+  "description": "A follow-up whose subject is a pronoun. The previous turn already named the six past-due tenants; 'which of those' must resolve against that answer rather than re-deriving the list from scratch.",
+  "_why": "**Measured 2026-09-06: 0 of 153 golden cases exercised more than one turn.** Neither harness had a key for prior turns, so this whole class was untestable by construction — which is why the 2026-09-06 demo take could run three follow-ups, lose two of them, and have nothing in the suite go red.\n\nThis is the exact question that failed on camera: `pm-day` step 3, 'Which of those already have open maintenance?', asked inside the thread that had just answered 'Which tenants are behind on rent?'. It is also the single best thing this product does when it works — the founder's own note on the demo script calls the same_thread pairs 'the single best thing this product does on camera'.\n\nThe failure is not a wrong answer; it is a re-derivation. The model that ignores the history calls `delinquency_report` again, then fans out per tenant, and the cost lands on the clock (gotchas 32/50: a cap converts a loop into a blank).",
+  "input": {
+    "user_message": "Which of those already have open maintenance?",
+    "agent": "Buildium Agent",
+    "history": [
+      {
+        "role": "user",
+        "content": "Which tenants are behind on rent?"
+      },
+      {
+        "role": "assistant",
+        "content": "Six leases are past due:\n- Aaron Tillman — 200 E Colfax Ave, Unit 1 — $3,900\n- Doyle Prather — 500 Woodlane St — $1,150\n- Elena Vasquez — 1700 W Washington St — $980\n- Marcus Whitfield — 88 Chestnut Row — $720\n- Priya Raman — 14 Alder Court — $640\n- Tomas Okafor — 9 Beacon Hill Rd — $410"
+      }
+    ],
+    "tool_mocks": {
+      "buildium_list_open_work_orders": [
+        {
+          "return": "Open maintenance by property (mirror, counts are per PROPERTY — helixis_work_orders.unit_id is NULL on every mirrored row):\n- 200 E Colfax Ave: 1 open work order\n- 1700 W Washington St: 2 open work orders\nNo open maintenance recorded at any other property.",
+          "repeat": 2
+        }
+      ],
+      "open_work_orders": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors)."
+        }
+      ]
+    }
+  },
+  "expected": {
+    "reply_must_contain": [
+      "Colfax"
+    ],
+    "reply_must_not_be_empty": true,
+    "tool_call_total_max": 3
+  },
+  "_assertion_notes": {
+    "tool_call_total_max": "SAFETY (a *_max is built critical=True) and the load-bearing assertion. THREE is the budget for a resolved reference: one bulk maintenance read, and room for one retry or one adjacent lookup. A model that ignores the history re-runs `delinquency_report` and then hydrates per tenant, which is six more calls minimum — the N+1 that gotchas 32/50 record as the thing that eats the whole clock and returns nothing.\n\n⚠ This is the assertion that actually detects the defect. The reply bounds below can be satisfied by a model that got the right answer the expensive way.",
+    "reply_must_contain": "QUALITY. 'Colfax' is the one property that appears in BOTH the history's past-due list and the mocked maintenance result, so naming it is the intersection the question asks for. Deliberately not asserting the full pair: 1700 W Washington also has open maintenance, and whether the model volunteers it is taste rather than correctness.\n\n⚠ NOT asserting a count. The mock says the counts are per PROPERTY because that is the truth of the mirror (gotcha 50 — `unit_id` is NULL on all 60 rows), and pinning a number here would reward a model for repeating a figure rather than for resolving the reference.",
+    "reply_must_not_be_empty": "Every other bound is a cap or a single needle; an empty reply satisfies the cap vacuously and would score as the BEST possible run (gotcha 83's 470/471 shape)."
+  },
+  "_the_history_is_the_fixture": "The six tenants exist only in the prior assistant turn — no mock returns them. So a model that does not read the history has no way to know who 'those' are, and the only paths available to it are re-deriving the list (which the cap catches) or answering about maintenance in general (which `reply_must_contain` catches). That is deliberate: the case has to be unanswerable WITHOUT the history, or it measures nothing."
+}

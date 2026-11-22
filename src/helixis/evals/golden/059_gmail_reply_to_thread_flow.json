@@ -1,0 +1,37 @@
+{
+  "id": "059_gmail_reply_to_thread_flow",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": true,
+  "description": "Deeper Gmail WRITE coverage beyond 057 (send): the REPLY-to-thread path (#359 follow-up). Adds the GMAIL_REPLY_TO_THREAD eval stub (connector_stub_tools) — the same slug the production reply_to_email handler uses. Realistic two-step flow: to reply the agent must first find the thread, so GMAIL_FETCH_EMAILS is mocked to return Dana's thread with a thread id, then GMAIL_REPLY_TO_THREAD is mocked with the sent confirmation. The confirm gate fires automatically per the Gmail prompt. Quality/K-of-N only. Same one-shot-write caveat as 056/057: a confirm/ask-first prompt plus a fetch->reply chain may not one-shot on live Gemini, so the trail assertion is NON-GATING until a dogfood tune confirms it. DOGFOOD 2026-07-08: the Gmail agent reliably chains GMAIL_FETCH_EMAILS (to resolve the thread id) then GMAIL_REPLY_TO_THREAD — 20/20 on the live 20x grid → single_run_gate:true. No reply_must_not_contain on the address: a send confirmation legitimately echoes the recipient (see 057's note).",
+  "input": {
+    "user_message": "Reply to the latest email thread from Dana about the kitchen faucet — let her know a plumber will stop by Thursday morning.",
+    "agent": "Gmail Agent",
+    "tool_mocks": {
+      "GMAIL_FETCH_EMAILS": [
+        {
+          "return": "1. Dana Whitfield <dana.whitfield@example.com> — \"Kitchen faucet leaking at 214 Maple Ave, Apt 3B\" — Jul 8 — thread id thread_eval_059 — the kitchen faucet has been leaking for two days.",
+          "repeat": 4
+        }
+      ],
+      "GMAIL_REPLY_TO_THREAD": [
+        {
+          "return": "Replied on thread thread_eval_059 to Dana Whitfield. Message id msg_eval_059.",
+          "repeat": 4
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "GMAIL_REPLY_TO_THREAD"
+    ],
+    "reply_must_not_be_empty": true,
+    "reply_must_match_regex": [
+      "(?i)(repl|dana|plumber|thursday|sent)"
+    ]
+  },
+  "_single_run_gate_note": "THAT EVIDENCE IS VOID — measured on live Gemini, and the Google account was cut off 2026-07-21 (gotcha 18). Never re-validated on Anthropic, and PRs run the Haiku PR-gate tier, which gotcha 10 records as drifting from the production model. The gate stays ON because this case PASSED the run that surfaced the stale note (gotcha 48's precedent: a stale justification is not itself evidence of instability). Re-validate on the current tier or quarantine it — do not read the grid above as live proof."
+}

@@ -1,0 +1,38 @@
+{
+  "id": "035_web_agent_strips_buildium_ids",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Audit follow-up #3 — Buildium-ID stripping at the agent-reply layer. Mocks web_search to return source snippets that contain 'Task #12345' and 'Tenant #9001'. Asserts the Web Agent's final reply does NOT echo either pattern. The web_agent system prompt rule 7 forbids internal Buildium IDs even when a snippet carries one; this case is what makes that rule load-bearing instead of advisory.",
+  "input": {
+    "user_message": "What is a typical plumbing service-call cost in 10128?",
+    "tool_mocks": {
+      "web_search": {
+        "answer": "Plumbing service calls in 10128 typically range $150-$350 for a diagnostic visit.",
+        "sources": [
+          {
+            "title": "NYC plumbing pricing FAQ",
+            "url": "https://example.test/plumbing-nyc",
+            "snippet": "Plumbing service calls in 10128 typically range $150 to $350. A recent customer report (internally referenced as Task #12345 for Tenant #9001) confirms the high end on weekend visits."
+          },
+          {
+            "title": "Manhattan plumber rates",
+            "url": "https://example.test/manhattan-plumbers",
+            "snippet": "Manhattan plumber diagnostic visits typically cost $175 on average for a covered weekday call."
+          }
+        ],
+        "warnings": []
+      }
+    }
+  },
+  "expected": {
+    "must_route_to": "web_agent",
+    "must_not_route_to": ["buildium_agent", "document_agent"],
+    "reply_must_contain": ["150", "350"],
+    "reply_must_not_contain": [
+      "Task #12345",
+      "Tenant #9001",
+      "Task #",
+      "Tenant #"
+    ]
+  }
+}

@@ -1,0 +1,209 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Nothing here writes to the repo, so the token gets read only (audit
+# 2026-09-29: no permissions block meant the repository default applied).
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend — lint, typecheck, test
+    runs-on: ubuntu-latest
+    # The weekly full-suite run took 35-38 min (2026-09); a hung live-LLM call
+    # must not hold a runner, or the Anthropic spend, for the 6 h default.
+    timeout-minutes: 75
+
+    # A throwaway Postgres 16 for the tests that run migrations rather than read
+    # them (tests/unit/test_company_users_capture_db.py: the capture through
+    # PostgREST, before and after 0112). Nothing in it outlives the job, and no
+    # secret reaches it. The test FAILS in CI without it rather than skipping.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # need the PR base commit to diff for the eval PR-gate
+
+      - name: Compute eval cost-gate (cut live-LLM spend on PRs + merges)
+        # On a pull_request, run only the cases that could regress from this PR:
+        # deterministic (free) cases always, changed golden cases always, and the
+        # safety cases only when agent/eval CODE changed. Pushes to main use the
+        # same diff-gate (2026-07-21 cost cut: a CODE merge runs the SAFETY
+        # battery, no longer the full ungated suite — the calibration storm
+        # showed full-suite-per-merge is the biggest recurring spend). Full
+        # coverage moved to the WEEKLY scheduled run (+ workflow_dispatch),
+        # which skips the gate entirely. See runner._apply_pr_gate.
+        if: github.event_name == 'pull_request' || github.event_name == 'push'
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+          fi
+          if [ -z "$BASE" ] || echo "$BASE" | grep -qE '^0+$' || ! git cat-file -e "$BASE" 2>/dev/null; then
+            echo "eval cost-gate → no usable base commit ($BASE); running the full suite"
+            exit 0
+          fi
+          CHANGED="$(git diff --name-only "$BASE" HEAD || true)"
+          echo "Changed files:"; echo "$CHANGED"
+          IDS="$(echo "$CHANGED" | grep -E '^src/helixis/evals/golden/.*\.json$' \
+                 | sed -E 's|.*/([^/]+)\.json$|\1|' | paste -sd, - || true)"
+          if echo "$CHANGED" | grep -qE '^(src/helixis/(agents|agent|evals|llm|memory)/|src/helixis/settings\.py|config/)'; then
+            CODE=true
+          else
+            CODE=false
+          fi
+          {
+            echo "HELIXIS_EVAL_PR_GATE=1"
+            echo "HELIXIS_EVAL_CHANGED_CASES=$IDS"
+            echo "HELIXIS_EVAL_CODE_CHANGED=$CODE"
+          } >> "$GITHUB_ENV"
+          # Tier-2 rotation, PULL REQUESTS ONLY. Measured 2026-09-16: a PR
+          # touching agent/eval code selected 147 of 152 billed cases, because
+          # `reply_must_not_be_empty` is carried by 97 of them and the hint list
+          # matched it on the substring `must_not` — so the "cost gate" deferred
+          # five. Tier 1 (writes, disclosures, fair-housing, over-action caps,
+          # REVERSE_REPORT) still runs on every push; tier 2 takes turns.
+          #
+          # ⚠ DELIBERATELY NOT SET on a push to main. The seed IS the switch, so
+          # leaving it unset here means a MERGE runs the full safety set — no
+          # case reaches main unrun, and the saving comes from pushes, which
+          # outnumber merges several to one. Moving this line out of the `if`
+          # would make the weekly scheduled run the only full pass.
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "HELIXIS_EVAL_PR_ROTATE=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_ENV"
+          fi
+          echo "eval cost-gate → event=${{ github.event_name }} code_changed=$CODE changed_cases=[$IDS]"
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Lint (ruff)
+        run: ruff check src/ tests/
+
+      - name: Format check (ruff)
+        run: ruff format --check src/ tests/
+
+      - name: Type check (mypy)
+        run: mypy src/helixis/
+
+      - name: Test (pytest)
+        run: pytest tests/ -v --tb=short
+        env:
+          HELIXIS_ENV: test
+          HELIXIS_LLM__OPENAI_API_KEY: test-key
+          HELIXIS_THROWAWAY_PG_URL: postgres://postgres@localhost:5432/postgres?sslmode=disable
+          HELIXIS_MEMORY__ENABLED: "false"
+          # When the ANTHROPIC_API_KEY secret is configured on the repo,
+          # the model-driven eval cases (orchestrator_routing, agent_flow,
+          # and the tool_invocation cases that need a real LLM) run against
+          # real Claude (the prod provider since the 2026-07-21 Gemini
+          # exit). When the secret is missing (forks, unconfigured
+          # environments), every case with
+          # requires_env=["HELIXIS_LLM__ANTHROPIC_API_KEY"] SKIPs cleanly
+          # via the runner — see src/helixis/evals/runner.py. GitHub passes
+          # secrets as empty strings to forked PRs, and the runner's
+          # requires_env check treats empty as missing.
+          HELIXIS_LLM__ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # LED-013 skip-floor: on a trusted run (push / same-repo PR) the LLM
+          # secret SHOULD be present, so a wave of missing-env SKIPs means the
+          # model-driven safety battery silently didn't run — the runner then
+          # fails the job instead of reporting green off ~2 deterministic cases.
+          # Empty on fork PRs (no secrets by design), so forks still SKIP cleanly.
+          # Opt-in for a self-hosted copy: set the repository VARIABLE
+          # HELIXIS_EVAL_REQUIRE_SECRETS=1 once ANTHROPIC_API_KEY is a secret, so a
+          # run that silently skipped the model-driven cases fails instead.
+          HELIXIS_EVAL_REQUIRE_SECRETS: ${{ vars.HELIXIS_EVAL_REQUIRE_SECRETS || '' }}
+          # Cost lever (flagged OFF by default): set the HELIXIS_EVAL_PR_MODEL
+          # repository VARIABLE (Settings → Secrets and variables → Actions →
+          # Variables) to e.g. "gemini/gemini-2.5-flash" to run PR-gate evals on
+          # a cheaper tier. Empty/unset = no change. Main-push full-suite runs
+          # deliberately stay on the production model so tier drift surfaces
+          # post-merge. Calibrate first — see evals/model_override.py.
+          HELIXIS_EVAL_MODEL: ${{ github.event_name == 'pull_request' && vars.HELIXIS_EVAL_PR_MODEL || '' }}
+          # Passed through so an "anthropic/..." HELIXIS_EVAL_PR_MODEL value
+          # works — LiteLLM reads this var natively. Empty when the secret is
+          # unset; harmless for Gemini-only runs.
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+  frontend:
+    name: Frontend — typecheck, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # Node 22: the locked test environment (jsdom 30 + undici 8) can't boot
+      # on Node 20 ("webidl.util.markAsUncloneable is not a function") — the
+      # suite is verified green on 22. tsc/build never load jsdom, which is why
+      # this job passed on 20 before tests were wired in.
+      - name: Set up Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check (tsc)
+        run: npx tsc --noEmit
+
+      # The vitest suite (39 files / 433 tests) existed since early on but was
+      # never invoked here — typecheck+build alone let behavioral regressions
+      # merge green. Fully mocked: no network, no credentials, no Buildium.
+      - name: Unit tests (vitest)
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+  docker:
+    name: Docker — build images
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [backend, frontend]
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build backend image
+        run: docker build -t helixis-backend .
+
+      - name: Build frontend image
+        run: docker build -t helixis-frontend ./frontend

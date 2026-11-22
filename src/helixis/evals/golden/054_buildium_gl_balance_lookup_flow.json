@@ -1,0 +1,88 @@
+{
+  "id": "054_buildium_gl_balance_lookup_flow",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "description": "Closes part of #410 — the 11 Buildium read tools from #400-#404 shipped with zero agent_flow coverage. This is the GL-balance leg (#400): an accounting question one-shots buildium_get_gl_account_balances. Mirrors 040: the mirror aggregate tools (property_snapshot / portfolio_overview) are mocked with the mirror-empty message so the agent takes the documented fallback to the live tool rather than answering from an empty mirror. Quality/K-of-N assertions; the identifier guard stays critical. DOGFOOD 2026-07-08: in eval there is no memory context, so an UNMOCKED mirror tool returns the 'which company?' dead-end (not the empty-mirror hint) and the fallback never fires — the agent stalled on the unmocked bank_balances aggregate. Fix: ALL nine mirror tools are now mocked with the empty-mirror message (harness gained the 7 missing mirror mock targets) and the ask is anchored on 'general ledger bank accounts' so the model reliably reaches buildium_get_gl_account_balances. 6/6 sweep + 20/20 grid → single_run_gate:true. ⚠ DE-GATED 2026-09-15, AND THE 20/20 GRID ABOVE IS VOID RATHER THAN DISPROVEN. It was measured 2026-07-08 against a tool registry that did not contain buildium_list_bank_accounts — which shipped 2026-09-13 and whose description claims \"what's in the operating account?\". The anchor this case was deliberately built on, 'general ledger BANK ACCOUNTS', is now the new tool's own subject, so the phrase that made the case reliable is the phrase that makes it ambiguous. Runs 2111 and 2112 produced a BYTE-IDENTICAL trail (['buildium_list_bank_accounts']) with the disambiguating descriptions already in place, so this is not variance the gate should absorb. ⚠ The model's choice is DEFENSIBLE for a real user: both tools return balances and differ in VIEW (the ledger at any date across every GL account, versus the banking view right now), so weakening the assertion to accept either would delete the only bound this case carries. Quarantine drops the GATE, not the visibility — the case still runs, still prints its [FAIL], and eval-flake.yml still counts it. RE-EARNING THE GATE means either a fresh 20x grid on the CURRENT registry, or re-anchoring the ask so it names the ledger without naming bank accounts — the second is the better fix, and it is a live model-driven prose change, so it needs a dogfood pass (#271) and an eval budget this container does not have.",
+  "input": {
+    "user_message": "What are the current balances on our Buildium general ledger bank accounts?",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "buildium_get_gl_account_balances": [
+        {
+          "return": "Operating (GL 1000 — Operating Bank Account): $48,215.90 as of 2026-07-08. Security Deposits (GL 1010): $22,400.00. Reserve (GL 1020): $10,000.00.",
+          "repeat": 5
+        }
+      ],
+      "property_snapshot": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "portfolio_overview": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "delinquency_report": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "expiring_leases": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "unpaid_bills": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "spending_report": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "open_tasks": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "contact_lookup": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "bank_balances": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "buildium_get_gl_account_balances"
+    ],
+    "reply_must_match_regex": [
+      "(?i)(operating|balance|48,215|\\$)"
+    ],
+    "reply_must_not_be_empty": true,
+    "reply_must_not_contain": [
+      "Task #",
+      "Tenant #"
+    ]
+  }
+}

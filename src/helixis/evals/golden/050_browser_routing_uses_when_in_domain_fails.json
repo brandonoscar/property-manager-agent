@@ -1,0 +1,15 @@
+{
+  "id": "050_browser_routing_uses_when_in_domain_fails",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Browser Agent fires when an in-domain specialist cannot answer AND a snippet answer wouldn't suffice. Asks about a county magistrate court hearing schedule — public web, not Buildium / Gmail / Calendar / Drive, and the answer is structured (table/calendar) rather than snippet-sized, so Web Agent is also wrong. Must route to Browser Agent.",
+  "input": {
+    "user_message": "Pull the full list of magistrate court hearings scheduled for next Tuesday at the Fairfax County, Virginia courthouse — I need every case number and time slot, not just the summary.",
+    "tool_mocks": {}
+  },
+  "expected": {
+    "must_route_to": "browser_agent",
+    "must_not_route_to": ["buildium_agent", "gmail_agent", "calendar_agent", "drive_agent", "document_agent", "web_agent"],
+    "reply_must_not_contain": ["Task #", "Tenant #", "Property #"]
+  }
+}

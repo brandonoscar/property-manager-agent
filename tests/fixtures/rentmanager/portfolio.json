@@ -1,0 +1,133 @@
+{
+  "_synthetic": true,
+  "_about": "Hand-built from the documented Rent Manager models (docs/rentmanager/api-notes.md and the help-site scrape it cites). Never read from any Rent Manager account (terms rule 16). Ids are in the 880 000 xxx range, names are invented, emails are example.com, phones are 555-01xx. The tests read it on 2026-10-05: lease 880000601 is current with a notice, 880000602 starts next month, 880000603 moved out 15 days ago, 880000605 is that tenant's old lease, 880000604 is a company with no unit on file.",
+  "current_location": {"LocationID": 1, "Name": "Synthetic Main Office"},
+  "properties": [
+    {"PropertyID": 880000101, "Name": "Synthetic Cedar Court", "IsActive": true, "PropertyType": "Residential",
+     "UpdateDate": "2026-09-30T10:15:00-04:00",
+     "PrimaryAddress": {"Street": "100 Synthetic Way\nSuite 0", "City": "Testville", "State": "OH", "PostalCode": "43000"}},
+    {"PropertyID": 880000102, "Name": "Synthetic Alder House", "IsActive": false, "PropertyType": "Residential",
+     "UpdateDate": "2026-09-30T10:15:00-04:00", "PrimaryAddress": null}
+  ],
+  "units": [
+    {"UnitID": 880000201, "PropertyID": 880000101, "Name": "C-101", "UpdateDate": "2026-09-30T10:15:00-04:00",
+     "CurrentOccupants": [{"TenantID": 880000301, "Name": "Synthwood, Avery"}],
+     "CurrentMarketRent": {"MarketRentID": 880000951, "UnitID": 880000201, "Amount": 1450.0}},
+    {"UnitID": 880000202, "PropertyID": 880000101, "Name": "C-102", "UpdateDate": "2026-09-30T10:15:00-04:00",
+     "CurrentOccupants": [],
+     "CurrentMarketRent": [{"MarketRentID": 880000952, "UnitID": 880000202, "Amount": 1475.5}]},
+    {"UnitID": 880000203, "PropertyID": 880000102, "Name": "Alder", "UpdateDate": "2026-09-30T10:15:00-04:00"}
+  ],
+  "tenants": [
+    {"TenantID": 880000301, "Name": "Synthwood, Avery", "FirstName": "Avery", "LastName": "Synthwood",
+     "UpdateDate": "2026-10-01T08:00:00-04:00",
+     "Contacts": [
+       {"ContactID": 880000311, "FirstName": "Avery", "LastName": "Synthwood", "IsPrimary": true,
+        "Email": "avery.synthwood@example.com",
+        "PhoneNumbers": [{"PhoneNumberID": 880000321, "PhoneNumber": "555-0101", "IsPrimary": true}]},
+       {"ContactID": 880000312, "FirstName": "Jules", "LastName": "Synthwood", "IsPrimary": false,
+        "Email": "jules.synthwood@example.com",
+        "PhoneNumbers": [{"PhoneNumberID": 880000322, "PhoneNumber": "555-0102", "IsPrimary": true}]}
+     ],
+     "Balance": 250.0, "SecurityDepositHeld": 1450.0,
+     "OpenReceivables": [{"Amount": 250.0, "AmountAllocated": 0.0, "TransactionDate": "2026-09-01T00:00:00"}]},
+    {"TenantID": 880000302, "Name": "Fernhollow, Blake", "FirstName": "Blake", "LastName": "Fernhollow",
+     "UpdateDate": "2026-10-01T08:00:00-04:00",
+     "Contacts": [{"ContactID": 880000313, "FirstName": "Blake", "LastName": "Fernhollow", "IsPrimary": true,
+                   "Email": "blake.fernhollow@example.com", "PhoneNumbers": []}],
+     "Balance": 0.0, "SecurityDepositHeld": 1000.0, "OpenReceivables": []},
+    {"TenantID": 880000303, "Name": "Mossgrove, Casey", "FirstName": "Casey", "LastName": "Mossgrove",
+     "UpdateDate": "2026-10-01T08:00:00-04:00",
+     "Contacts": [{"ContactID": 880000314, "FirstName": "Casey", "LastName": "Mossgrove", "IsPrimary": true,
+                   "Email": "casey.mossgrove@example.com"}],
+     "Balance": 75.0, "SecurityDepositHeld": 900.0,
+     "OpenReceivables": [{"Amount": 100.0, "AmountAllocated": 25.0, "TransactionDate": "2026-05-01T00:00:00"}]},
+    {"TenantID": 880000304, "Name": "Synthetic Ventures LLC", "FirstName": null, "LastName": null,
+     "UpdateDate": "2026-10-01T08:00:00-04:00", "Contacts": [],
+     "Balance": 120.0, "SecurityDepositHeld": 0.0,
+     "OpenReceivables": [{"Amount": 100.0, "AmountAllocated": 0.0, "TransactionDate": "2026-09-20T00:00:00"}]}
+  ],
+  "leases": [
+    {"LeaseID": 880000601, "TenantID": 880000301, "UnitID": 880000201, "PropertyID": 880000101,
+     "MoveInDate": "2025-11-01T00:00:00", "MoveOutDate": null, "ExpectedMoveOutDate": "2026-10-31T00:00:00",
+     "StartDate": "2025-11-01T00:00:00", "EndDate": "2026-10-31T00:00:00", "UpdateDate": "2026-10-01T08:00:00-04:00",
+     "Unit": {"UnitID": 880000201, "PropertyID": 880000101, "Name": "C-101"},
+     "LeaseRenewals": [{"LeaseRenewalID": 880000611, "StartDate": "2025-11-01T00:00:00", "EndDate": "2026-10-31T00:00:00"}]},
+    {"LeaseID": 880000602, "TenantID": 880000302, "UnitID": 880000202, "PropertyID": 880000101,
+     "MoveInDate": "2026-11-01T00:00:00", "MoveOutDate": null, "ExpectedMoveOutDate": null,
+     "StartDate": "2026-11-01T00:00:00", "EndDate": "2027-10-31T00:00:00", "UpdateDate": "2026-10-01T08:00:00-04:00",
+     "Unit": {"UnitID": 880000202, "PropertyID": 880000101, "Name": "C-102"},
+     "LeaseRenewals": [{"LeaseRenewalID": 880000612, "StartDate": "2026-11-01T00:00:00", "EndDate": "2027-10-31T00:00:00"}]},
+    {"LeaseID": 880000603, "TenantID": 880000303, "UnitID": 880000203, "PropertyID": 880000102,
+     "MoveInDate": "2024-01-01T00:00:00", "MoveOutDate": "2026-09-20T00:00:00", "ExpectedMoveOutDate": "2026-09-30T00:00:00",
+     "StartDate": "2024-01-01T00:00:00", "EndDate": "2026-12-31T00:00:00", "UpdateDate": "2026-09-21T08:00:00-04:00",
+     "Unit": {"UnitID": 880000203, "PropertyID": 880000102, "Name": "Alder"},
+     "LeaseRenewals": [{"LeaseRenewalID": 880000613, "StartDate": "2024-01-01T00:00:00", "EndDate": "2026-12-31T00:00:00"}]},
+    {"LeaseID": 880000605, "TenantID": 880000303, "UnitID": 880000203, "PropertyID": 880000102,
+     "MoveInDate": "2020-01-01T00:00:00", "MoveOutDate": "2023-12-31T00:00:00", "ExpectedMoveOutDate": null,
+     "StartDate": "2020-01-01T00:00:00", "EndDate": "2023-12-31T00:00:00", "UpdateDate": "2024-01-02T08:00:00-05:00",
+     "Unit": {"UnitID": 880000203, "PropertyID": 880000102, "Name": "Alder"}, "LeaseRenewals": []},
+    {"LeaseID": 880000604, "TenantID": 880000304, "UnitID": null, "PropertyID": 880000102,
+     "MoveInDate": "2026-01-01T00:00:00", "MoveOutDate": null, "ExpectedMoveOutDate": null,
+     "StartDate": null, "EndDate": null, "UpdateDate": "2026-01-02T08:00:00-05:00",
+     "Unit": null, "LeaseRenewals": []}
+  ],
+  "owners": [
+    {"OwnerID": 880000401, "Name": "Synthetic Holdings LLC", "UpdateDate": "2026-09-30T10:15:00-04:00",
+     "Contact": {"ContactID": 880000411, "FirstName": "Dana", "LastName": "Quarrystone", "Email": "dana.quarrystone@example.com"},
+     "PhoneNumbers": [{"PhoneNumber": "555-0141", "IsPrimary": true}],
+     "Ownerships": [{"PropertyID": 880000101}, {"PropertyID": 880000102}, {"PropertyID": 880000101}]},
+    {"OwnerID": 880000402, "Name": "Pinecrest, Elliot", "UpdateDate": "2026-09-30T10:15:00-04:00",
+     "Contact": {"ContactID": 880000412, "FirstName": "Elliot", "LastName": "Pinecrest", "Email": null},
+     "PhoneNumbers": [], "Ownerships": []},
+    {"OwnerID": 880000403, "Name": "Synthetic Family Trust", "UpdateDate": "2026-09-30T10:15:00-04:00",
+     "Contact": null}
+  ],
+  "vendors": [
+    {"VendorID": 880000501, "Name": "Synthetic Plumbing Co", "IsActive": true, "Category": "Plumbing",
+     "UpdateDate": "2026-09-30T10:15:00-04:00",
+     "Contact": {"ContactID": 880000511, "FirstName": "Frankie", "LastName": "Brookline", "Email": "frankie.brookline@example.com"},
+     "PhoneNumbers": [{"PhoneNumber": "555-0151", "IsPrimary": false}, {"PhoneNumber": "555-0152", "IsPrimary": true}]},
+    {"VendorID": 880000502, "Name": "Synthetic Electric", "IsActive": false, "Category": null,
+     "UpdateDate": "2026-09-30T10:15:00-04:00", "Contact": null, "PhoneNumbers": []}
+  ],
+  "work_order_statuses": [
+    {"ServiceManagerStatusID": 1, "Name": "Open"},
+    {"ServiceManagerStatusID": 2, "Name": "Waiting on Parts"},
+    {"ServiceManagerStatusID": 3, "Name": "Closed"}
+  ],
+  "work_order_priorities": [
+    {"ServiceManagerPriorityID": 1, "Name": "Low"},
+    {"ServiceManagerPriorityID": 2, "Name": "Urgent"}
+  ],
+  "work_orders": [
+    {"ServiceManagerIssueID": 880000701, "Title": "Leaking kitchen faucet", "StatusID": 2, "PriorityID": 2,
+     "CategoryID": 5, "AssignedToUserID": 12, "UpdateDate": "2026-10-01T09:30:00-04:00",
+     "LinkedProperties": [{"PropertyID": 880000101}], "LinkedUnits": [{"UnitID": 880000201, "PropertyID": 880000101}]},
+    {"ServiceManagerIssueID": 880000702, "Title": "Replace hallway light", "StatusID": 3, "PriorityID": 1,
+     "CategoryID": 6, "AssignedToUserID": null, "UpdateDate": "2026-09-15T14:00:00",
+     "LinkedProperties": [{"PropertyID": 880000102}], "LinkedUnits": []},
+    {"ServiceManagerIssueID": 880000703, "Title": "Gutter check", "StatusID": 1, "PriorityID": null,
+     "CategoryID": null, "AssignedToUserID": null, "UpdateDate": null,
+     "LinkedProperties": [{"PropertyID": 880000101}, {"PropertyID": 880000102}], "LinkedUnits": []}
+  ],
+  "bills": [
+    {"ID": 880000801, "Amount": 325.0, "TransactionDate": "2026-09-15T00:00:00", "DueDate": "2026-10-15T00:00:00",
+     "Reference": "INV-1001", "IsFullyAllocated": false, "ReversalDate": null, "UpdateDate": "2026-09-15T09:00:00-04:00",
+     "Vendor": {"VendorID": 880000501, "Name": "Synthetic Plumbing Co"}},
+    {"ID": 880000802, "Amount": 90.0, "TransactionDate": "2026-08-01T00:00:00", "DueDate": "2026-08-31T00:00:00",
+     "Reference": "INV-1002", "IsFullyAllocated": true, "ReversalDate": null, "UpdateDate": "2026-08-20T09:00:00-04:00",
+     "Vendor": {"VendorID": 880000502, "Name": "Synthetic Electric"}},
+    {"ID": 880000803, "Amount": 50.0, "TransactionDate": "2026-09-01T00:00:00", "DueDate": "2026-09-30T00:00:00",
+     "Reference": "INV-1003", "IsFullyAllocated": false, "ReversalDate": "2026-09-20T00:00:00",
+     "UpdateDate": "2026-09-20T09:00:00-04:00", "Vendor": {"VendorID": 880000501, "Name": "Synthetic Plumbing Co"}}
+  ],
+  "gl_accounts": [
+    {"GLAccountID": 880000901, "ParentGLAccountID": null, "Name": "Repairs", "Reference": "6100",
+     "GLAccountType": "Expense", "IsActive": true, "UpdateDate": "2026-01-02T08:00:00-05:00"},
+    {"GLAccountID": 880000902, "ParentGLAccountID": null, "Name": "Rent Income", "Reference": "4000",
+     "GLAccountType": "income", "IsActive": true, "UpdateDate": "2026-01-02T08:00:00-05:00"},
+    {"GLAccountID": 880000903, "ParentGLAccountID": 880000901, "Name": "Operating Bank", "Reference": "1000",
+     "GLAccountType": "Bank", "IsActive": false, "UpdateDate": "2026-01-02T08:00:00-05:00"}
+  ]
+}

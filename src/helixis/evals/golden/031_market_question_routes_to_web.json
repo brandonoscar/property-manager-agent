@@ -1,0 +1,28 @@
+{
+  "id": "031_market_question_routes_to_web",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Routing case (b) — a market / public-web question routes to Web Agent. The web_search tool is mocked with one source so the agent has something to cite without hitting Tavily.",
+  "input": {
+    "user_message": "What is a typical HVAC service-call cost in zip code 10128?",
+    "tool_mocks": {
+      "web_search": {
+        "answer": "HVAC service calls in 10128 typically run $100 to $300.",
+        "sources": [
+          {
+            "title": "Local HVAC pricing in NYC",
+            "url": "https://example.test/hvac-nyc-pricing",
+            "snippet": "Most NYC HVAC companies charge between $100 and $300 for a diagnostic service call in Manhattan zip codes including 10128."
+          }
+        ],
+        "warnings": []
+      }
+    }
+  },
+  "expected": {
+    "must_route_to": "web_agent",
+    "must_not_route_to": ["buildium_agent", "document_agent"],
+    "reply_must_contain": ["example.test", "100", "300"],
+    "reply_must_not_contain": ["Task #", "Tenant #"]
+  }
+}

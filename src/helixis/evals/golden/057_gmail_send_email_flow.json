@@ -1,0 +1,28 @@
+{
+  "id": "057_gmail_send_email_flow",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": true,
+  "description": "Closes the Gmail leg of #359 — the Composio WRITE path had no coverage (only GMAIL_FETCH_EMAILS was stubbed). Adds the GMAIL_SEND_EMAIL eval stub (connector_stub_tools) and exercises the happy path: a send request one-shots the send tool. The confirm gate fires automatically per the Gmail prompt. Quality/K-of-N only. Two deliberate choices vs. the issue's proposal: (1) same one-shot-write caveat as 056 — a confirm/ask-first prompt may not one-shot on live Gemini, so the trail assertion is NON-GATING. (2) NO reply_must_not_contain on the recipient address: a send-confirmation legitimately echoes the address it is sending to, so a hard PII gate on it would false-positive and red-gate — PII-echo hardening is a dogfood follow-up once the agent's confirmation wording is observed. DOGFOOD 2026-07-08: the Gmail prompt is action-oriented for writes ('just call the tool'; confirm gate is automatic), so the send request DOES one-shot GMAIL_SEND_EMAIL — 20/20 on the live 20x grid → flipped to single_run_gate:true.",
+  "input": {
+    "user_message": "Send a move-in reminder to tenant Alex at alex@example.test — remind them keys are ready for pickup Friday.",
+    "agent": "Gmail Agent",
+    "tool_mocks": {
+      "GMAIL_SEND_EMAIL": [
+        {
+          "return": "Sent 'Move-in reminder' to alex@example.test. Message id msg_eval_057.",
+          "repeat": 4
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "GMAIL_SEND_EMAIL"
+    ],
+    "reply_must_not_be_empty": true
+  },
+  "_single_run_gate_note": "THAT EVIDENCE IS VOID — measured on live Gemini, and the Google account was cut off 2026-07-21 (gotcha 18). Never re-validated on Anthropic, and PRs run the Haiku PR-gate tier, which gotcha 10 records as drifting from the production model. The gate stays ON because this case PASSED the run that surfaced the stale note (gotcha 48's precedent: a stale justification is not itself evidence of instability). Re-validate on the current tier or quarantine it — do not read the grid above as live proof."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "043_calendar_today_agenda_flow",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Closes #298 (Calendar leg). Uses the eval-stub GOOGLECALENDAR_EVENTS_LIST tool (helixis.evals.connector_stub_tools) injected by the harness, mocked to return today's events. The Calendar prompt's FIRST MOVE rule says the agent must one-shot a calendar tool on receiving control; this asserts it reaches the list-events tool and presents the agenda. Quality/K-of-N — surfacing the user's own agenda carries no must-never.",
+  "input": {
+    "user_message": "What's on my calendar today?",
+    "agent": "Calendar Agent",
+    "tool_mocks": {
+      "GOOGLECALENDAR_EVENTS_LIST": [
+        {
+          "return": "Events for today (America/New_York):\n- 10:00-10:30 AM — Unit 4B move-in walkthrough — 50 Maple St, with Sarah Chen\n- 1:00-1:30 PM — Vendor call: Mike's Plumbing (kitchen leak follow-up)\n- 3:00-4:00 PM — Quarterly owner review — Zoom",
+          "repeat": 4
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["GOOGLECALENDAR_EVENTS_LIST"],
+    "reply_must_not_be_empty": true,
+    "reply_must_match_regex": ["(?i)(walkthrough|plumbing|owner|review|10:00|1:00|3:00)"]
+  }
+}

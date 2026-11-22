@@ -1,0 +1,14 @@
+{
+  "name": "helixis-live-playground",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Drive the DEPLOYED Helixis web app as a property manager (manual login, safe/read-mostly).",
+  "scripts": {
+    "play": "node playground.mjs",
+    "battery": "node battery.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.61.1"
+  }
+}

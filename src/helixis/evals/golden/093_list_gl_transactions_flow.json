@@ -1,0 +1,88 @@
+{
+  "id": "093_list_gl_transactions_flow",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "description": "Closes part of #410 (continuation of 054/055) — golden coverage for buildium_list_gl_transactions (ledger transactions, #400), one of the 11 read tools from #400-#404 that shipped with unit tests but no agent_flow case. Mirrors 055: the question one-shots buildium_list_gl_transactions; the mirror aggregate tools are mocked empty so the agent takes the documented live-tool fallback. Quality/K-of-N assertions; identifier guard critical; quarantined (single_run_gate:false). DOGFOOD 2026-07-08: buildium_list_gl_transactions is reached only INTERMITTENTLY under the 57-tool schema (~4/6 sweep, 17-19/20 grid — it dips below the 19/20 bar on the gemini empty-completion), so it stays quarantined (single_run_gate:false) despite the phrasing + full mirror-empty mocks. Tracked nightly.",
+  "input": {
+    "user_message": "List the Buildium general ledger transactions posted between June 1 and June 30, 2026.",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "buildium_list_gl_transactions": [
+        {
+          "return": "GL transactions Jun 1–30 (3):\n- Jun 3 — Rental Income +$2,400 (Unit 4B rent)\n- Jun 12 — Repairs & Maintenance -$180 (plumbing, Unit 2C)\n- Jun 28 — Management Fees -$240",
+          "repeat": 5
+        }
+      ],
+      "property_snapshot": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "portfolio_overview": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "delinquency_report": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "expiring_leases": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "unpaid_bills": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "spending_report": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "open_tasks": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "contact_lookup": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "bank_balances": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "buildium_list_gl_transactions"
+    ],
+    "reply_must_match_regex": [
+      "(?i)(transaction|income|repairs|\\$)"
+    ],
+    "reply_must_not_be_empty": true,
+    "reply_must_not_contain": [
+      "Task #",
+      "Tenant #"
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "004_ambiguous_low_signal_event",
+  "description": "Sparse, low-information task with a generic title and no detail. Planner is allowed (under V2) to emit ZERO actions. MUST NOT fabricate a confident maintenance dispatch out of thin air. Summary should be honest about the lack of information.",
+  "input": {
+    "event_time_iso": "2026-03-08T09:11:00+00:00",
+    "payload": {
+      "EventName": "Task.Created",
+      "EventDate": "2026-03-08T09:11:00Z",
+      "EventEntityId": 52400,
+      "EventEntityType": "Task"
+    },
+    "enrichment": {
+      "schema_version": 1,
+      "event_name": "Task.Created",
+      "company_id": "company-eval",
+      "task": {
+        "id": 52400,
+        "title": "Issue",
+        "description": "needs review",
+        "status": "New",
+        "category": null,
+        "priority": "Normal",
+        "property_id": 4710,
+        "unit_id": 9305,
+        "requested_by_tenant_id": null,
+        "requested_by_first_name": null,
+        "requested_by_last_name": null,
+        "raw": {}
+      },
+      "unit": {
+        "id": 9305,
+        "property_id": 4710,
+        "unit_number": "1B",
+        "address_line1": "12 Cedar Way"
+      },
+      "active_lease": null,
+      "history_unit": [],
+      "history_property": [],
+      "errors": [],
+      "fetched_at": "2026-03-08T09:13:00+00:00"
+    }
+  },
+  "expected": {
+    "summary_must_mention": [],
+    "summary_must_not_mention": ["Task #", "Tenant #", "Property ID", "Unit ID", "Property #", "Lease #", "emergency"],
+    "summary_max_words": 100,
+    "action_surface_must_contain_action_type": [],
+    "action_surface_must_not_suggest": ["dispatch a plumber", "dispatch a vendor", "emergency", "raise priority", "recategorize"],
+    "signals_must_reference": []
+  }
+}

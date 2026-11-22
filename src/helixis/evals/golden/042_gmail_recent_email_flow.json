@@ -1,0 +1,23 @@
+{
+  "id": "042_gmail_recent_email_flow",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Closes #298 (Gmail leg) — the first connector agent_flow case. Composio is disabled in evals, so the Gmail agent normally boots with zero tools; this case relies on the eval-stub GMAIL_FETCH_EMAILS tool (helixis.evals.connector_stub_tools) injected by the harness, with its _impl mocked to return a recent-inbox summary. Asserts the happy path: a 'most recent email' ask one-shots the fetch tool and the reply surfaces the message (the Gmail prompt says fetch-and-present without follow-up questions). Quality/K-of-N assertions — the Gmail agent legitimately surfaces inbox contents to the user; no must-never applies.",
+  "input": {
+    "user_message": "What's my most recent email?",
+    "agent": "Gmail Agent",
+    "tool_mocks": {
+      "GMAIL_FETCH_EMAILS": [
+        {
+          "return": "1. Sarah Chen <sarah.chen@example.com> — \"Lease renewal for Unit 4B\" — Jun 20 — Hi, I'd like to renew my lease for another year, can we set that up?\n2. City Water Dept <billing@water.example.gov> — \"Your June statement\" — Jun 19 — Your balance of $84.20 is due Jul 1.\n3. Mike's Plumbing <mike@mikesplumbing.example.com> — \"Re: kitchen leak at 50 Maple\" — Jun 18 — Can stop by Thursday between 9 and noon.",
+          "repeat": 4
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["GMAIL_FETCH_EMAILS"],
+    "reply_must_not_be_empty": true,
+    "reply_must_match_regex": ["(?i)(sarah|lease|renewal|plumbing|water)"]
+  }
+}

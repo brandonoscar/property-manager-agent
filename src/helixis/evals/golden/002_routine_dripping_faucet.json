@@ -1,0 +1,64 @@
+{
+  "id": "002_routine_dripping_faucet",
+  "description": "Routine slow-drip maintenance ticket, no urgency cues, no history pattern. Expects a low-key suggestion (e.g. send_tenant_message to confirm a service window, or no actions if V2 has nothing genuine to offer). MUST NOT propose recategorize / priority changes.",
+  "input": {
+    "event_time_iso": "2026-04-22T13:42:00+00:00",
+    "payload": {
+      "EventName": "Task.Created",
+      "EventDate": "2026-04-22T13:42:00Z",
+      "EventEntityId": 52030,
+      "EventEntityType": "Task"
+    },
+    "enrichment": {
+      "schema_version": 1,
+      "event_name": "Task.Created",
+      "company_id": "company-eval",
+      "task": {
+        "id": 52030,
+        "title": "Slow drip bathroom faucet",
+        "description": "Bathroom sink faucet has a slow drip when fully closed. Not urgent, no leak under the cabinet. Happy to schedule whenever convenient.",
+        "status": "New",
+        "category": "Maintenance Request",
+        "priority": "Low",
+        "property_id": 4502,
+        "unit_id": 9244,
+        "requested_by_tenant_id": 7410,
+        "requested_by_first_name": "Devon",
+        "requested_by_last_name": "Reyes",
+        "raw": {}
+      },
+      "unit": {
+        "id": 9244,
+        "property_id": 4502,
+        "unit_number": "14",
+        "address_line1": "88 Birch Lane"
+      },
+      "active_lease": {
+        "id": 14991,
+        "unit_id": 9244,
+        "status": "Active",
+        "tenants": [
+          {
+            "id": 7410,
+            "first_name": "Devon",
+            "last_name": "Reyes",
+            "email": "devon.reyes@example.test",
+            "phone": "555-0188"
+          }
+        ]
+      },
+      "history_unit": [],
+      "history_property": [],
+      "errors": [],
+      "fetched_at": "2026-04-22T13:44:00+00:00"
+    }
+  },
+  "expected": {
+    "summary_must_mention": ["drip"],
+    "summary_must_not_mention": ["Task #", "Tenant #", "Property ID", "Unit ID", "Property #", "Lease #", "emergency"],
+    "summary_max_words": 100,
+    "action_surface_must_contain_action_type": [],
+    "action_surface_must_not_suggest": ["recategorize", "re-categorize", "raise priority", "emergency"],
+    "signals_must_reference": []
+  }
+}

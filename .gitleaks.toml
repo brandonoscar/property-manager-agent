@@ -1,0 +1,89 @@
+title = "Helixis gitleaks config"
+
+# Extend the default rule set (all the built-in secret patterns) and add an
+# allowlist for the KNOWN, audited non-secrets in the repo so they don't
+# red-gate a PR. The 2026-07-14 audit confirmed there are no real committed
+# secrets — only local-dev / test / example placeholders. Keep this list tight:
+# a new real secret must still trip the scan.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Audited non-secret dev/test/example placeholders (see reliability audit)"
+paths = [
+  '''.*\.example$''',              # .env.example, frontend/.env.example — placeholders
+  '''docker-compose\.yml''',       # local dev postgres creds (helixis_dev)
+  '''supabase/README\.md''',       # local psql example
+  # Narrowed from the whole tests/ + docs/ trees (LED-042) to the specific
+  # files the reliability audit confirmed carry AUDITED fake placeholders — so
+  # a real key pasted into any OTHER test/doc file now trips the scan. The
+  # ``regexes`` list below is the string-level backstop for the exact fakes.
+  '''docs/prompts/.*''',           # build-prompt runbooks embed example DSNs/keys
+  '''tests/unit/test_smoke\.py''',        # fake sk- key + JWT (redaction tests)
+  '''tests/unit/test_backup_script\.py''', # fake pg DSN
+  '''tests/unit/test_memory_manager\.py''', # fake pg DSN
+]
+regexes = [
+  '''helixis_dev''',               # local docker-compose password
+  '''postgresql://test:test''',    # test DSN
+  '''sk-realLookingKey''',         # deliberate fake in test_smoke.py redaction test
+  '''password@db\.your-project''', # .env.example placeholder DSN
+  # The one string behind ALL 29 findings that silently reddened every
+  # full-history scan after LED-042 narrowed the path allowlist (diagnosed
+  # 2026-07-22 via the --verbose run): the fake Buildium credential used
+  # across tests/unit/test_buildium_routes.py since May. String-level, so
+  # a REAL secret pasted into that file still trips the scan.
+  '''secret-12345678''',
+  # The four fake Rentvine fixtures (2026-09-18, PR #1021). Audited: none is a
+  # real credential and none can be — Rentvine has never been reachable from
+  # any container and no Rentvine account exists, which is why Phase 8 is
+  # blocked. The Fernet key looks generated but appears nowhere else in the
+  # repo (grepped); HELIXIS_DATA_KEY is env-only and is never committed.
+  #
+  # ⚠ STRING-LEVEL, NOT A PATH ENTRY, and that is deliberate: a path entry
+  # would blind both files, and LED-042 narrowed the path list for exactly
+  # that reason. VERIFIED rather than assumed — a fresh high-entropy key
+  # appended to test_rentvine_credentials.py still trips the scan (1 finding),
+  # so these four strings are exempt and the files are not.
+  #
+  # ⚠ EDITING THE FIXTURES WOULD NOT HAVE WORKED, which is why this is an
+  # allowlist rather than a nicer-looking constant. The scan runs over the
+  # PR's COMMIT RANGE, so the commits that introduced these strings stay in
+  # scope however the working tree looks — measured: replacing the key with
+  # "PLACEHOLDER" and re-running still reported 3 leaks. Only history
+  # rewriting removes them, and this branch is shared with a second session.
+  '''rv_whsec_2f8c41a9e7b34d5f''',                     # fake webhook secret
+  '''8Bz3Qn5r7sW9xYzA1bC2dE3fG4hI5jK6lM7nO8pQ9rM=''',  # test-only Fernet key
+  '''RV-KEY-123456''',                                 # fake Rentvine api_key
+  '''RV-SECRET-abcdef''',                              # fake Rentvine api_secret
+  # The fifth Rentvine fixture (2026-09-23, PR #1032) — the api_key constant in
+  # tests/unit/test_rentvine_routes.py, beside a TEST_JWT_SECRET that says
+  # "not-production" in the value itself. Audited on the same grounds as the
+  # four above: it cannot be a real credential, because no Rentvine account
+  # exists and *.rentvine.com has never been reachable from any container
+  # (that is blocker B1, and the whole reason Phase 8 is still open).
+  #
+  # ⚠ ONLY THIS ONE, and the omission beside it is MEASURED rather than an
+  # oversight. gitleaks 8.24.3 over the PR range reports exactly ONE finding:
+  # generic-api-key at line 43, entropy 3.807. The API_SECRET on line 44
+  # ("rvsecret-supersecret-value") does NOT trip — hyphenated dictionary words
+  # score too low for the entropy floor. Pre-emptively exempting it would be an
+  # allowlist entry matching nothing, which reads as a licence the repo needs
+  # and does not have; "keep this list tight" at the top of this file is the
+  # rule, and a stale exemption is what makes the list look more permissive
+  # than the code is.
+  '''rvkey-abcd1234''',                                # fake Rentvine api_key
+  # DoorLoop's reference, saved byte for byte under docs/doorloop/vendor/
+  # (2026-10-06; PR #1096's first scan, measured with gitleaks 8.24.3 over
+  # the PR range: 6 findings, all of them these three strings).
+  # - DoorLoop's own placeholder in its curl examples (curl-auth-header, 4x).
+  # - The SHA-256 of two saved pages, recorded in the folder's MANIFEST.json as
+  #   their provenance (generic-api-key: "authentication.md" and "open-api"
+  #   sit beside them). Verified: each equals `sha256sum` of its page.
+  # String-level, not a path entry, as above: the saved pages cannot be edited
+  # (they are verbatim, and the manifest's hashes pin them), and a real key
+  # pasted into any of them must still trip the scan.
+  '''your_api_token_goes_here''',
+  '''a26b28b307bf32370f537685774e803d0fd565bf821adfef89366fc465fa67d1''',
+  '''4f9c0b1cf3468ba54e3f6f27d28cc872b3a9a95b634410083f45b628df597eef''',
+]

@@ -1,0 +1,24 @@
+{
+  "id": "080_memory_explicit_store",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "single_run_gate": false,
+  "_single_run_gate_note": "First 08x (memory) case. Quarantined from the single-run gate until a dogfood tune (gotcha 10): whether the Orchestrator one-shots store_memory vs. hands off is model-dependent and unverified against live Gemini here. All assertions are quality (critical=False), so quarantine fully de-gates it while eval-flake.yml keeps tracking it; drop the flag to promote once a live run shows it's stable.",
+  "description": "Closes #341 (store leg). Memory shipped 2026-06-24 (PRs #321–#328) with ZERO eval coverage; it was silently broken for months (0 rows until the embedding-model fix #322) and CLAUDE.md gotcha 7 notes the embedding IDs ROTATE, so this path is regression-prone. The Orchestrator carries search_memory/store_memory directly; an explicit 'remember this' must reach store_memory and acknowledge it. NOTE: unlike 046 (web) / 067 (browser), this case does NOT assert PII-suppression in the reply — memory DELIBERATELY keeps email/phone (redact_for_memory preserves them so the agent can recall 'Sarah's number'), so echoing the user's own just-provided contact detail back in a confirmation is intended, not a leak.",
+  "input": {
+    "user_message": "Remember that our tenant Sarah Chen prefers to be contacted by email only — reach her at sarah.chen@example.com or 415-555-0142.",
+    "agent": "Orchestrator",
+    "tool_mocks": {
+      "store_memory": [
+        {
+          "return": "Stored in company memory: Sarah Chen prefers email contact.",
+          "repeat": 5
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["store_memory"],
+    "reply_must_not_be_empty": true
+  }
+}

@@ -1,0 +1,1554 @@
+{
+  "buildium_add_task_note": {
+    "description": "Add a staff note to a Buildium to-do task (a write \u2014 confirm-gated).\n\nResolve ``task_id`` from ``buildium_list_tasks`` (results include ids). Pass\n``task_label`` (the title) so the confirm card shows the title, not the id.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "note": {
+          "description": "The note text to add (required).",
+          "title": "Note",
+          "type": "string"
+        },
+        "task_id": {
+          "description": "Buildium to-do task id (required).",
+          "title": "Task Id",
+          "type": "integer"
+        },
+        "task_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The task's title to show the user (recommended).",
+          "title": "Task Label"
+        }
+      },
+      "required": [
+        "task_id",
+        "note",
+        "task_label"
+      ],
+      "title": "buildium_add_task_note_args",
+      "type": "object"
+    }
+  },
+  "buildium_add_vendor_note": {
+    "description": "Add a note to a Buildium vendor (a write \u2014 confirm-gated).\n\nResolve ``vendor_id`` from ``buildium_search_vendors`` (results include\nids). Pass ``vendor_label`` (the vendor's name) so the confirm card\nshows the name, not the id.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "note": {
+          "description": "The note text to add (required).",
+          "title": "Note",
+          "type": "string"
+        },
+        "vendor_id": {
+          "description": "Buildium vendor id (required).",
+          "title": "Vendor Id",
+          "type": "integer"
+        },
+        "vendor_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The vendor's name to show the user (recommended).",
+          "title": "Vendor Label"
+        }
+      },
+      "required": [
+        "vendor_id",
+        "note",
+        "vendor_label"
+      ],
+      "title": "buildium_add_vendor_note_args",
+      "type": "object"
+    }
+  },
+  "buildium_add_work_order_note": {
+    "description": "Add a staff note to a Buildium work order (a write \u2014 confirm-gated).\n\nResolve ``work_order_id`` from ``buildium_list_open_work_orders`` (results\ninclude the id as ``[ref:N]``). Pass ``work_order_label`` (the title) so the\nconfirm card shows the title, not the id.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "note": {
+          "description": "The note text to add (required).",
+          "title": "Note",
+          "type": "string"
+        },
+        "work_order_id": {
+          "description": "Buildium work-order id (required).",
+          "title": "Work Order Id",
+          "type": "integer"
+        },
+        "work_order_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The work order's title to show the user (recommended).",
+          "title": "Work Order Label"
+        }
+      },
+      "required": [
+        "work_order_id",
+        "note",
+        "work_order_label"
+      ],
+      "title": "buildium_add_work_order_note_args",
+      "type": "object"
+    }
+  },
+  "buildium_close_work_order": {
+    "description": "Close a Buildium work order \u2014 mark it Completed (a write \u2014 confirm-gated).\n\nUse for \"close / complete / mark done work order <X>\". Confirmation is\nenforced in code; you do NOT add a separate confirmation step.\n\nResolve ``work_order_id`` from ``buildium_list_open_work_orders`` (its\nresults include ids). Always pass ``work_order_label`` (the WO title) so the\nconfirm card and your reply show the title, never a raw id.\n\nA work order's status is set through its backing task, so this closes the WO\nby completing that task \u2014 calling ``buildium_update_task_status`` with the\n*work-order* id would NOT work. \u26a0 There is no API path to REOPEN a completed\nwork order (reopening needs the Buildium UI), so only use this when the work\nis genuinely done.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "work_order_id": {
+          "description": "Buildium work order id (required).",
+          "title": "Work Order Id",
+          "type": "integer"
+        },
+        "work_order_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The WO's title to show the user (recommended).",
+          "title": "Work Order Label"
+        }
+      },
+      "required": [
+        "work_order_id",
+        "work_order_label"
+      ],
+      "title": "buildium_close_work_order_args",
+      "type": "object"
+    }
+  },
+  "buildium_count_properties": {
+    "description": "Count the total number of rental properties in the user's Buildium account.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_count_properties_args",
+      "type": "object"
+    }
+  },
+  "buildium_count_tenants": {
+    "description": "Count the total number of tenants in Buildium.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_count_tenants_args",
+      "type": "object"
+    }
+  },
+  "buildium_count_units": {
+    "description": "Count the total number of rental units across all properties.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_count_units_args",
+      "type": "object"
+    }
+  },
+  "buildium_create_to_do_task": {
+    "description": "Create a To Do task in Buildium.\n\nUse this when the user says \"create a task for X to do Y\" or\nsimilar. Task creation is a write; confirmation is enforced in code\nby the tool itself (``confirm_or_abort`` inside the impl) \u2014 you do\nNOT need a separate confirmation step. If the user declines, the\ntool reports that nothing was changed.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "assigned_to_user_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "REQUIRED by Buildium despite being\noptional in this signature. Buildium 422s a create with no\nassignee (\"AssignedToUserId must be greater than 0\"), so it\ndoes NOT create the task unassigned \u2014 an earlier version of\nthis docstring said it did, and that instruction is what\nmade every create fail. If you don't know the id, call\nbuildium_list_staff first and pass one.",
+          "title": "Assigned To User Id"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional longer description / notes.",
+          "title": "Description"
+        },
+        "due_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional ISO date string ``YYYY-MM-DD``.",
+          "title": "Due Date"
+        },
+        "priority": {
+          "default": "Normal",
+          "description": "Buildium task priority \u2014 \"Low\", \"Normal\", or \"High\".\nDefaults to \"Normal\" (required by Buildium's API).",
+          "title": "Priority",
+          "type": "string"
+        },
+        "property_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional Buildium property id to attach the task to.",
+          "title": "Property Id"
+        },
+        "title": {
+          "description": "Short task title (e.g. \"Send lease to Ryan\").",
+          "title": "Title",
+          "type": "string"
+        },
+        "unit_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional Buildium unit id to attach the task to.",
+          "title": "Unit Id"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "assigned_to_user_id",
+        "property_id",
+        "unit_id",
+        "due_date",
+        "priority"
+      ],
+      "title": "buildium_create_to_do_task_args",
+      "type": "object"
+    }
+  },
+  "buildium_create_work_order": {
+    "description": "Create a maintenance work order in Buildium (a write \u2014 confirm-gated).\n\nUse this for \"open a work order for <property> \u2014 <issue> \u2014 assign <vendor>\".\nConfirmation is enforced in code; you do NOT add a separate confirmation step.\n\nBuildium REQUIRES all of: ``property_id``, ``vendor_id``, and\n``assigned_to_user_id``. Resolve these from the read tools FIRST\n(``buildium_list_properties`` for the property, ``buildium_search_vendors``\nfor the vendor, ``buildium_list_staff`` for the assignee) \u2014 their results\ninclude the ids. If you are missing any of them, ASK the user rather than\nguessing. Always also pass the matching ``*_label`` (the human name/address)\nso the confirm card and your reply show names, never raw ids.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "assigned_to_user_id": {
+          "description": "Buildium staff user id to own the task (required).",
+          "title": "Assigned To User Id",
+          "type": "integer"
+        },
+        "assignee_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Staff member's name to show the user (recommended).",
+          "title": "Assignee Label"
+        },
+        "description": {
+          "description": "What needs doing.",
+          "title": "Description",
+          "type": "string"
+        },
+        "entry_allowed": {
+          "default": "Unknown",
+          "description": "Entry permission (\"Unknown\" default; \"Yes\"/\"No\" if known).",
+          "title": "Entry Allowed",
+          "type": "string"
+        },
+        "priority": {
+          "default": "Normal",
+          "description": "\"Low\" | \"Normal\" | \"High\" (default \"Normal\").",
+          "title": "Priority",
+          "type": "string"
+        },
+        "property_id": {
+          "description": "Buildium property id (required).",
+          "title": "Property Id",
+          "type": "integer"
+        },
+        "property_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Property name/address to show the user (recommended).",
+          "title": "Property Label"
+        },
+        "title": {
+          "description": "Short work-order title (e.g. \"No hot water - 7C\").",
+          "title": "Title",
+          "type": "string"
+        },
+        "unit_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional Buildium unit id.",
+          "title": "Unit Id"
+        },
+        "vendor_id": {
+          "description": "Buildium vendor id to assign (required).",
+          "title": "Vendor Id",
+          "type": "integer"
+        },
+        "vendor_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Vendor name to show the user (recommended).",
+          "title": "Vendor Label"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "property_id",
+        "vendor_id",
+        "assigned_to_user_id",
+        "priority",
+        "unit_id",
+        "entry_allowed",
+        "property_label",
+        "vendor_label",
+        "assignee_label"
+      ],
+      "title": "buildium_create_work_order_args",
+      "type": "object"
+    }
+  },
+  "buildium_find_tenant_for_unit": {
+    "description": "Find the tenant(s) currently living in a specific unit.\n\nUse this for \"who lives in 4B?\", \"who's the tenant at 123 Main #2?\",\netc. Resolves the unit by number or address, looks up the active\nlease, and returns the current tenants in one logical operation\n(one Buildium call set, no per-tenant follow-ups needed).",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "unit_query": {
+          "title": "Unit Query",
+          "type": "string"
+        }
+      },
+      "required": [
+        "unit_query"
+      ],
+      "title": "buildium_find_tenant_for_unit_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_bill": {
+    "description": "Open ONE bill and show the line items behind its total.\n\nThis is the drill-down for any \"why is this bill this much?\", \"what GL\naccount did that hit?\", \"which property does this bill belong to?\" or\n\"show me the detail on bill 4821\" question. Every line carries its amount,\nGL account, property and unit, so a total can be traced to its parts.\n\nGet the bill id from `buildium_list_unpaid_bills` (each row ends with the\nid) or from `unpaid_bills`, the mirror rollup. For payments applied to the\nbill use `buildium_list_bill_payments`. This is a single-record read \u2014 for\npayables across the portfolio use the list tools, do not loop this.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "bill_id": {
+          "description": "The Buildium bill id.",
+          "title": "Bill Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "bill_id"
+      ],
+      "title": "buildium_get_bill_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_gl_account_balances": {
+    "description": "Show general-ledger account balances as of a date.\n\nThe LEDGER view, and the only one that answers \"as of\": every GL account \u2014\nincome, expense, asset, liability \u2014 at any date you name, not just the\nbanks. Use it when the question says general ledger, names a GL account, or\nasks what something held on a DATE.\n\nFor \"what's in the operating account right now\",\n``buildium_list_bank_accounts`` is the banking view and the better answer.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of_date": {
+          "default": "",
+          "description": "Balance date in ``YYYY-MM-DD`` form. Leave empty for today.",
+          "title": "As Of Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "as_of_date"
+      ],
+      "title": "buildium_get_gl_account_balances_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_lease": {
+    "description": "Get full detail on one lease \u2014 tenants, rent, term, eviction flag.\n\nUse this for \"what's lease #5678 \u2014 who's on it and what's the rent?\"",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "lease_id": {
+          "title": "Lease Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lease_id"
+      ],
+      "title": "buildium_get_lease_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_owner": {
+    "description": "Get a rental owner's full contact card by id or fuzzy name match.\n\nResolves an id (int) or a human-readable query (\"Ocean Properties\nLLC\", \"ocean\", \"smith\") against the owner list, then returns the\nmatched owner's contact details.\n\nReturns fields: company_name, first_name, last_name, email,\nphone_numbers, address, property_ids (list), is_active.\n\nUse this whenever the user asks about a specific rental owner \u2014\ncontact info, properties owned. Do NOT call ``buildium_list_owners``\nand ask the user to pick if the partial name is unambiguous; this\ntool fuzzy-matches for you. Only ask to disambiguate when 2+\nowners match.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "owner_id_or_query": {
+          "title": "Owner Id Or Query",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner_id_or_query"
+      ],
+      "title": "buildium_get_owner_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_property": {
+    "description": "Look up ONE property by id, name, or address.\n\nReturns name, address, unit count, active lease count, and owner\nnames. Use this for \"tell me about 123 Main Street\" or \"who owns\nthe building at 100 Elm\".",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "property_id_or_query": {
+          "title": "Property Id Or Query",
+          "type": "string"
+        }
+      },
+      "required": [
+        "property_id_or_query"
+      ],
+      "title": "buildium_get_property_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_rent_roll": {
+    "description": "Get the current rent roll \u2014 every active lease with rent +\noutstanding balance in one shot.\n\nReturns fields per row: lease_id, current_tenants, unit (property\n+ unit number), Rent (monthly $), total_balance owed (the actual\nBuildium spec field \u2014 PR #78 fixed the wrong-alias bug),\neviction_pending flag. Sorted by Rent descending so \"rank by rent\"\nanswers come out right without the model sorting itself. Tail line\nhas the total monthly rent across the portfolio.\n\nUse this for 'rank by rent' / 'total monthly rent' / 'rent roll'\nquestions. This is ONE call from your perspective even though the\nimplementation joins two endpoints. DO NOT iterate\n``buildium_get_lease`` per lease \u2014 that's the exact failure\nmode PR #73 was scoped to kill.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_get_rent_roll_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_task_history": {
+    "description": "Read one task's status history \u2014 who changed it, when, and to what.\n\nUse this to answer \"who last touched this?\", \"how long has it been sitting\nat In Progress?\", or before changing a task's status, so the change is made\nwith knowledge of what happened already.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "task_id": {
+          "description": "The Buildium task id.",
+          "title": "Task Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "task_id"
+      ],
+      "title": "buildium_get_task_history_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_tenant": {
+    "description": "Look up ONE tenant by id or name.\n\nUse this for \"show me Sarah Chen's contact info\", \"what's tenant\n#12345's email\", etc. Pass either the numeric tenant id or a name to\nfuzzy-match against. If multiple tenants match the query, returns a\ndisambiguation list \u2014 re-call with a more specific name or the id.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "tenant_id_or_query": {
+          "title": "Tenant Id Or Query",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tenant_id_or_query"
+      ],
+      "title": "buildium_get_tenant_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_unit": {
+    "description": "Look up ONE unit's details \u2014 number, address, beds/baths, size, rent.\n\nFor every unit at a property use `buildium_get_property`; for vacancies use\n`buildium_list_vacant_units`. This is the single-record read.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "unit_id": {
+          "description": "The Buildium unit id.",
+          "title": "Unit Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "unit_id"
+      ],
+      "title": "buildium_get_unit_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_vendor": {
+    "description": "Look up ONE vendor by id or name.\n\nUse this for \"what's vendor #42's info?\" or \"find the plumber Acme\".",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "vendor_id_or_query": {
+          "title": "Vendor Id Or Query",
+          "type": "string"
+        }
+      },
+      "required": [
+        "vendor_id_or_query"
+      ],
+      "title": "buildium_get_vendor_args",
+      "type": "object"
+    }
+  },
+  "buildium_get_work_order": {
+    "description": "Get full detail on one work order \u2014 status, vendor, description.\n\nUse this for \"what happened with work order #123?\".",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "work_order_id": {
+          "title": "Work Order Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "work_order_id"
+      ],
+      "title": "buildium_get_work_order_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_active_leases": {
+    "description": "List all active leases with tenants, unit, rent, and end date.\n\nUse this for \"show me active leases\", \"current rent roll\", etc.\n\nReturns fields per lease: lease_id, current_tenants (list of\n{first_name, last_name, email}), unit (property + unit number),\nRent (monthly $), lease_to_date.\n\nCRITICAL: every row already includes Rent (monthly). Do NOT call\n``buildium_get_lease`` per row to find the rent \u2014 it's already\nhere. For \"rank by rent\" / \"rent roll\" / \"total monthly rent\"\nquestions, this single call has everything you need. The dedicated\n``buildium_get_rent_roll`` tool joins this with outstanding\nbalances in one shot for the full rent-roll-with-delinquency view.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_active_leases_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_announcements": {
+    "description": "List announcements posted to tenants/owners in Buildium.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_announcements_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_bank_accounts": {
+    "description": "List the company's bank accounts with their current balances.\n\nAnswers \"what's in the operating account?\", \"how much cash do we have?\"\nand \"which trust account does this property use?\". Returns every ACTIVE\naccount in one call \u2014 this is a portfolio-wide read, not a per-record one.\n\n\u26a0 Balances are Buildium's, as of its last reconciliation \u2014 this is not a\nlive bank feed, and it is not a substitute for the bank's own statement.\nAccount and routing numbers are deliberately never returned.\n\nA question that says GENERAL LEDGER, names a GL account, or asks for a\nbalance AS OF a date wants ``buildium_get_gl_account_balances`` instead \u2014\nthat is the ledger view and it covers every account, not just the banks.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_bank_accounts_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_bill_payments": {
+    "description": "Read the payments applied to one bill.\n\n\u26a0 This is the ONLY way to see whether a bill was paid \u2014 the local mirror\ncarries no paid bills at all, so `unpaid_bills` cannot answer \"when did we\nlast pay this?\" and says so. Use this for a specific bill; it is a\nper-record read, so do not loop it over a whole vendor's history.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "bill_id": {
+          "description": "The Buildium bill id.",
+          "title": "Bill Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "bill_id"
+      ],
+      "title": "buildium_list_bill_payments_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_contact_requests": {
+    "description": "List contact requests (prospect / general inquiries) from Buildium.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "default": "",
+          "description": "Optional Buildium task status \u2014 ``New``, ``InProgress``,\n``Completed``, ``Deferred``, or ``Closed``. Empty = all.",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "buildium_list_contact_requests_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_gl_accounts": {
+    "description": "List the general-ledger chart of accounts.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "account_type": {
+          "default": "",
+          "description": "Optional filter \u2014 one of ``Asset``, ``Liability``,\n``Equity``, ``Income``, ``Expense``. Leave empty for all accounts.",
+          "title": "Account Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "account_type"
+      ],
+      "title": "buildium_list_gl_accounts_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_gl_transactions": {
+    "description": "List general-ledger transactions within a date range.\n\nBuildium requires both dates for this report.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "end_date": {
+          "description": "Range end, ``YYYY-MM-DD`` (required).",
+          "title": "End Date",
+          "type": "string"
+        },
+        "start_date": {
+          "description": "Range start, ``YYYY-MM-DD`` (required).",
+          "title": "Start Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start_date",
+        "end_date"
+      ],
+      "title": "buildium_list_gl_transactions_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_lease_departures": {
+    "description": "Read the move-outs recorded on one lease.\n\n\u26a0 Named \"departures\" rather than \"move_outs\" ON PURPOSE. The stress\nbattery's write-verb net matches whole TOKENS, and ``move`` is a write verb\n\u2014 so ``buildium_list_move_outs`` was flagged as an unreviewed write and\nfailed ``test_live_write_surface_is_exactly_the_reviewed_set``. The net is\nright: a read one token away from ``buildium_record_move_out`` is exactly\nthe shape that should trip a safety check, and widening the net to admit it\nwould weaken the thing that catches an unauthorized send. The test's own\nguidance is \"tighten the tool name\", so the name moved instead.\n\nUse this to confirm a move-out landed, or to answer \"is anyone moving out\nof this unit?\". A move-out recorded in error is undone with\n``buildium_undo_move_out`` (registered live in PR #943, confirm-gated).\n\n\u26a0 Confirming it LANDED is the point: on 2026-08-30 ``record_move_out``\nreturned 2xx and created no move-out row (gotcha 70), so this read is the\nonly thing that can tell the difference between a write and a receipt.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "lease_id": {
+          "description": "The Buildium lease id.",
+          "title": "Lease Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lease_id"
+      ],
+      "title": "buildium_list_lease_departures_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_listings": {
+    "description": "List the active rental listings in Buildium \u2014 your leasing pipeline /\nadvertised vacancies (unit, rent, available date).",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_listings_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_open_work_orders": {
+    "description": "List EVERY open work order across the whole portfolio in one call.\n\nAnswers \"what's open in maintenance?\" and \"show me open tickets\", and is\nALSO the right tool for any question needing maintenance status across\nmore than one unit \u2014 \"who is behind on rent AND has open maintenance\",\n\"which expiring leases have unresolved tickets\", triage, dispatch plans.\nEvery row carries its ``property <id> / unit <id>`` location, so you can\njoin this single result against tenants, leases, or balances yourself.\nDo NOT loop ``buildium_list_work_orders_for_unit`` over many units to\nbuild a portfolio picture \u2014 call this once and filter the rows; a live\nrun that fanned out per-unit spent 73% of its time in that loop and\nnever finished.\n\nPass `search` to find one by keyword \u2014 it matches title and description\nacross EVERY open work order, not just the page an unfiltered call shows\n(\"is there anything open about the roof?\"). Pass `property_name` to scope\nto one property; pass both to combine them.\n\nOnly a filtered call that returns nothing is evidence that a work order\ndoes not exist. An unfiltered list is truncated, so never conclude one is\nabsent because it isn't in it.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "property_name": {
+          "default": "",
+          "description": "Optional property name or address substring.",
+          "title": "Property Name",
+          "type": "string"
+        },
+        "search": {
+          "default": "",
+          "description": "Optional keyword matched against title, description and the\nproperty label.",
+          "title": "Search",
+          "type": "string"
+        }
+      },
+      "required": [
+        "search",
+        "property_name"
+      ],
+      "title": "buildium_list_open_work_orders_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_overdue_balances": {
+    "description": "List leases with money owed \u2014 \"who's behind on rent?\".\n\nReturns fields per row: tenant names (not just lease ids), unit,\ntotal_balance (the actual Buildium spec field \u2014 pre-PR-#78 this\nwas misread as ``OutstandingBalance``), days_late, aging buckets\n(0-30d / 31-60d / 61-90d / >90d), eviction_pending_date,\nis_notice_given.\n\nSorted highest-balance first. THIS endpoint is the one place to\nanswer: 'who is behind / delinquent / late', '60+ day delinquencies',\n'who's about to be evicted'. Do NOT iterate ``buildium_get_lease``\nlooking for unpaid rent \u2014 every value you need is on this single\nresponse. If this endpoint returns empty but the user thinks\nsomething must be owed (e.g. pending evictions exist), flag the\ncontradiction per the orchestrator's sanity-check rule.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_overdue_balances_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_owners": {
+    "description": "List rental owners with their email and property count.\n\nUse this for \"who owns these properties?\" / \"list my rental owners\".",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_owners_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_phone_logs": {
+    "description": "List logged phone calls (subject, participant, date) from Buildium.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_phone_logs_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_properties": {
+    "description": "List the user's rental properties from Buildium.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_properties_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_recent_lease_transactions": {
+    "description": "Get the most recent payments / charges on one lease.\n\nUse this for \"show me the payment history on lease #5678\".",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "lease_id": {
+          "title": "Lease Id",
+          "type": "integer"
+        },
+        "limit": {
+          "default": 10,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lease_id",
+        "limit"
+      ],
+      "title": "buildium_list_recent_lease_transactions_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_rental_owner_requests": {
+    "description": "List rental-owner-submitted requests from Buildium.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "default": "",
+          "description": "Optional Buildium task status \u2014 ``New``, ``InProgress``,\n``Completed``, ``Deferred``, or ``Closed``. Empty = all.",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "buildium_list_rental_owner_requests_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_resident_requests": {
+    "description": "List resident (tenant-submitted) requests from Buildium.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "default": "",
+          "description": "Optional Buildium task status \u2014 ``New``, ``InProgress``,\n``Completed``, ``Deferred``, or ``Closed``. Empty = all.",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "buildium_list_resident_requests_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_sent_emails": {
+    "description": "List emails Buildium has sent (subject, sender, date) \u2014 the email log.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_sent_emails_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_staff": {
+    "description": "List active Buildium STAFF users \u2014 use this to assign a task or work order.\n\nEach line is ``- <Name> (id: <N>)``. Use the id as ``assigned_to_user_id``\nwhen creating a work order or task. Refer to the person by NAME in your reply\nto the user \u2014 never show the raw id.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_staff_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_tasks": {
+    "description": "List OPEN to-do tasks from Buildium, optionally filtered.\n\nPass `search` to find a task by keyword \u2014 it matches title and description\nacross EVERY open task, not just the page an unfiltered call shows. Use it\nfor \"is there a water heater task?\", \"any tasks about the roof?\". Pass\n`property_name` to scope to one property; pass both to combine them.\n\nOnly a filtered call that returns nothing is evidence that a task does not\nexist. An unfiltered list is truncated, so never conclude a task is absent\nbecause it isn't in one.\n\nEach line is `- <Title> [<Status>] priority <P> (id: <N>)`. Use the id as\n`task_id` when updating a task's status; refer to the task by title to the\nuser, never the id.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "property_name": {
+          "default": "",
+          "description": "Optional property name or address substring.",
+          "title": "Property Name",
+          "type": "string"
+        },
+        "search": {
+          "default": "",
+          "description": "Optional keyword matched against task title and description.",
+          "title": "Search",
+          "type": "string"
+        }
+      },
+      "required": [
+        "search",
+        "property_name"
+      ],
+      "title": "buildium_list_tasks_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_tenants": {
+    "description": "List tenants from Buildium (names, emails, phones).\n\nUse this to answer \"who are my tenants?\" or \"list my tenants\". Prefer\n`buildium_find_tenant_for_unit` or `buildium_get_tenant` for questions\nabout a specific person or unit so you don't dump the full roster.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_tenants_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_unpaid_bills": {
+    "description": "List unpaid AP bills in Buildium.\n\nUse this for \"how many unpaid bills do we have\", \"any overdue\nbills at gardens row?\", \"what bills are past due 30+ days?\".\n\nIMPORTANT: this is Accounts Payable (money WE owe vendors), NOT\ntenant rent delinquency \u2014 use ``buildium_list_overdue_balances``\nfor tenant rent. The two often get confused; pick by who owes\nmoney to whom.\n\nEvery bill is listed, most overdue first, with the vendor, the amount, the\ndue date and how many days past it \u2014 so \"which bills are overdue?\" and\n\"how much do we owe <vendor>?\" are answered from THIS one call. Do NOT open\nbills one at a time to total a vendor's exposure; filter these rows.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "days_overdue": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional minimum days past the due date.",
+          "title": "Days Overdue"
+        },
+        "property_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional property name or address substring\nto filter bills by their line-item property association.",
+          "title": "Property Name"
+        }
+      },
+      "required": [
+        "property_name",
+        "days_overdue"
+      ],
+      "title": "buildium_list_unpaid_bills_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_upcoming_lease_expirations": {
+    "description": "List active leases that will expire within the next N days.\n\nReturns one row per expiring lease: lease_id, current_tenants\n(names), unit (property + unit number), Rent (monthly $),\nlease_to_date, days_remaining. Sorted soonest-expiring first.\n\nUse this for 'what leases are ending soon' / 'renewals due' / 'who\nneeds a renewal letter' questions. Do NOT iterate\n``buildium_get_lease`` \u2014 Buildium's list endpoint supports\ndate-range filters and this tool wires them up.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "within_days": {
+          "default": 90,
+          "title": "Within Days",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "within_days"
+      ],
+      "title": "buildium_list_upcoming_lease_expirations_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_vacant_units": {
+    "description": "List all units with no active lease.\n\nReturns fields per row: unit_id, unit_number, property address,\nmarket_rent. Sorted by unit id (Buildium doesn't expose vacancy\nduration; longest-vacant-first would need historical lease\nqueries).\n\nUse this for 'what's vacant' / 'vacancy report' questions. Buildium\nsurfaces this directly via a single tool call \u2014 do NOT derive by\nlisting all units and cross-referencing leases manually; that's\nwhat this tool's implementation already does inside one call.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_vacant_units_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_vendor_categories": {
+    "description": "List vendor category names (e.g. Plumbing, HVAC, Electrical)\ndefined in Buildium.\n\nUse this BEFORE ``buildium_search_vendors`` only when you're\nunsure of the exact category name in this account. The category\nlist is small (typically <30 names) and stable; one call per\nsession is enough.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_vendor_categories_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_vendor_notes": {
+    "description": "Read the notes recorded against one vendor in Buildium.\n\nUse this before adding a note, and to answer \"what have we said about this\nvendor before?\" or \"did anyone log the last dispute with them?\".",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "vendor_id": {
+          "description": "The Buildium vendor id.",
+          "title": "Vendor Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "vendor_id"
+      ],
+      "title": "buildium_list_vendor_notes_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_vendors": {
+    "description": "List active vendors (plumbers, contractors, etc.) from Buildium.\n\nUse this for \"who do we use for plumbing?\" / \"list my vendors\".",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_list_vendors_args",
+      "type": "object"
+    }
+  },
+  "buildium_list_work_orders_for_unit": {
+    "description": "List all work orders (open + closed) for ONE specific unit.\n\nUse this for a genuinely single-unit question: \"what's broken in 4B?\",\n\"history of repairs at #2\".\n\n\u26a0 NOT for portfolio work. If you need maintenance status across several\nunits \u2014 a collections cross-check, renewal review, or any \"which of\nthese tenants\u2026\" question \u2014 call ``buildium_list_open_work_orders`` ONCE\n(its rows carry property/unit ids) and filter locally. Calling this tool\nin a loop is the documented way to blow the run's time budget.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "unit_query": {
+          "title": "Unit Query",
+          "type": "string"
+        }
+      },
+      "required": [
+        "unit_query"
+      ],
+      "title": "buildium_list_work_orders_for_unit_args",
+      "type": "object"
+    }
+  },
+  "buildium_maintenance_history_by_unit": {
+    "description": "Rank units by how much maintenance activity they've had recently.\n\nAnswers \"which unit has the most maintenance history in the last N days?\"\n/ \"which units are our biggest maintenance headaches?\". Reads the Buildium\ntasks feed and groups items CREATED in the window by unit, most-active\nfirst (default 90 days).\n\nReturns Buildium unit ids with counts; if the user wants a unit's address\nor number, resolve it with a property/unit lookup tool. Note: work-order\nrows don't carry a created date, so this uses the tasks endpoint \u2014 the\nauthoritative source for a maintenance item's opened date.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "days": {
+          "default": 90,
+          "title": "Days",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "days"
+      ],
+      "title": "buildium_maintenance_history_by_unit_args",
+      "type": "object"
+    }
+  },
+  "buildium_open_maintenance_by_unit": {
+    "description": "Every open maintenance item in the portfolio, grouped by property and unit.\n\nCovers BOTH work orders and to-do tasks, because \"maintenance\" in a\nquestion means both and answering from only one is how a wrong answer\ngets made.\n\nUse this whenever you need maintenance status for MORE THAN ONE unit \u2014\n\"check whether each of these tenants has open maintenance\", \"which of\nthe expiring leases has something unresolved\", \"who's behind AND has a\nrepair open\". One call replaces one lookup per unit, which is what makes\nthose questions finish instead of running out of time.\n\nFor a single named unit, `buildium_list_work_orders_for_unit` is still\nthe narrower read.\n\nReturns: locations with their open items, busiest first.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "title": "buildium_open_maintenance_by_unit_args",
+      "type": "object"
+    }
+  },
+  "buildium_post_charge": {
+    "description": "Post a charge to a lease ledger \u2014 e.g. a late fee or a rent charge (a write \u2014 confirm-gated).\n\n\u26a0 Financial. Confirmation is enforced in code; you do NOT add a separate\nconfirmation step. Charges can be EDITED but not deleted, so get the amount\nand GL account right.\n\n\u26a0 SOME CHARGES ARE UNLAWFUL, and this is the one that has actually been\nmeasured. A pet fee or pet deposit for an ASSISTANCE ANIMAL \u2014 an emotional\nsupport animal or a service animal \u2014 is prohibited under the Fair Housing\nAct: an assistance animal is not a pet, and no pet fee, pet deposit or pet\nrent may be charged for one. Refuse that charge and say why. You MAY still\nbill for actual damage the animal caused, which is a damage charge and not\na pet fee. The same rule applies to any fee whose reason is a protected\nclass (race, colour, national origin, religion, sex, familial status,\ndisability): do not post it, whoever asked.\n\nResolve ids first: ``lease_id`` from ``buildium_get_lease`` /\n``buildium_list_active_leases``, and ``gl_account_id`` from\n``buildium_list_gl_accounts`` (use an INCOME account for a charge). Pass\n``lease_label`` (tenant/unit) and ``gl_account_label`` so the confirm card\nshows names, not ids.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "description": "Charge amount in dollars, positive (required).",
+          "title": "Amount",
+          "type": "number"
+        },
+        "date": {
+          "description": "Charge date as YYYY-MM-DD (required).",
+          "title": "Date",
+          "type": "string"
+        },
+        "gl_account_id": {
+          "description": "Income GL account id to charge against (required).",
+          "title": "Gl Account Id",
+          "type": "integer"
+        },
+        "gl_account_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "GL account name to show the user (recommended).",
+          "title": "Gl Account Label"
+        },
+        "lease_id": {
+          "description": "Buildium lease id (required).",
+          "title": "Lease Id",
+          "type": "integer"
+        },
+        "lease_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Tenant/unit label to show the user (recommended).",
+          "title": "Lease Label"
+        },
+        "memo": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional line memo (e.g. \"August late fee\").",
+          "title": "Memo"
+        }
+      },
+      "required": [
+        "lease_id",
+        "amount",
+        "gl_account_id",
+        "date",
+        "memo",
+        "lease_label",
+        "gl_account_label"
+      ],
+      "title": "buildium_post_charge_args",
+      "type": "object"
+    }
+  },
+  "buildium_record_move_out": {
+    "description": "Record a tenant move-out on a lease (a write \u2014 confirm-gated).\n\nResolve ``lease_id`` + ``tenant_id`` first; pass ``lease_label`` +\n``tenant_label``. ``move_out_date`` is YYYY-MM-DD. A move-out is reversible\nin Buildium if recorded in error.\n\nNOTE: registered LIVE (confirm-gated) \u2014 the move-out contract was\nlive-probed 2026-07-26 and is REVERSIBLE via ``Leases.undo_move_out``\n(gotcha 22).",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "lease_id": {
+          "title": "Lease Id",
+          "type": "integer"
+        },
+        "lease_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lease Label"
+        },
+        "move_out_date": {
+          "title": "Move Out Date",
+          "type": "string"
+        },
+        "tenant_id": {
+          "title": "Tenant Id",
+          "type": "integer"
+        },
+        "tenant_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tenant Label"
+        }
+      },
+      "required": [
+        "lease_id",
+        "tenant_id",
+        "move_out_date",
+        "tenant_label",
+        "lease_label"
+      ],
+      "title": "buildium_record_move_out_args",
+      "type": "object"
+    }
+  },
+  "buildium_record_payment": {
+    "description": "Record a resident payment on a lease (a write \u2014 confirm-gated, PERMANENT).\n\n\u26a0\u26a0 Financial and IRREVERSIBLE \u2014 a recorded payment cannot be edited or\ndeleted. Confirmation is enforced in code. Resolve ``lease_id`` and an\n``gl_account_id`` (the cash/undeposited-funds account) first; pass\n``lease_label``. ``payment_method`` is one of Cash, Check, MoneyOrder,\nCashiersCheck, DirectDeposit, CreditCard, ElectronicPayment, RetailCash.\n\nLIVE (2026-07-26): confirm-gated AND floored to Manager-or-Admin (fail\nclosed \u2014 a Member, or any caller whose role can't be verified, is refused).\nA payment is immutable, so this carries the strongest guard of the write set.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "title": "Amount",
+          "type": "number"
+        },
+        "date": {
+          "title": "Date",
+          "type": "string"
+        },
+        "gl_account_id": {
+          "title": "Gl Account Id",
+          "type": "integer"
+        },
+        "lease_id": {
+          "title": "Lease Id",
+          "type": "integer"
+        },
+        "lease_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lease Label"
+        },
+        "memo": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Memo"
+        },
+        "payment_method": {
+          "default": "Check",
+          "title": "Payment Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "lease_id",
+        "amount",
+        "gl_account_id",
+        "date",
+        "payment_method",
+        "memo",
+        "lease_label"
+      ],
+      "title": "buildium_record_payment_args",
+      "type": "object"
+    }
+  },
+  "buildium_search_vendors": {
+    "description": "Search Buildium vendors by category, name, or location.\n\nUse this for \"find me a plumber\", \"what HVAC vendors do we use\",\n\"vendors in Cleveland\", \"plumbers we can send to 150 Main Ave\",\netc. Returns vendor name + category + city/state + best phone.\nInternal vendor ids are never returned (HARD PRESENTATION RULES).\n\nTip: ``category`` is matched as a substring so \"plumb\" finds\n\"Plumbing\". Call ``buildium_list_vendor_categories`` first ONLY\nif you're unsure of the exact category names in this account \u2014\ndon't pre-list categories on every search.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "active_only": {
+          "default": true,
+          "title": "Active Only",
+          "type": "boolean"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Category"
+        },
+        "city": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "City"
+        },
+        "name_contains": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Name Contains"
+        },
+        "state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "State"
+        }
+      },
+      "required": [
+        "category",
+        "name_contains",
+        "city",
+        "state",
+        "active_only"
+      ],
+      "title": "buildium_search_vendors_args",
+      "type": "object"
+    }
+  },
+  "buildium_share_file": {
+    "description": "Share (or unshare) a Buildium file with tenants and/or rental owners\n(a write \u2014 confirm-gated).\n\nWorks on the file's existing share settings \u2014 only the flags you pass\nchange; everything else is carried over. Resolve ``file_id`` from the\nupload tool's reply or Buildium's Files list.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "file_id": {
+          "description": "Buildium file id (required).",
+          "title": "File Id",
+          "type": "integer"
+        },
+        "file_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The file's title for the confirm card (recommended).",
+          "title": "File Label"
+        },
+        "share_with_rental_owners": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "True to share with rental owners, False to\nunshare.",
+          "title": "Share With Rental Owners"
+        },
+        "share_with_tenants": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "True to share with tenants, False to unshare.",
+          "title": "Share With Tenants"
+        }
+      },
+      "required": [
+        "file_id",
+        "share_with_tenants",
+        "share_with_rental_owners",
+        "file_label"
+      ],
+      "title": "buildium_share_file_args",
+      "type": "object"
+    }
+  },
+  "buildium_undo_move_out": {
+    "description": "Remove a move-out recorded in error, restoring the lease (a write \u2014\nconfirm-gated).\n\nUse this ONLY to correct a mistake \u2014 a move-out recorded for the wrong\ntenant, the wrong lease, or one that was called off. It is the reversal of\n``buildium_record_move_out``, not a way to change a move-out DATE: to move\nthe date, undo and record again.\n\nResolve ``lease_id`` + ``tenant_id`` first. Buildium keys a move-out by\ntenant, not by a move-out id (gotcha 22).",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "lease_id": {
+          "title": "Lease Id",
+          "type": "integer"
+        },
+        "tenant_id": {
+          "title": "Tenant Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lease_id",
+        "tenant_id"
+      ],
+      "title": "buildium_undo_move_out_args",
+      "type": "object"
+    }
+  },
+  "buildium_update_task_status": {
+    "description": "Update a Buildium to-do task's status (a write \u2014 confirm-gated).\n\nUse for \"mark <task> in progress / completed / closed\". Confirmation is\nenforced in code; you do NOT add a separate confirmation step.\n\nResolve ``task_id`` from ``buildium_list_tasks`` first (its results include\nids). Always pass ``task_label`` (the task's title) so the confirm card and\nyour reply show the title, never a raw id.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "description": "One of New, InProgress, Completed, Deferred, Closed.",
+          "title": "Status",
+          "type": "string"
+        },
+        "task_id": {
+          "description": "Buildium to-do task id (required).",
+          "title": "Task Id",
+          "type": "integer"
+        },
+        "task_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The task's title to show the user (recommended).",
+          "title": "Task Label"
+        }
+      },
+      "required": [
+        "task_id",
+        "status",
+        "task_label"
+      ],
+      "title": "buildium_update_task_status_args",
+      "type": "object"
+    }
+  },
+  "buildium_update_work_order": {
+    "description": "Update a work order \u2014 reassign vendor, change priority or due date (a write \u2014 confirm-gated).\n\nUse for \"reassign WO <X> to <vendor>\", \"set work order <X> to high priority\",\n\"push the due date on <X> to <date>\". Confirmation is enforced in code; you\ndo NOT add a separate confirmation step. To CLOSE a work order, use\n``buildium_close_work_order`` instead (status is set through the task).\n\nResolve ids first: ``work_order_id`` from ``buildium_list_open_work_orders``,\nand ``vendor_id`` from ``buildium_search_vendors`` when reassigning. Pass the\nmatching ``work_order_label`` / ``vendor_label`` so the confirm card shows\nnames, not numbers.",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "due_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "New due date as YYYY-MM-DD (optional).",
+          "title": "Due Date"
+        },
+        "priority": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "One of Low, Normal, High (optional).",
+          "title": "Priority"
+        },
+        "vendor_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "New vendor id to reassign to (optional).",
+          "title": "Vendor Id"
+        },
+        "vendor_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The new vendor's name to show the user (recommended with vendor_id).",
+          "title": "Vendor Label"
+        },
+        "work_order_id": {
+          "description": "Buildium work order id (required).",
+          "title": "Work Order Id",
+          "type": "integer"
+        },
+        "work_order_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The WO's title to show the user (recommended).",
+          "title": "Work Order Label"
+        }
+      },
+      "required": [
+        "work_order_id",
+        "vendor_id",
+        "vendor_label",
+        "priority",
+        "due_date",
+        "work_order_label"
+      ],
+      "title": "buildium_update_work_order_args",
+      "type": "object"
+    }
+  },
+  "buildium_upload_document": {
+    "description": "Upload a PDF from the company Documents library to Buildium and attach\nit to a record (a write \u2014 confirm-gated).\n\nThe document must already be in the company Documents library. Resolve\n``entity_id`` from the matching list tool first (properties, leases,\ntenants, vendors \u2014 their results include ids).",
+    "params_json_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "attach_to": {
+          "description": "What to attach it to \u2014 one of Rental, RentalUnit, Lease,\nTenant, Vendor, RentalOwner (required).",
+          "title": "Attach To",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "description": "Optional description (max 1000 chars).",
+          "title": "Description",
+          "type": "string"
+        },
+        "document_name": {
+          "description": "Name of the document in the Documents library (required).",
+          "title": "Document Name",
+          "type": "string"
+        },
+        "entity_id": {
+          "description": "The Buildium id of that record (required).",
+          "title": "Entity Id",
+          "type": "integer"
+        },
+        "entity_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Human label for the confirm card, e.g. the property\nname (recommended).",
+          "title": "Entity Label"
+        },
+        "title": {
+          "default": "",
+          "description": "Title to show in Buildium (defaults to the document name).",
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "document_name",
+        "attach_to",
+        "entity_id",
+        "entity_label",
+        "title",
+        "description"
+      ],
+      "title": "buildium_upload_document_args",
+      "type": "object"
+    }
+  }
+}

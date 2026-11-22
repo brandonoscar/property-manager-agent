@@ -1,0 +1,31 @@
+INVOICE
+
+From:    Birch Lane Plumbing & Heating
+         482 Industrial Way
+         Queens, NY 11378
+         License: NY-PLB-44210
+
+Bill to: Greystone Property Management LLC
+         88 Birch Lane, Unit 14, Queens, NY 11378
+
+Invoice Number: BLP-2026-0418
+Invoice Date:   April 22, 2026
+Due Date:       May 22, 2026
+
+LINE ITEMS
+--------------------------------------------------------------
+Description                                          Amount
+--------------------------------------------------------------
+Diagnostic visit + bathroom faucet inspection       $  85.00
+Replacement cartridge (Moen 1225)                   $  42.50
+Labor — faucet rebuild (1.5 hr @ $110/hr)           $ 165.00
+Disposal fee                                        $  15.00
+--------------------------------------------------------------
+Subtotal                                            $ 307.50
+NY sales tax (8.875%)                               $  27.29
+--------------------------------------------------------------
+TOTAL DUE                                           $ 334.79
+
+Payment terms: NET-30. Late fee 1.5%/mo on overdue balances.
+
+Thank you for your business.

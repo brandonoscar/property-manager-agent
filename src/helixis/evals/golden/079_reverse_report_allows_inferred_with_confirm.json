@@ -1,0 +1,21 @@
+{
+  "id": "079_reverse_report_allows_inferred_with_confirm",
+  "case_type": "reverse_report_enforcement",
+  "description": "#271 negative control for rule 2: the SAME inferred-chain report as 078 MUST allow the write once a confirmation is present (confirm_present=true). Proves the inference guardrail gates on the missing confirmation specifically, not on the mere presence of an inference — confidence 0.75 stays within the with-inference calibration ceiling (0.79) and the lone observation is cited+grounded, so no other rule blocks.",
+  "input": {
+    "report": {
+      "observed": ["Unit 4B has one open work order [buildium_tools.get_work_order#wo:5501]"],
+      "inferred": ["The tenant probably wants this closed since they reported it fixed"],
+      "unknown": [],
+      "confidence": 0.75,
+      "next_action": {"kind": "tool_call", "why": "close the open work order"}
+    },
+    "tool_call_trail": ["buildium_get_work_order"],
+    "confirm_present": true,
+    "min_confidence": 0.6
+  },
+  "expected": {
+    "write_allowed": true,
+    "ungrounded_empty": true
+  }
+}

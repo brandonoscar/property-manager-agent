@@ -1,0 +1,88 @@
+{
+  "id": "091_list_contact_requests_flow",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "description": "Closes part of #410 (continuation of 054/055) — golden coverage for buildium_list_contact_requests (prospect / general inquiries, #401), one of the 11 read tools from #400-#404 that shipped with unit tests but no agent_flow case. Mirrors 055: the question one-shots buildium_list_contact_requests; ALL nine mirror aggregate tools are mocked empty so the agent takes the documented live-tool fallback regardless of which it reaches for. Quality/K-of-N assertions; identifier guard critical. DOGFOOD 2026-07-08: anchored the ask on 'open contact and prospect requests on the Buildium task board'. 6/6 sweep + 20/20 grid → single_run_gate:true. QUARANTINED 2026-08-17: the Gemini-era dogfood promotion no longer holds on Sonnet — reply_must_match_regex quality-failed 3/3 rerolls on two main merge runs (#820, #822 squashes) while every safety assertion held; gotcha 10 remedy. Re-promote only after a Sonnet-era 6/6 sweep + 20/20 grid.",
+  "input": {
+    "user_message": "What are the open contact and prospect requests on the Buildium task board?",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "buildium_list_contact_requests": [
+        {
+          "return": "Open contact requests (2):\n- \"Tour request for 2BR at Maple Court\" — from prospect, submitted Jul 6, New.\n- \"General question about pet policy\" — from prospect, submitted Jul 4, New.",
+          "repeat": 5
+        }
+      ],
+      "property_snapshot": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "portfolio_overview": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "delinquency_report": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "expiring_leases": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "unpaid_bills": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "spending_report": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "open_tasks": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "contact_lookup": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "bank_balances": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "buildium_list_contact_requests"
+    ],
+    "reply_must_match_regex": [
+      "(?i)(tour|prospect|pet|inquir|request)"
+    ],
+    "reply_must_not_be_empty": true,
+    "reply_must_not_contain": [
+      "Task #",
+      "Tenant #"
+    ]
+  }
+}

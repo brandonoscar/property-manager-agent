@@ -1,0 +1,224 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      HELIXIS_ENV: production
+      HELIXIS_API__HOST: "0.0.0.0"
+      HELIXIS_API__PORT: "8000"
+      HELIXIS_API__CORS_ORIGINS: '["http://localhost","http://localhost:80"]'
+    volumes:
+      - ./config:/app/config:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Browser-based VNC desktop running Chromium pointed at the frontend.
+  # Access the UI from anywhere at http://<host>:6080/ (noVNC web client).
+  # Start with: docker compose --profile vnc up
+  vnc:
+    image: accetto/ubuntu-vnc-xfce-chromium-g3:latest
+    ports:
+      - "6080:6901"
+    environment:
+      VNC_PW: helixis
+      VNC_RESOLUTION: "1440x900"
+      CHROMIUM_OPTS: "--no-sandbox --start-maximized --app=http://frontend:80"
+    depends_on:
+      frontend:
+        condition: service_started
+    shm_size: "1gb"
+    profiles:
+      - vnc
+    restart: unless-stopped
+
+  # Local Postgres with pgvector for development (production uses Supabase)
+  # Start with: docker compose --profile dev up
+  postgres:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: helixis
+      POSTGRES_PASSWORD: helixis_dev
+      POSTGRES_DB: helixis
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    profiles:
+      - dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U helixis"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- Langfuse Observability (self-hosted) ---
+  # Start with: docker compose --profile dev --profile observability up
+  # Web UI: http://localhost:3000
+  langfuse-web:
+    image: langfuse/langfuse:3
+    restart: unless-stopped
+    depends_on:
+      langfuse-clickhouse:
+        condition: service_healthy
+      langfuse-redis:
+        condition: service_healthy
+      langfuse-minio:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://helixis:helixis_dev@postgres:5432/helixis"
+      NEXTAUTH_URL: "http://localhost:3000"
+      NEXTAUTH_SECRET: "helixis-langfuse-dev-secret"
+      SALT: "helixis-langfuse-dev-salt"
+      ENCRYPTION_KEY: "0000000000000000000000000000000000000000000000000000000000000000"
+      CLICKHOUSE_MIGRATION_URL: "clickhouse://langfuse-clickhouse:9000"
+      CLICKHOUSE_URL: "http://langfuse-clickhouse:8123"
+      CLICKHOUSE_USER: "clickhouse"
+      CLICKHOUSE_PASSWORD: "clickhouse"
+      CLICKHOUSE_CLUSTER_ENABLED: "false"
+      LANGFUSE_S3_EVENT_UPLOAD_BUCKET: "langfuse"
+      LANGFUSE_S3_EVENT_UPLOAD_REGION: "auto"
+      LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID: "minio"
+      LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY: "miniosecret"
+      LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT: "http://langfuse-minio:9000"
+      LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE: "true"
+      LANGFUSE_S3_EVENT_UPLOAD_PREFIX: "events/"
+      LANGFUSE_S3_MEDIA_UPLOAD_BUCKET: "langfuse"
+      LANGFUSE_S3_MEDIA_UPLOAD_REGION: "auto"
+      LANGFUSE_S3_MEDIA_UPLOAD_ACCESS_KEY_ID: "minio"
+      LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY: "miniosecret"
+      LANGFUSE_S3_MEDIA_UPLOAD_ENDPOINT: "http://langfuse-minio:9000"
+      LANGFUSE_S3_MEDIA_UPLOAD_FORCE_PATH_STYLE: "true"
+      LANGFUSE_S3_MEDIA_UPLOAD_PREFIX: "media/"
+      REDIS_HOST: "langfuse-redis"
+      REDIS_PORT: "6379"
+      REDIS_AUTH: "langfuse-dev-secret"
+    profiles:
+      - observability
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/public/health"]
+      interval: 15s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+
+  langfuse-worker:
+    image: langfuse/langfuse-worker:3
+    restart: unless-stopped
+    depends_on:
+      langfuse-clickhouse:
+        condition: service_healthy
+      langfuse-redis:
+        condition: service_healthy
+      langfuse-minio:
+        condition: service_healthy
+    ports:
+      - "3030:3030"
+    environment:
+      DATABASE_URL: "postgresql://helixis:helixis_dev@postgres:5432/helixis"
+      SALT: "helixis-langfuse-dev-salt"
+      ENCRYPTION_KEY: "0000000000000000000000000000000000000000000000000000000000000000"
+      CLICKHOUSE_MIGRATION_URL: "clickhouse://langfuse-clickhouse:9000"
+      CLICKHOUSE_URL: "http://langfuse-clickhouse:8123"
+      CLICKHOUSE_USER: "clickhouse"
+      CLICKHOUSE_PASSWORD: "clickhouse"
+      CLICKHOUSE_CLUSTER_ENABLED: "false"
+      LANGFUSE_S3_EVENT_UPLOAD_BUCKET: "langfuse"
+      LANGFUSE_S3_EVENT_UPLOAD_REGION: "auto"
+      LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID: "minio"
+      LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY: "miniosecret"
+      LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT: "http://langfuse-minio:9000"
+      LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE: "true"
+      LANGFUSE_S3_EVENT_UPLOAD_PREFIX: "events/"
+      LANGFUSE_S3_MEDIA_UPLOAD_BUCKET: "langfuse"
+      LANGFUSE_S3_MEDIA_UPLOAD_REGION: "auto"
+      LANGFUSE_S3_MEDIA_UPLOAD_ACCESS_KEY_ID: "minio"
+      LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY: "miniosecret"
+      LANGFUSE_S3_MEDIA_UPLOAD_ENDPOINT: "http://langfuse-minio:9000"
+      LANGFUSE_S3_MEDIA_UPLOAD_FORCE_PATH_STYLE: "true"
+      LANGFUSE_S3_MEDIA_UPLOAD_PREFIX: "media/"
+      REDIS_HOST: "langfuse-redis"
+      REDIS_PORT: "6379"
+      REDIS_AUTH: "langfuse-dev-secret"
+    profiles:
+      - observability
+
+  langfuse-clickhouse:
+    image: clickhouse/clickhouse-server
+    restart: unless-stopped
+    environment:
+      CLICKHOUSE_DB: default
+      CLICKHOUSE_USER: clickhouse
+      CLICKHOUSE_PASSWORD: clickhouse
+    volumes:
+      - langfuse_clickhouse_data:/var/lib/clickhouse
+    ports:
+      - "8123:8123"
+    profiles:
+      - observability
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8123/ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  langfuse-minio:
+    image: minio/minio
+    restart: unless-stopped
+    entrypoint: sh
+    command: "-c 'mkdir -p /data/langfuse && minio server --address \":9000\" --console-address \":9001\" /data'"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: miniosecret
+    volumes:
+      - langfuse_minio_data:/data
+    ports:
+      - "9090:9000"
+    profiles:
+      - observability
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+
+  langfuse-redis:
+    image: redis:7
+    restart: unless-stopped
+    command: "--requirepass langfuse-dev-secret"
+    ports:
+      - "6380:6379"
+    profiles:
+      - observability
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "langfuse-dev-secret", "ping"]
+      interval: 3s
+      timeout: 10s
+      retries: 10
+
+volumes:
+  pgdata:
+  langfuse_clickhouse_data:
+  langfuse_minio_data:

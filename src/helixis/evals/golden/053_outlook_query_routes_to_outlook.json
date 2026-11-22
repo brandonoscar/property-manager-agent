@@ -1,0 +1,20 @@
+{
+  "id": "053_outlook_query_routes_to_outlook",
+  "case_type": "orchestrator_routing",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "description": "Closes #386 (Outlook routing leg) — the Outlook specialist (#380/#382) is in the routing table but no case verified an Outlook query reaches it. must_route_to (outlook_agent) is the quality assertion. The negative list deliberately OMITS gmail_agent: Gmail-vs-Outlook disambiguation is the unstable axis under the 8th-handoff roster (see #405), so hard-gating 'not gmail' here would risk red-gating an unrelated PR before that regression is resolved. It keeps only the clearly-wrong-and-stable prohibitions (web_agent / browser_agent) — an email query must never land on public-web navigation. DOGFOOD 2026-07-08: 20/20 on the live-Gemini 20x grid — flipped to single_run_gate:true (gates on quality now, keeping the gmail_agent omission from must_not_route_to).",
+  "input": {
+    "user_message": "What Outlook emails did I get from tenants today?"
+  },
+  "expected": {
+    "must_route_to": "outlook_agent",
+    "must_not_route_to": [
+      "web_agent",
+      "browser_agent"
+    ]
+  },
+  "_single_run_gate_note": "RE-QUARANTINED 2026-09-05 after gating CI on PR #986, which touched no routing code. THAT EVIDENCE IS VOID — the 20/20 grid in the description was measured on live Gemini and the Google account was cut off 2026-07-21 (gotcha 18); this case has never been validated on Anthropic, and PRs run the Haiku PR-gate tier (gotcha 10's tier drift).\n\n⚠ The description already names the reason it fails. It says Gmail-vs-Outlook disambiguation is 'the unstable axis' and deliberately OMITS gmail_agent from must_not_route_to to avoid red-gating unrelated PRs on it. The POSITIVE assertion (must_route_to: outlook_agent) rides the SAME axis and was promoted to gating anyway — so the negative list's protection was undone by the positive one, on evidence that has since expired.\n\nNOT weakened: every assertion is unchanged. The case still runs, still prints its [FAIL], and eval-flake.yml still counts it. Quarantine drops the GATE, not the visibility (gotcha 48). Re-promote only after a §4 20x grid on the CURRENT tier, and only once #405 resolves the Gmail/Outlook roster instability its own description names."
+}

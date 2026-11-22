@@ -1,0 +1,40 @@
+{
+  "id": "021_extract_invoice",
+  "case_type": "tool_invocation",
+  "tool": "extract_document_fields",
+  "description": "Real-LLM smoke test for invoice extraction. Feeds a synthetic invoice text fixture and asserts the model returns doc_type='invoice', the invoice number, total amount, and vendor name visible in fixture text, and zero terminal warnings. Requires HELIXIS_LLM__ANTHROPIC_API_KEY — SKIPs in CI without secrets.",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "input": {
+    "kwargs": {
+      "file_path": "src/helixis/evals/fixtures/documents/sample_invoice.txt",
+      "mime_type": "text/plain"
+    }
+  },
+  "expected": {
+    "result_must_contain": [
+      "invoice",
+      "Birch Lane",
+      "BLP-2026-0418",
+      "334.79"
+    ],
+    "result_must_not_contain": [
+      "Task #",
+      "Tenant #",
+      "Vendor #"
+    ],
+    "warnings_must_not_include": [
+      "attachment_unavailable",
+      "attachment_too_large",
+      "llm_unavailable",
+      "llm_unauthorized",
+      "low_confidence",
+      "doc_type_uncertain",
+      "empty_document",
+      "invalid_extraction"
+    ]
+  },
+  "single_run_gate": false,
+  "_single_run_gate_note": "Model-driven the multimodal model extraction typed as tool_invocation. Quarantined from the single-run QUALITY gate (gotcha 10): result_must_contain (did the model extract every field) and model-confidence warnings vary run-to-run on the preview model. SAFETY still gates every run — result_must_not_contain (no fabricated entity id) and any infra/auth warning stay critical=True. ⚠ TEXT BRANCH ONLY — this case does NOT exercise the path a real upload takes. It passes mime_type='text/plain', and api/routes/agent.py builds its upload allowlist by excluding exactly that value ('text/plain is eval-only fixtures'), so production can never reach the branch this case runs. _build_messages splits on the same value: text is inlined as a text block, everything else is base64'd into an image_url. use_docling defaults False, so a production PDF takes the base64 branch too. Live-verified 2026-08-29: company_documents holds 0 rows for all time and 0 orchestrator_runs have ever called either document tool, across every tenant. The multimodal branch IS covered structurally (test_document_tools feeds real PDF bytes and asserts an image_url block); what has never happened is that branch meeting a live model. Both sides are pinned in tests/unit/test_document_eval_reaches_production.py."
+}

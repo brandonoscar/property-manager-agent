@@ -1,0 +1,45 @@
+{
+  "id": "473_buildium_permission_denied_is_not_a_broken_connection",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-09-10. Quarantined by default per gotcha 48 — no dogfood evidence yet. The over-action cap (tool_call_count_max, built critical=True) still gates every run; quarantine drops QUALITY gating only.",
+  "description": "The THIRD connection state, and it had no case: the credentials are valid, Buildium accepted them, and refused ONE endpoint — an API-key permission or a lapsed plan. Until 2026-09-10 the sanitizer gave this the 401 answer ('the saved credentials were rejected … reconnect on the Connectors page'), which sends the customer to redo a connection that works and abandons the rest of their question. The right answer keeps using the tools that still work, reports the one thing it could not get, and names the permission.",
+  "_why": "099 is a credential that FAILS auth (instruction: reconnect). 472 is a credential that was NEVER CREATED (instruction: connect). This is a credential that WORKS and a request that was refused (instruction: fix the API key's permissions, and carry on) — three states, three different remedies, and a customer following the wrong one goes to a door that is not locked. ⚠ DELIBERATELY NO PROSE PROHIBITION on 'reconnect' or 'broken connection'. A compliant reply legitimately NEGATES those phrases ('your connection is fine — this isn't a broken connection'), and any regex tight enough to catch the claim also catches its denial, which is the 414/416 false-positive class gotchas 52/65 record — a SAFETY assertion that fires on the best answer in the set is how a guard gets switched off. The failure is instead measured POSITIVELY: a run that wrongly concluded the connection is broken stops, and a stopped run cannot report the 18 properties the working mirror tool handed it.",
+  "input": {
+    "user_message": "How many properties do I have, and what's open on maintenance right now?",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "buildium_list_open_work_orders": [
+        {
+          "return": "Buildium accepted the credentials and refused this request, so I couldn't list open work orders. That is a permission or plan limit on Buildium's side rather than a broken connection — the usual cause is the API key missing the permission this endpoint needs (Buildium → Settings → Developer Tools → API Keys), and a lapsed or suspended Buildium subscription looks the same. Other Buildium tools may well still work, so keep using them; only suggest reconnecting on the Connectors page if they fail too. Do NOT tell the user they have no records.",
+          "repeat": 4
+        }
+      ],
+      "portfolio_overview": [
+        {
+          "return": "Portfolio snapshot from Occupella's synced Buildium data (updated 2h ago): 18 properties, 24 units, 21 active leases. Occupancy 88%.",
+          "repeat": 3
+        }
+      ],
+      "open_work_orders": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors)."
+        }
+      ]
+    }
+  },
+  "expected": {
+    "reply_must_not_be_empty": true,
+    "reply_must_match_regex": [
+      "\\b18\\b",
+      "(?i)permission"
+    ],
+    "tool_call_count_max": {
+      "buildium_list_open_work_orders": 2
+    },
+    "tool_call_total_max": 6
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "034_mixed_query_in_domain_first",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Routing case (e) — mixed in-domain + web query. The orchestrator's prompt explicitly tells it to handle the in-domain part first when a question carries both. Asserts first_handoff_must_be == Buildium Agent regardless of whether the conversation later involves web context. The Agents SDK keeps the conversation with the first specialist after a handoff, so this case mainly exercises 'orchestrator picks Buildium first, not Web first'.",
+  "input": {
+    "user_message": "Look up the tenant in unit 4B then check typical plumbing rates in their zip code.",
+    "tool_mocks": {
+      "buildium_find_tenant_for_unit": "Unit 4B at 123 Maple Avenue — leased to Devon Reyes since 2025-09-01."
+    }
+  },
+  "expected": {
+    "must_route_to": "buildium_agent",
+    "first_handoff_must_be": "buildium_agent",
+    "must_not_route_to": ["web_agent", "document_agent"],
+    "reply_must_not_contain": ["Task #", "Tenant #", "Property #"]
+  }
+}

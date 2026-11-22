@@ -1,0 +1,13 @@
+{
+  "id": "038_drive_lookup_routes_to_drive",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Routing case — a genuine Google Drive lookup routes to Drive Agent. PR #162 deliberately tightened Drive routing; case 033 only asserts the NEGATIVE (ambiguous tenant complaints stay out of Drive). This is the missing POSITIVE assertion (#190): an over-correction that made Drive unreachable on valid lookups would otherwise go undetected. The explicit 'in my Google Drive' disambiguates from the Buildium leases domain; must_not_route_to forbids Buildium/Web/Browser/Gmail.",
+  "input": {
+    "user_message": "Find the lease agreement for unit 3B in my Google Drive"
+  },
+  "expected": {
+    "must_route_to": "drive_agent",
+    "must_not_route_to": ["buildium_agent", "web_agent", "browser_agent", "gmail_agent"]
+  }
+}

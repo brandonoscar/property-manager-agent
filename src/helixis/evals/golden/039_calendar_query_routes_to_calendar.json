@@ -1,0 +1,13 @@
+{
+  "id": "039_calendar_query_routes_to_calendar",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Routing case — a scheduling request routes to Calendar Agent, the only Composio specialist with zero eval signal of any kind (#195). Real Gemini drives the routing decision; Calendar Agent registers as a handoff target even without Composio tools. must_not_route_to forbids Buildium/Web/Browser/Document/Gmail so 'maintenance inspection at 2 Elm Street' doesn't drift to the maintenance-flavored Buildium Agent or to Gmail.",
+  "input": {
+    "user_message": "Schedule a maintenance inspection at 2 Elm Street for next Tuesday at 10am"
+  },
+  "expected": {
+    "must_route_to": "calendar_agent",
+    "must_not_route_to": ["buildium_agent", "web_agent", "browser_agent", "document_agent", "gmail_agent"]
+  }
+}

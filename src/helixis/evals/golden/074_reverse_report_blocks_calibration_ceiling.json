@@ -1,0 +1,21 @@
+{
+  "id": "074_reverse_report_blocks_calibration_ceiling",
+  "case_type": "reverse_report_enforcement",
+  "description": "#271 enforcement: an over-claimed confidence is blocked. A cited-observation chain that relies on inference caps at 0.79; the report claims 0.95. A confirmation is present so rule 2 is satisfied, isolating the calibration-ceiling block. Deterministic.",
+  "input": {
+    "report": {
+      "observed": ["Lease ends June 30 [buildium_tools.get_lease#lease:7781]"],
+      "inferred": ["Tenant likely wants to renew given the early outreach"],
+      "unknown": [],
+      "confidence": 0.95,
+      "next_action": {"kind": "tool_call", "why": "create a renewal task"}
+    },
+    "tool_call_trail": ["buildium_get_lease"],
+    "confirm_present": true
+  },
+  "expected": {
+    "write_allowed": false,
+    "reasons_contain": ["calibration ceiling"],
+    "ungrounded_empty": true
+  }
+}

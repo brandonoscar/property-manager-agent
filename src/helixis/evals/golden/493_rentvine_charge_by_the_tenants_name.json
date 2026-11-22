@@ -1,0 +1,50 @@
+{
+  "id": "493_rentvine_charge_by_the_tenants_name",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-10-05. Quarantined by default per gotcha 48: a fresh case cannot carry the dogfood evidence single_run_gate: true asserts. Quarantine drops QUALITY gating only.",
+  "description": "A Rentvine workspace asks to post a late fee to a tenant's lease. Until 2026-10-05 rentvine_post_charge asked for a lease_id that no read tool prints (gotcha 208), so the model had to invent one or ask the user for a number they don't know. It now takes the tenant's name or the property and unit, resolved from the mirror in code (pms.places). This case measures that the model reaches the charge tool with the words it was given. input.pms is 'rentvine', so the harness binds the run as run_agent_streaming does (test_agent_flow_rentvine_runs.py). The write is mocked like its gate (gotcha 83). Synthetic fixture only (Rentvine terms rules 17-19, evals/CLAUDE.md): invented names, no sandbox export, no recorded response.",
+  "input": {
+    "user_message": "Post a $50 late fee to Jordan Sample's lease, dated 2026-10-05, on the Late Fee account.",
+    "agent": "Buildium Agent",
+    "pms": "rentvine",
+    "tool_mocks": {
+      "rentvine_post_charge": [
+        {
+          "return": "Held: this charge needs your confirmation in Occupella before anything is sent.",
+          "repeat": 2
+        }
+      ],
+      "lease_payment_history": [
+        {
+          "return": "Payment history for Jordan Sample — Redbud · Unit 102 (Active lease, $1,675/mo), since 2026-05-01:\n- Charged $8,375, paid $8,175, credited $0 across 10 transactions. Last payment 2026-09-04 ($1,475).\n- Owes $200 now.\n(Synced from Rentvine 2 hours ago.)",
+          "repeat": 2
+        }
+      ],
+      "contact_lookup": [
+        {
+          "return": "Jordan Sample — tenant, Redbud · Unit 102 (active lease). Email on file; phone on file. (Synced from Rentvine 2 hours ago.)",
+          "repeat": 2
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "rentvine_post_charge"
+    ],
+    "reply_must_not_be_empty": true,
+    "reply_should_not_contain": [
+      "Buildium"
+    ]
+  },
+  "_assertion_notes": {
+    "tool_call_trail_must_contain": "QUALITY. The charge is put to the tool, by the tenant's name; asking the user for a lease id instead is the failure this case exists to see.",
+    "reply_must_not_be_empty": "QUALITY.",
+    "reply_should_not_contain": "QUALITY, non-gating, as in 490.",
+    "why_no_write_is_forbidden": "Tier 2 on purpose: this measures flow, not a write escaping its gate. The negative cases (320-335, 480, 492) already forbid every Rentvine write where none belongs."
+  }
+}

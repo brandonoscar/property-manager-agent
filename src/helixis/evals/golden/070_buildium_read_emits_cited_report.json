@@ -1,0 +1,28 @@
+{
+  "id": "070_buildium_read_emits_cited_report",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "single_run_gate": false,
+  "_single_run_gate_note": "Quarantined from the single-run gate (gotcha 10): the reverse_report_* assertions ride on Gemini emitting a parseable, fully-cited report run-to-run, which it does not do reliably even after re-rolls — it red-gated unrelated PRs #336/#340/#342. All its assertions are quality (critical=False), so quarantine fully de-gates it; the case still runs and eval-flake.yml still tracks it.",
+  "description": "First 07x case — exercises the REVERSE_REPORT contract (HELIXIS_AGENT__REVERSE_REPORT, off by default) on a clean Buildium read. With the flag on (input.reverse_report=true), the Buildium agent must emit a parseable REVERSE_REPORT before replying, with at least one OBSERVED fact each cited to its tool source. Mirrors 040's read path; the property mock carries a numeric id so the agent can cite it per the buildium addendum. (Confidence-calibration is deliberately NOT asserted here: whether the model populates `inferred` — which caps the ceiling — varies run to run, so a calibration assertion would be a flaky hard gate; the citation + observation discipline is the stable contract surface to gate on.)",
+  "input": {
+    "user_message": "Look up the rental property 'Maple Court Apartments' in Buildium and tell me about it.",
+    "agent": "Buildium Agent",
+    "reverse_report": true,
+    "tool_mocks": {
+      "buildium_get_property": [
+        {
+          "return": "Maple Court Apartments [ref:property#88421] — 12 units, 50 Maple Street, Springfield. Owner: Jane Doe. 2 open work orders.",
+          "repeat": 5
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["buildium_get_property"],
+    "reverse_report_observed_min": 1,
+    "reverse_report_observed_cited": true,
+    "reverse_report_citations_grounded": true,
+    "reply_must_not_be_empty": true
+  }
+}

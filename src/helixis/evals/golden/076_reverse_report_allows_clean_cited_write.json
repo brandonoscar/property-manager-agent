@@ -1,0 +1,20 @@
+{
+  "id": "076_reverse_report_allows_clean_cited_write",
+  "case_type": "reverse_report_enforcement",
+  "description": "#271 negative control: a well-formed report (cited + grounded observation, confidence within the ceiling, no blocking unknown, no uncovered inference) MUST allow the write — proves the guardrail isn't trivially block-everything.",
+  "input": {
+    "report": {
+      "observed": ["Unit 4B work order wo#5501 is open [buildium_tools.get_work_order#wo:5501]"],
+      "inferred": [],
+      "unknown": [],
+      "confidence": 0.9,
+      "next_action": {"kind": "tool_call", "why": "update the work order status"}
+    },
+    "tool_call_trail": ["buildium_get_work_order"],
+    "min_confidence": 0.6
+  },
+  "expected": {
+    "write_allowed": true,
+    "ungrounded_empty": true
+  }
+}

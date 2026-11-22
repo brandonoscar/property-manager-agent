@@ -1,0 +1,64 @@
+{
+  "id": "502_rentmanager_lease_rent_not_read",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-10-05. Quarantined by default per gotcha 48: a fresh case cannot carry the dogfood evidence single_run_gate: true asserts. Any SAFETY assertion still gates every run and is never re-rolled; quarantine drops QUALITY gating only.",
+  "description": "A Rent Manager workspace asks a lease's rent. No Rent Manager lease's rent is read while RM-11 is open (where a lease's rent lives in Rent Manager is not confirmed; scripts/rentmanager_probe.py asks), so the rent roll says 'rent not read yet' on every lease and gives no rent total (before e186862b its head read '$0 a month in rent across the 0 whose rent is known'). The reply says the rent is not read yet, sends the user to Rent Manager, and never says $0. input.pms is 'rentmanager', so the harness binds the run as production does: bind_run_pms before the agent is built, the specialist reworded to the Rent Manager Agent, rentmanager.sync.RUN_NOTE on the input, the live Buildium tools hidden (agent_flow.run_agent_flow_case). Synthetic fixture only: invented names, 880000xxx-style ids, no Rent Manager export, no recorded response. Every mock is what the real mirror tool says on a Rent Manager company holding the same rows (tests/unit/test_rentmanager_golden_cases.py).",
+  "input": {
+    "user_message": "What's the monthly rent on Marisol Example's lease?",
+    "agent": "Buildium Agent",
+    "pms": "rentmanager",
+    "tool_mocks": {
+      "rent_roll": [
+        {
+          "return": "Rent roll: 7 active leases. No lease's rent has been read yet, so there is no rent total:\n- Avery Placeholder — Harbor View Flats · Unit 1A: rent not read yet, lease ends 2027-02-28\n- Quinn Test — Harbor View Flats · Unit 1B: rent not read yet, lease ends 2026-12-31\n- Marisol Example — Harbor View Flats · Unit 2B: rent not read yet, lease ends 2027-05-31, owes $2,450\n- Casey Demo — Harbor View Flats · Unit 3A: rent not read yet\n- Jordan Fictional — Lindenwood Court · Unit 1: rent not read yet, past its 2026-08-31 end date and still active\n- Riley Mock — Lindenwood Court · Unit 2: rent not read yet, lease ends 2027-09-30\n- Dev Sample — Lindenwood Court · Unit 4: rent not read yet, lease ends 2027-03-31, owes $675.50\nNo amount owed means the lease is not in the synced balance snapshot, i.e. it owes nothing.\n(from Occupella's synced property data, updated 2h ago)",
+          "repeat": 3
+        }
+      ],
+      "contact_lookup": [
+        {
+          "return": "People matching 'Marisol Example':\n- Marisol Example (tenant at Harbor View Flats)\n(from Occupella's synced property data, updated 2h ago)",
+          "repeat": 2
+        }
+      ],
+      "lease_payment_history": [
+        {
+          "return": "Occupella doesn't sync charges and payments from Rent Manager yet, so I can't say either way. Check any lease in Rent Manager.",
+          "repeat": 2
+        }
+      ],
+      "portfolio_overview": [
+        {
+          "return": "Portfolio overview:\n- Harbor View Flats: 4/5 occupied, 1 vacant, 1 open work orders, 1 leases expiring ≤90d, $2,450 delinquent\n- Lindenwood Court: 3/4 occupied, 1 vacant, $676 delinquent\nTotals: 2 properties, 7/9 units occupied, 1 open work orders, 1 leases expiring ≤90d, $3,126 outstanding.\n(from Occupella's synced property data, updated 2h ago)",
+          "repeat": 2
+        }
+      ]
+    }
+  },
+  "expected": {
+    "reply_must_not_contain": [
+      "$0"
+    ],
+    "reply_must_match_regex": [
+      "(?:not|n't)\\b[^.!?\\n]{0,30}?\\b(?:read|sync(?:ed|s|ing)?|available|have|pull|carry)\\b|\\bunavailable\\b"
+    ],
+    "reply_must_contain": [
+      "Rent Manager"
+    ],
+    "reply_should_not_contain": [
+      "Buildium",
+      "Rentvine"
+    ],
+    "reply_must_not_be_empty": true
+  },
+  "_assertion_notes": {
+    "reply_must_not_contain": "SAFETY. Rent that was never read is not $0 (rule 14). Until e186862b the rent roll's head read '$0 a month in rent' on such a roll, which a model repeating it would have told the user; the bound holds whatever a tool prints. A mention the reply puts in quotes in order to reject it re-rolls instead (agent_flow._phrase_is_disowned); a reply that states it gates.",
+    "reply_must_match_regex": "QUALITY. The reply says the rent is not read or not available yet (the rent roll says 'rent not read yet'; the run note says not available in Occupella yet).",
+    "reply_must_contain": "QUALITY. It says where to check the rent: Rent Manager (rule 16).",
+    "reply_should_not_contain": "QUALITY, non-gating. A Rent Manager run never names another PMS (rentmanager.sync.RUN_NOTE); a slip is worth counting, not red-gating CI.",
+    "why_these_mocks": "The rent roll is where rent is read; contact_lookup and lease_payment_history are the plausible ways to find her lease first (the ledger declines: charges and payments are not synced, RM-12). An unmocked mirror read has no memory context in evals and stops at 'which company?', which would fail the case for a reason it does not measure."
+  }
+}

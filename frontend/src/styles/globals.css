@@ -1,0 +1,880 @@
+/* Helixis — premium OS design system (iris on deep neutral canvas). */
+
+@import "tailwindcss";
+
+/* ────────────────────────────────────────────────────────────────
+   Tailwind @theme — maps utilities (bg-surface, text-ink, border-line,
+   bg-iris, etc.) onto the new token values. Keep legacy class names
+   (text-text-primary, bg-accent, …) pointed at the new palette so the
+   existing components keep rendering while Phase 1 lands.
+   ──────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* ── Namespace reconciliation (commit 6) ─────────────────────────
+     Every --color-* aliases its :root counterpart with var(). :root
+     is the ONE source of truth for palette values — no hardcoded hex
+     lives here, so a theme change (dark↔light) happens in one place
+     and this mirror cannot drift out of sync (the bug that stranded
+     CrmPage dark after the inversion). Plain @theme (NOT inline) so
+     these emit as real CSS variables for the var(--color-*) inline
+     consumers (CrmPage, services/crm.ts). */
+
+  /* Canvas family */
+  --color-canvas: var(--canvas);
+  --color-canvas-raised: var(--canvas-raised);
+  --color-canvas-elevated: var(--canvas-elevated);
+  --color-canvas-overlay: var(--canvas-overlay);
+
+  /* Ink family */
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+  --color-ink-faint: var(--ink-faint);
+
+  /* Iris accent */
+  --color-iris: var(--iris);
+  --color-iris-hover: var(--iris-hover);
+  --color-iris-press: var(--iris-press);
+
+  /* Navy chrome (sidebar + title bar) */
+  --color-chrome: var(--chrome);
+  --color-chrome-raised: var(--chrome-raised);
+  --color-chrome-ink: var(--chrome-ink);
+  --color-chrome-ink-muted: var(--chrome-ink-muted);
+  --color-chrome-accent: var(--chrome-accent);
+  --color-chrome-line: var(--chrome-line);
+  --color-chrome-line-strong: var(--chrome-line-strong);
+
+  /* Semantic status */
+  --color-positive: var(--positive);
+  --color-caution: var(--caution);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+
+  /* ── Legacy class aliases → :root raw tokens ──────────────────────
+     Keep bg-surface / bg-primary / bg-accent / text-text-primary / …
+     resolving to the palette. Now var()-referenced, not literal, so
+     the utilities follow :root. Remove in the final cleanup pass. */
+  --color-primary: var(--canvas);
+  --color-secondary: var(--canvas-raised);
+  --color-sidebar: var(--canvas-raised);
+  --color-surface: var(--canvas-elevated);
+  --color-hover: var(--canvas-hover);
+  --color-active: var(--canvas-active);
+  --color-input: var(--canvas-elevated);
+
+  --color-text-primary: var(--ink);
+  --color-text-secondary: var(--ink-muted);
+  --color-text-body: var(--ink-muted);
+  --color-text-tertiary: var(--ink-subtle);
+  --color-text-meta: var(--ink-faint);
+  --color-text-accent: var(--iris);
+
+  --color-border: var(--line);
+  --color-border-subtle: var(--line);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-accent: var(--iris);
+  --color-accent-hover: var(--iris-hover);
+  --color-accent-strong: var(--iris-press);
+
+  --color-success: var(--positive);
+  --color-warning: var(--caution);
+  --color-error: var(--danger);
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
+
+  --font-sans: "IBM Plex Sans Variable", "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+  /* Fonts match occupella.com (2026-09-29): IBM Plex Sans for everything,
+     Fraunces (--font-display) for page titles and empty-state headings only,
+     IBM Plex Mono for IDs, amounts and code only. The wordmark is Fraunces too.
+     ⚠ Self-hosted via @fontsource, never a Google Fonts link — the boot
+     screen is the first thing rendered, and putting a third-party stylesheet
+     in front of it means a network hop can delay or silently change the one
+     screen whose job is to say the product is starting. The fallback stack is
+     deliberate rather than a bare `serif`: on a machine where the face fails
+     to load the mark still reads as a high-contrast serif rather than as
+     whatever the OS calls "serif" (Times, on Windows). */
+  --font-wordmark: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ── Utilities ─────────────────────────────────────────────────── */
+
+@utility animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+@utility animate-live-pulse {
+  animation: live-pulse 2s ease-in-out infinite;
+}
+
+@utility animate-fade-in-up {
+  animation: fade-in-up 400ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@utility animate-fade-in {
+  animation: fade-in var(--dur-base) var(--ease);
+}
+
+@utility animate-rail-slide-in {
+  animation: rail-slide-in var(--dur-slow) var(--ease);
+}
+
+/* Small label voice (timestamps, source names, eyebrows). Sans, not mono:
+   mono is for IDs, amounts and code. */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-subtle);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   :root — raw design tokens (source of truth for inline styles,
+   shadows, focus rings, gradients). Components should prefer the
+   Tailwind utilities above, but inline styles read these directly.
+   ──────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Canvas — content stays pure white so cards/tables pop; the raised
+     surfaces carry a light cool-blue tint toward the brand hue so the
+     panels read as distinct planes instead of one white sheet (the
+     "too much white" fix), and the greys read as chosen.
+     2026-08-18 (founder direction): these were #CBDDF0/#BFD5EC/#B2CCE7
+     — ~50% saturation, which turned every card, bubble, panel, and menu
+     into a solid blue SLAB and flattened the hierarchy app-wide (~40
+     components inherit these three tokens). They are now a few points
+     off white: unmistakably blue, but light enough that a white card on
+     top of them still reads as the raised thing. Keep them this light —
+     if a surface needs to stand out, that is a border/shadow job, not
+     more saturation. */
+  --canvas: #FFFFFF;
+  --canvas-raised: #F4F8FD;
+  --canvas-elevated: #EDF3FA;
+  --canvas-overlay: #E4EDF7;
+  --canvas-hover: rgba(14, 22, 32, 0.04);
+  --canvas-active: rgba(14, 22, 32, 0.08);
+
+  /* Hairlines */
+  --line: rgba(14, 22, 32, 0.10);
+  --line-strong: rgba(14, 22, 32, 0.18);
+  --line-focus: rgba(25, 87, 160, 0.50);
+  /* PR #86 — card edges. A card BOUNDARY is a different job than an
+     in-card divider (``--line``): on the white ground, --canvas-raised
+     (#F7F9FC) barely separates from #FFFFFF, so the border is the only
+     thing defining a card and must stay heavier than --line's 10%.
+     Kept a distinct token, NOT folded into --line, at the same 14%/22%
+     (ink, not white — the dark-theme "light from above" idiom has no
+     light-ground equivalent; this is an honest border). */
+  --card-edge: rgba(14, 22, 32, 0.14);
+  --card-edge-hover: rgba(14, 22, 32, 0.22);
+
+  /* Navy chrome — the sidebar + title bar are a dark island on the light
+     UI. Dark-theme rules apply INSIDE the chrome only: text is light,
+     borders are translucent WHITE, hover goes LIGHTER. The content area
+     is unaffected. --chrome-accent is #74A2CE (the old dark-theme blue)
+     because the ground is dark again; --iris is ~1.9:1 on
+     navy and must never be used inside the chrome. */
+  /* THE CHROME IS LIGHT (2026-08-18). It was #16243D, then a deeper
+     brand blue — both still a DARK full-height sidebar, which is the
+     silhouette Buildium/AppFolio/Yardi all share, so the app kept
+     reading as one of them ("it looks way too similar for my liking").
+     Darkening or re-hueing could not fix that; the value had to flip.
+     The sidebar is now a light blue-tinted rail with INK text, one
+     step deeper than the content surfaces so it still reads as a
+     distinct plane, separated from the white canvas by a hairline
+     rather than by contrast.
+
+     ⚠ The comments elsewhere calling this a "dark island" are stale by
+     definition now: inside the chrome, LIGHT-ground rules apply — ink
+     text, ink hairlines, hover goes DARKER (--chrome-raised is a
+     deeper tint, not a lighter one), and --iris is usable directly
+     (4.6:1 here) where on the old navy it was ~1.9:1 and banned. */
+  /* ⚠ 12/16/20% tints of --iris, and the landing page's nav uses the same
+     three values (helixis-onboarding theme.ts). A visitor sees the marketing
+     page and the product within ten minutes of each other; a rail tint that
+     is close-but-not-equal across them reads as two products rather than as
+     a choice. Change one, change both. */
+  --chrome: #E4EEF7;
+  --chrome-hover: #DBE9F4;   /* row hover */
+  --chrome-active: #D2E3F2;  /* selected row fill */
+  --chrome-raised: #FFFFFF;
+  --chrome-ink: #12233A;
+  --chrome-ink-muted: #4C5C72;
+  --chrome-accent: #1957A0;
+  /* Ink hairlines, not translucent white — the chrome ground is light now. */
+  --chrome-line: rgba(14, 22, 32, 0.09);
+  --chrome-line-strong: rgba(14, 22, 32, 0.16);
+
+  /* Title bar — its OWN set, deliberately split from --chrome*
+     (2026-08-18, founder direction: "make the bar at the top white").
+     The sidebar stays the navy island; the top bar is a white rail that
+     continues the content canvas, so it needs LIGHT-ground rules: ink
+     text, ink hairlines, --iris usable (unlike inside the navy, where
+     it fails contrast). It is separated from the canvas below by
+     --titlebar-line alone — no shadow, or the 32px rail reads as a
+     floating slab. Do NOT re-point these at --chrome*: that is what
+     made the two surfaces one token set and forced this split. */
+  --titlebar: #FFFFFF;
+  --titlebar-raised: rgba(14, 22, 32, 0.05);
+  --titlebar-ink: #0E1620;
+  --titlebar-ink-muted: #55606E;
+  --titlebar-line: rgba(14, 22, 32, 0.10);
+  --titlebar-line-strong: rgba(14, 22, 32, 0.18);
+
+  /* Text */
+  --ink: #0E1620;
+  --ink-muted: #55606E;
+  --ink-subtle: #6B7481;
+  --ink-faint: #98A1AE;
+  /* PR #110 — body-secondary text. Slightly darker than --ink-muted
+     (on the white ground) so secondary body copy (e.g. summary
+     paragraphs, "Not set" placeholders) reads on elevated cards
+     without competing with primary --ink. */
+  --ink-secondary: #3E4854;
+
+  /* Iris — the brand blue, the same #1957A0 as occupella.com (2026-09-29;
+     it was a lighter blue). Hover and press go DARKER, as on the site. Used
+     sparingly (CTA / active nav / focus / links), never as a gradient. */
+  --iris: #1957A0;
+  --iris-hover: #144A88;
+  --iris-press: #0F3A6B;
+  /* A separate, lighter brand-family purple (NOT an alpha of --iris) — the
+     CRM "scheduled" stage accent + source badges. Kept as one token so the
+     two drifted lilacs (#a99bd6 / #d9b3ff) resolve to a single value. */
+  --iris-light: #6DAAD8;
+  /* Alpha ladder — four rungs, not one per observed alpha. Fills/borders
+     collapse onto the nearest rung; imperceptible on the #0a090f ground. */
+  --iris-tint: rgba(25, 87, 160, 0.08); /* faint fills   (0.08 / 0.09) */
+  --iris-soft: rgba(25, 87, 160, 0.12); /* soft fills    (0.10–0.14) */
+  --iris-glow: rgba(25, 87, 160, 0.15); /* ambient glow  (unchanged) */
+  --iris-ring: rgba(25, 87, 160, 0.35); /* borders/rings (0.28–0.35) */
+
+  /* Semantic — muted, considered status hues (dialed back from the
+     neon defaults so colour reads as meaning, not decoration). Each is
+     reserved strictly for a real state (payment / lease / urgency /
+     validation), never a generic accent. */
+  --positive: #1D7A4C;
+  --positive-bg: #E7F4EC;
+  --caution: #A8631A;
+  --caution-bg: #FAF0E1;
+  --danger: #B3261E;
+  --danger-bg: #F9E9E7;
+  /* --negative is the failure/error alias of --danger. ~16 call sites
+     (connect-failure boxes, the Inbox load error, the `failed` StatusBadge)
+     render through it; without a definition those messages showed with a
+     transparent background + inherited text — i.e. "it failed" was nearly
+     invisible. Alias to --danger so all of them read correctly. */
+  --negative: var(--danger);
+  --negative-bg: var(--danger-bg);
+  /* --ok is the success alias of --positive (checklist ticks, renewal/turnover
+     "done" states). It was referenced with fallbacks but never defined, so
+     those success indicators silently rendered in the fallback colour. */
+  --ok: var(--positive);
+  --info: #4A5A6B;
+  --info-bg: #EFF2F6;
+  /* Disabled controls are gray, not a faded copy of their colour. */
+  --disabled-bg: #E6E9ED;
+  --disabled-ink: #6B7481;
+
+  /* Radius — the site's two: 6px for buttons and inputs (--r-sm), 8px for
+     cards and popovers (--r-md, and --r-lg, which was 12px). --r-pill is
+     for badges and avatars, never a button. */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 8px;
+  --r-pill: 9999px;
+
+  /* Elevation — ink-tinted and LIGHT. These were pure black at 40-60%
+     alpha, calibrated for the old dark theme; on the white canvas they
+     read as smudges under every card and dialog. A light-ground shadow
+     is a soft contact shadow, not a scrim. */
+  --shadow-sm: 0 1px 2px rgba(14, 22, 32, 0.06);
+  --shadow-md: 0 8px 24px -8px rgba(14, 22, 32, 0.14);
+  --shadow-lg: 0 24px 64px -16px rgba(14, 22, 32, 0.18);
+  --shadow-iris: 0 0 0 1px var(--iris-ring), 0 8px 32px -8px var(--iris-glow);
+
+  /* Typography */
+  /* Must MIRROR the @theme stacks above. This :root block is unlayered,
+     so it outranks Tailwind's layers — when it led with "Inter" the app
+     silently rendered in the fallback and the real face never shipped at all
+     (found 2026-08-18 by inspecting the running app). If the @theme
+     stack changes, change it here too. */
+  --font-sans: "IBM Plex Sans Variable", "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+  /* Fonts match occupella.com (2026-09-29): IBM Plex Sans for everything,
+     Fraunces (--font-display) for page titles and empty-state headings only,
+     IBM Plex Mono for IDs, amounts and code only. The wordmark is Fraunces too.
+     ⚠ Self-hosted via @fontsource, never a Google Fonts link — the boot
+     screen is the first thing rendered, and putting a third-party stylesheet
+     in front of it means a network hop can delay or silently change the one
+     screen whose job is to say the product is starting. The fallback stack is
+     deliberate rather than a bare `serif`: on a machine where the face fails
+     to load the mark still reads as a high-contrast serif rather than as
+     whatever the OS calls "serif" (Times, on Windows). */
+  --font-wordmark: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* PR #110 — Typography scale tokens, named by role rather than raw
+     px. A future bump cascades cleanly across the app instead of
+     hunting `text-[16px]` arbitrary classes one file at a time.
+       page-title  → top-of-page H1 ("Inbox", "Activity", "Settings")
+       section     → card / section heading (event title, "Suggested workflow")
+       body        → paragraph copy (summary, descriptions, metadata values)
+       micro       → uppercase tracked labels (PROPERTY / REPORTER / etc) */
+  /* The scale is 12/13/14/16/20/28 and nothing is smaller than 12px. */
+  --text-page-title: 20px;
+  --text-section: 14px;
+  --text-body: 14px;
+  --text-micro: 12px;
+  --letter-tracking-micro: 0.08em;
+  --weight-page-title: 600;
+  --weight-section: 600;
+  --weight-body: 400;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 320ms;
+
+  /* ── Legacy alias bag (safe while migration is in-flight) ── */
+  --bg-primary: var(--canvas);
+  --bg-secondary: var(--canvas-raised);
+  --bg-sidebar: var(--canvas-raised);
+  --bg-surface: var(--canvas-elevated);
+  --bg-hover: var(--canvas-hover);
+  --bg-active: var(--canvas-active);
+  --bg-input: var(--canvas-elevated);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-muted);
+  --text-tertiary: var(--ink-subtle);
+  --text-accent: var(--iris-hover);
+  --border: var(--line);
+  --border-subtle: var(--line);
+  --accent: var(--iris);
+  --accent-rgb: 25, 87, 160;
+  --accent-strong: var(--iris-press);
+  --accent-hover: var(--iris-hover);
+  --success: var(--positive);
+  --warning: var(--caution);
+  --error: var(--danger);
+  --radius-full: 9999px;
+}
+
+/* ── Base resets ───────────────────────────────────────────────── */
+/* Layered into `base` so Tailwind's `utilities` layer (loaded after this
+   via `@import "tailwindcss"`) wins. An UNLAYERED reset here silently
+   overrode every margin/padding utility app-wide (mx-auto, px-*, py-*,
+   m-*, p-* all no-op'd), because unlayered CSS beats any @layer. Tailwind
+   v4 preflight already resets these in a layer, so this block is kept
+   explicit but must stay layered. */
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Tailwind v4's preflight DELIBERATELY dropped `cursor: pointer` on
+     buttons (v3 set it; v4 matches the browser default of `cursor: default`).
+     Nothing here put it back, so 103 of this app's 132 buttons showed an
+     arrow — the CRM pipeline cards, the Operations tab strip, every card
+     whose whole surface is a button. The 29 that felt right were the ones
+     someone had hand-annotated `cursor-pointer`.
+
+     Layered into `base`, so a Tailwind utility (`cursor-default`,
+     `cursor-not-allowed`) still wins wherever a component means it. */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  [role='tab'],
+  summary,
+  label[for],
+  a[href] {
+    cursor: pointer;
+  }
+
+  /* The other half, and it is not cosmetic: a disabled control that still
+     shows a hand invites the click it is about to swallow. */
+  button:disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  /* Tabular figures app-wide: this is a data-dense operations tool
+     (rent rolls, ledgers, counts), so equal-width digits keep numbers
+     aligned and stop them shifting width on update — an enterprise
+     signal the design brief calls for. */
+  font-variant-numeric: tabular-nums;
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Faint dot-grid behind everything for depth (1.5% opacity). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(14, 22, 32, 0.015) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── PR #118 Phase E — universal focus ring ─────────────────────
+   The redesign brief's accessibility baseline: every interactive
+   element gets a visible focus ring on keyboard navigation.
+   ``:focus-visible`` (not ``:focus``) so mouse clicks don't paint
+   the ring — only Tab / Shift+Tab / arrow-key focus does. Uses
+   --iris-ring (existing token) so no new colour is introduced. */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid var(--iris-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+  transition: outline-color var(--dur-fast) var(--ease);
+}
+
+/* ── Scrollbar — thin, ink/22, rounded ─────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  /* Affordance, not texture: raised well above a straight alpha swap
+     so the thumb is genuinely grabbable on the white ground. */
+  background: rgba(14, 22, 32, 0.22);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(14, 22, 32, 0.38);
+}
+
+/* Chrome (navy sidebar) scrollbar — the global thumb is translucent
+   BLACK and vanishes on navy, so scope a translucent-white thumb. */
+.chrome-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.20);
+}
+.chrome-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+/* ── Keyframes ─────────────────────────────────────────────────── */
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-quiet {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rail-slide-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ── Motion primitive classes ──────────────────────────────────── */
+
+/* Agent "thinking" shimmer on a text label — replaces the generic
+   spinner for streamed content's pre-token state. */
+.thinking-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--ink-subtle) 0%,
+    var(--ink) 50%,
+    var(--ink-subtle) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 2s linear infinite;
+}
+
+.pulse-dot {
+  animation: pulse-dot 1.6s var(--ease) infinite;
+}
+
+.spinner {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid var(--line-strong);
+  border-top-color: var(--iris);
+  border-radius: 50%;
+  animation: spin-quiet 0.8s linear infinite;
+}
+
+.fade-in {
+  animation: fade-in var(--dur-base) var(--ease);
+}
+
+/* ── Dialog entrance (DESIGN.md "Motion") ────────────────────────────
+   A modal is "occasional": 150-300ms, ease-out, scaling from CENTRE and
+   starting near 0.95 — never from scale(0), never ease-in. `--dur-base`
+   (180ms) and `--ease` (cubic-bezier(.2,.8,.2,1), an ease-out curve) are
+   the tokens, so these two classes carry no literal timing of their own.
+
+   ⚠ NO reduced-motion block here. The global one above already neutralises
+   every animation-duration; a second copy would be one more place to forget.
+
+   ⚠ Deliberately NOT the `.cmdk-root` treatment beside it. That one carries
+   `backdrop-filter: blur(6px)` and `--shadow-iris`, both of which DESIGN.md
+   forbids on content surfaces — it is grandfathered, not a pattern to copy. */
+.dialog-backdrop {
+  animation: fade-in var(--dur-base) var(--ease);
+}
+
+.dialog-panel {
+  animation: dialog-pop-in var(--dur-base) var(--ease);
+}
+
+@keyframes dialog-pop-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+/* Respect user's reduced-motion preference — always. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Agent message markdown prose ──────────────────────────────── */
+
+.prose-helixis h1,
+.prose-helixis h2,
+.prose-helixis h3 {
+  margin: 16px 0 6px;
+  color: var(--ink);
+  /* Sans: headings inside an answer are not page titles. */
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.prose-helixis h1 {
+  font-size: 20px;
+}
+.prose-helixis h2 {
+  font-size: 16px;
+}
+.prose-helixis h3 {
+  font-size: 14px;
+}
+.prose-helixis p {
+  margin: 8px 0;
+  line-height: 1.7;
+}
+.prose-helixis ul,
+.prose-helixis ol {
+  margin: 8px 0;
+  padding-left: 22px;
+}
+.prose-helixis li {
+  margin: 3px 0;
+}
+.prose-helixis code {
+  background: var(--canvas-elevated);
+  padding: 1px 6px;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.prose-helixis pre {
+  background: var(--canvas-elevated);
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  overflow-x: auto;
+  margin: 10px 0;
+}
+.prose-helixis pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.prose-helixis a {
+  color: var(--iris-hover);
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+.prose-helixis a:hover {
+  border-bottom-style: solid;
+}
+.prose-helixis blockquote {
+  border-left: 2px solid var(--iris);
+  padding-left: 14px;
+  margin: 10px 0;
+  color: var(--ink-muted);
+}
+
+/* ── Command palette (cmdk) ─────────────────────────────────────── */
+
+[cmdk-overlay] {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  animation: cmdk-fade-in var(--dur-base) var(--ease);
+}
+
+@keyframes cmdk-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cmdk-pop-in {
+  from { transform: translate(-50%, -48%) scale(0.98); opacity: 0; }
+  to   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.cmdk-root {
+  position: fixed;
+  top: 22%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 201;
+  width: min(640px, calc(100vw - 32px));
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--canvas-elevated);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg), var(--shadow-iris);
+  overflow: hidden;
+  animation: cmdk-pop-in var(--dur-base) var(--ease);
+}
+
+.cmdk-input {
+  appearance: none;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 500 16px/1.4 var(--font-sans);
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.cmdk-input::placeholder {
+  color: var(--ink-subtle);
+}
+
+.cmdk-list {
+  overflow: auto;
+  padding: 6px 6px 8px;
+  scroll-padding-block: 8px;
+}
+
+.cmdk-empty {
+  padding: 24px 18px;
+  color: var(--ink-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.cmdk-group {
+  padding: 6px 0;
+}
+
+[cmdk-group-heading] {
+  padding: 8px 12px 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-subtle);
+}
+
+.cmdk-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  margin: 0 4px;
+  border-radius: var(--r-sm);
+  color: var(--ink);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.cmdk-item[data-selected='true'] {
+  background: var(--iris-soft);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--iris-ring);
+}
+
+.cmdk-item[data-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Typewriter cursor — appended to the trailing edge of streaming
+   agent text. Solid iris bar that blinks at 600ms intervals. The
+   element is removed by ChatThread the moment the run completes, so
+   the cursor never lingers on a finished message. */
+.typewriter-cursor {
+  animation: typewriter-blink 600ms steps(2, end) infinite;
+}
+
+@keyframes typewriter-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* ── Skip to content ──────────────────────────────────────────────
+   The first focusable element on the page, and invisible until it is
+   focused. NOT `display:none` and not `visibility:hidden` — either of those
+   removes it from the tab order entirely, which is the one thing it must
+   never be. Clipped to a 1px box instead, then given real dimensions on
+   focus.
+
+   `top` rather than `transform` for the reveal so it lands in a predictable
+   place regardless of what the header is doing, and it sits above the
+   mobile sidebar scrim (z-index 99). */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 12px;
+  z-index: 200;
+  padding: 10px 16px;
+  border-radius: var(--r-sm);
+  background: var(--iris);
+  color: var(--canvas);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: top var(--dur-state, 140ms) ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 12px;
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+/* The target takes focus programmatically via tabIndex={-1}; it must not then
+   draw a focus ring around the entire page. */
+main#main:focus {
+  outline: none;
+}

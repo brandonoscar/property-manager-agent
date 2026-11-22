@@ -1,0 +1,36 @@
+{
+  "_synthetic": true,
+  "_about": "Hand-built from BillDTO and BillSplitDTO in Propertyware's official spec. Never exported from any Propertyware account (terms rule 17). amountPaid and paid are fields of the bill read, not a payment endpoint. Quirks: a part-paid bill; a split charged to a portfolio and no building; a vendor credit; splits with no paid flag or amount paid; a split whose unit id is also a building id.",
+  "rows": [
+    {"id": 990800001, "billNumber": 5001, "vendorID": 990500001, "billDate": "2026-09-20", "dueDate": "2026-10-15",
+     "amount": 325.0, "refNo": "INV-1001", "workOrderID": 990700001, "credit": false, "approvalStatus": "APPROVED",
+     "billSplits": [
+       {"id": 990850001, "amount": 300.0, "amountPaid": 300.0, "paid": true, "buildingID": 990100001,
+        "unitID": 990200003, "portfolioID": 990300001, "glAccountID": 990900003, "comments": "Labor"},
+       {"id": 990850002, "amount": 25.0, "amountPaid": 0.0, "paid": false, "buildingID": 990100001,
+        "unitID": null, "portfolioID": 990300001, "glAccountID": 990900003, "comments": "Parts"}
+     ],
+     "lastModifiedDateTime": "2026-09-21T10:00:00Z"},
+    {"id": 990800002, "billNumber": 5002, "vendorID": 990500002, "billDate": "2026-09-10", "dueDate": "2026-09-30",
+     "amount": 80.0, "refNo": "INV-1002", "credit": false, "paymentDate": "2026-09-29",
+     "billSplits": [
+       {"id": 990850003, "amount": 80.0, "amountPaid": 80.0, "paid": true, "buildingID": null,
+        "portfolioID": 990300001, "glAccountID": 990900004, "comments": "Portfolio-wide inspection"}
+     ],
+     "lastModifiedDateTime": "2026-09-29T10:00:00Z"},
+    {"id": 990800003, "billNumber": 5003, "vendorID": 990500001, "billDate": "2026-09-22", "amount": 40.0,
+     "refNo": "CR-1003", "credit": true,
+     "billSplits": [
+       {"id": 990850004, "amount": 40.0, "amountPaid": 0.0, "paid": false, "buildingID": 990100001,
+        "glAccountID": 990900003, "comments": "Vendor credit"}
+     ],
+     "lastModifiedDateTime": "2026-09-22T10:00:00Z"},
+    {"id": 990800004, "billNumber": 5004, "vendorID": 990500001, "billDate": "2026-09-25", "dueDate": "2026-10-25",
+     "amount": 60.0, "refNo": "INV-1004",
+     "billSplits": [
+       {"id": 990850005, "amount": 60.0, "buildingID": 990100003, "unitID": 990100002,
+        "glAccountID": 990900003, "comments": "Lock change"}
+     ],
+     "lastModifiedDateTime": "2026-09-25T10:00:00Z"}
+  ]
+}

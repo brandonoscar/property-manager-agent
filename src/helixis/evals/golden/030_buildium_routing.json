@@ -1,0 +1,18 @@
+{
+  "id": "030_buildium_routing",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Routing case (a) — in-domain Buildium query routes to Buildium Agent, must NOT route to Web Agent or Document Agent. Real Gemini drives the routing decision; the buildium_count_properties tool is mocked so the specialist's reply is deterministic.",
+  "input": {
+    "user_message": "How many rental properties do I have in Buildium?",
+    "tool_mocks": {
+      "buildium_count_properties": "You have 12 properties in Buildium."
+    }
+  },
+  "expected": {
+    "must_route_to": "buildium_agent",
+    "must_not_route_to": ["web_agent", "document_agent"],
+    "reply_must_contain": ["12"],
+    "reply_must_not_contain": ["Task #", "Tenant #", "Property #"]
+  }
+}

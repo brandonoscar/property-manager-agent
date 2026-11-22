@@ -1,0 +1,186 @@
+name: RLS guard
+
+# Risk #1 — forgotten RLS on a public table is the top cross-tenant leak vector.
+# This wires scripts/rls_guard.py into CI so the audit is self-enforcing.
+#
+#   * STATIC (every PR touching migrations, + push to main): deterministic, no
+#     creds — every ``create table public.X`` in supabase/migrations/ must have
+#     a matching ``enable row level security`` (dead/never-applied migrations
+#     excluded). Fails the check on a finding.
+#   * INVARIANTS (scheduled / manual): scripts/tenant_isolation_probe.py asks
+#     the DATABASE the questions the source-reading guards cannot — orphan
+#     company scope, a user in two workspaces, a chat row whose author is not
+#     a member of the company it is filed under, RLS off on an app table.
+#
+# ⚠ THIS WORKFLOW FILED NO ISSUES UNTIL 2026-09-04, AND THAT IS THE WHOLE
+# REASON IT WENT RED FOR A MONTH UNNOTICED (gotcha 23: red 2026-07-13 ->
+# 2026-08-17). Every other background routine files one; this one just failed
+# a job nobody opened, and workflow-liveness tracks 'ran recently', not
+# 'passed'. A cross-tenant guard whose failure is invisible is not a guard.
+#
+#   * LIVE (scheduled / manual): when the HELIXIS_SUPABASE__DB_URL secret is
+#     present, also query pg_tables.rowsecurity to catch library-created tables
+#     (e.g. Mem0's) that a static scan can't see. Skipped when the secret is
+#     absent so forks / PRs don't fail on a missing credential.
+
+on:
+  pull_request:
+    paths:
+      - "supabase/migrations/**"
+      - "scripts/rls_guard.py"
+      - ".github/workflows/rls-guard.yml"
+  push:
+    branches: [main]
+    paths:
+      - "supabase/migrations/**"
+  schedule:
+    - cron: "23 13 * * 1" # Mondays ~13:23 UTC (off-minute)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: rls-guard-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rls-guard:
+    name: RLS coverage guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Static guard (migrations have RLS on every created table)
+        run: python scripts/rls_guard.py
+
+      - name: Live guard (pg_tables.rowsecurity) — scheduled/manual only
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        env:
+          HELIXIS_SUPABASE__DB_URL: ${{ secrets.HELIXIS_SUPABASE__DB_URL }}
+        run: |
+          if [ -z "${HELIXIS_SUPABASE__DB_URL}" ]; then
+            echo "HELIXIS_SUPABASE__DB_URL not set — skipping live RLS check."
+            exit 0
+          fi
+          pip install --quiet asyncpg
+          python scripts/rls_guard.py --live
+
+      # The rowsecurity flag proves RLS is ENABLED, not that its POLICIES are
+      # correct. This runs the real cross-tenant zero-row proof (insert as
+      # company A, read as user B → expect 0 rows) on the same cadence — the
+      # thing that would actually catch a membership/policy hole like the one
+      # closed in 0052. Self-cleaning teardown, so it's safe against prod.
+      - name: Live cross-tenant isolation proof — scheduled/manual only
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        env:
+          HELIXIS_SUPABASE__DB_URL: ${{ secrets.HELIXIS_SUPABASE__DB_URL }}
+        run: |
+          if [ -z "${HELIXIS_SUPABASE__DB_URL}" ]; then
+            echo "HELIXIS_SUPABASE__DB_URL not set — skipping cross-tenant proof."
+            exit 0
+          fi
+          pip install --quiet -e ".[dev]"
+          pytest tests/unit/test_buildium_rls.py -v
+
+      # The invariants a source-reading test cannot see: the guards in
+      # tests/unit/ all go green against a database that has already drifted.
+      #
+      # ⚠ Exit 2 (could not run — no credential) is NOT a pass and is filed like
+      # any finding. gotcha 23 is the record of what the other reading costs.
+      - name: Live tenant-isolation invariants — scheduled/manual only
+        id: invariants
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        continue-on-error: true
+        env:
+          HELIXIS_SUPABASE__DB_URL: ${{ secrets.HELIXIS_SUPABASE__DB_URL }}
+        run: |
+          if [ -z "${HELIXIS_SUPABASE__DB_URL}" ]; then
+            echo "HELIXIS_SUPABASE__DB_URL not set: skipping the live invariants."
+            echo "code=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          pip install --quiet asyncpg
+          set +e
+          python scripts/tenant_isolation_probe.py 2>&1 | tee probe_out.txt
+          CODE=${PIPESTATUS[0]}
+          set -e
+          echo "code=${CODE}" >> "$GITHUB_OUTPUT"
+
+      - name: File an issue on a finding
+        if: ${{ steps.invariants.outcome != 'skipped' && steps.invariants.outputs.code != '0' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CODE: ${{ steps.invariants.outputs.code }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ "${CODE}" = "2" ]; then
+            TITLE_SUFFIX="isolation probe could not run"
+          else
+            TITLE_SUFFIX="tenant-isolation invariant broken"
+          fi
+          NEW_TITLE="[tenant-isolation] ${TITLE_SUFFIX}"
+          SINCE=$(date -u -d '7 days ago' +%Y-%m-%d)
+
+          {
+            echo "## What happened"
+            if [ "${CODE}" = "2" ]; then
+              echo "The probe could not run (exit 2) — a missing/rotated"
+              echo "\`HELIXIS_SUPABASE__DB_URL\` secret, or the database was unreachable."
+              echo "Filed rather than passed silently: a check that did not run is not a check"
+              echo "that passed, and this repo has already lost a month to the other reading."
+            else
+              echo "At least one tenant-isolation invariant no longer holds in the LIVE database."
+              echo ""
+              echo "The unit guards read SOURCE — they prove every query carries a company id,"
+              echo "that the id came from the caller's token, and that a thread belongs to one"
+              echo "person. All three stay green against a database that has already drifted."
+              echo "This is the half that asks the data."
+            fi
+            echo ""
+            echo "## Probe output"
+            echo '```'
+            cat probe_out.txt
+            echo '```'
+            echo ""
+            echo "## Action"
+            echo "- Findings are COUNTS, never rows — the probe never selects tenant content,"
+            echo "  so this issue is safe to read but will not tell you which records."
+            echo "- Orphan scope: those rows are unreadable AND skipped by the Buildium purge"
+            echo "  (ToS §18 keys it on the company). Decide delete-or-reattach deliberately."
+            echo "- A user in two workspaces: buying a number, the A2P attestation and Stripe"
+            echo "  Checkout are ALREADY returning 409 for that person (require_unambiguous_company)."
+            echo "- RLS off on an app table: that is the top cross-tenant leak vector. A VIEW over"
+            echo "  an RLS table opts out by DEFAULT unless it sets security_invoker (gotcha 82)."
+            echo "- Do NOT widen an exemption to silence the probe."
+            echo ""
+            echo "Run: ${RUN_URL}"
+            echo ""
+            echo "---"
+            echo "Filed automatically by .github/workflows/rls-guard.yml."
+          } > issue_body.md
+
+          DUPE_NUMBER=$(gh issue list \
+            --state open \
+            --search "in:title \"${TITLE_SUFFIX}\" created:>=${SINCE}" \
+            --json number \
+            --jq '.[0].number // empty')
+
+          if [ -n "${DUPE_NUMBER}" ]; then
+            echo "Existing issue #${DUPE_NUMBER} for the same condition — commenting."
+            gh issue comment "${DUPE_NUMBER}" --body-file issue_body.md
+          else
+            gh issue create --title "${NEW_TITLE}" --body-file issue_body.md --label bug
+          fi
+
+      - name: Fail the job so the run is red
+        if: ${{ steps.invariants.outcome != 'skipped' && steps.invariants.outputs.code != '0' }}
+        run: exit 1

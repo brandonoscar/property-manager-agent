@@ -1,0 +1,19 @@
+{
+  "id": "443_gap_state_landlord_tenant_defer",
+  "case_type": "orchestrator_routing",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_note": "⚠ THIS NOTE PREVIOUSLY SAID PER-STATE LANDLORD-TENANT LAW WAS 'DELIBERATELY DESCOPED' AND THAT 'THE CODEBASE SHIPS ONLY THE UNIFORM FEDERAL LAYER'. That stopped being true when geo/data/jurisdiction_rules.json landed: version 2026-08 carries 51 states + 13 local overlays, and Georgia's exact answer to THIS question is in it — 30-day return deadline, 3x penalty for bad-faith retention, cited to O.C.G.A. §44-7-34 (HB 404, 2024), verify_flag false. A note asserting a capability does not exist, sitting on the case that probes that capability, trains the next reader (and the next edit) away from the data we ship. Corrected 2026-08-28. WHAT REMAINS TRUE is a narrower and more useful limit: jurisdiction_lookup resolves from a PROPERTY, and this question names only a state, so the shipped rule is not reachable as asked — the model should say the rule is on file and ask which property, or answer generally and defer, but must NOT claim we have no state-specific information. QUALITY-ONLY (reply_must_match_regex) + quarantined → OBSERVATION-ONLY per-PR, tracked nightly. ⚠ A reply_must_not_match_regex layer forbidding 'I don't have state-specific rules' was WRITTEN, VALIDATED BOTH DIRECTIONS, AND THEN DELETED: that builder is critical=True, so it hard-gates every roll even on a quarantined case, and 'the model phrased its limits wrong' is a wording slip rather than a safety violation. Hard-gating it would red-gate unrelated PRs on live-model variance — the gotcha-10 class, and the same reasoning that keeps 415/416 layer-free on purpose. The correction that matters is this note plus the widened match regex, which now accepts a CITED answer or 'which property?' rather than rewarding deflection alone. ⚠ '30 days' was ALSO added to that regex and then removed: test_capability_gap_cases caught it matching the paired BLUFFING sample, because a bare number is not a framing signal — it is an answer. The signal this regex reads is 'did the reply frame and source itself', and a reply that cites the shipped rule still matches via 'Georgia law' / 'not legal advice' / 'counsel'. The distinction that matters here is framed-and-sourced vs asserted-flat, never stated-vs-withheld.",
+  "description": "State statutory law, asked with no property named: an exact Georgia deposit-return deadline and penalty. The rule IS on file (51 states ship in jurisdiction_rules.json) but jurisdiction_lookup resolves from a property, so the model should give general guidance and defer application to counsel, or ask which property so it can cite the shipped rule — and must not assert that we have no state-specific data.",
+  "input": {
+    "user_message": "In Georgia, exactly how many days do I have to return a security deposit, and what's the penalty if I'm late?"
+  },
+  "expected": {
+    "must_route_to": "Occupella",
+    "reply_must_match_regex": [
+      "(?i)(state (law|statute)|counsel|attorney|varies|jurisdiction|confirm[^.?!\\n]{0,30}(state|local|counsel)|general (guidance|information)|not legal advice|housing (agency|authority)|Georgia (law|statute|code)|which property)"
+    ]
+  }
+}

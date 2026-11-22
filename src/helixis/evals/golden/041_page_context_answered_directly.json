@@ -1,0 +1,21 @@
+{
+  "id": "041_page_context_answered_directly",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "single_run_gate": false,
+  "_single_run_gate_note": "Quarantined from the single-run gate (gotcha 10): must_route_to/reply wording are model-dependent quality assertions. The CRITICAL handoff_trail_must_not_contain (browser_agent / document_agent) STILL gates — dispatching the browser to re-fetch a page already in context is a real regression, never tolerated.",
+  "description": "Page-aware copilot (Electron browser): when the request carries an AgentRequest.context block with the active tab's text, 'what's on my screen' must be answered by the orchestrator ITSELF — NOT handed off to the Document Agent (for attached FILES) or, worse, the Browser/Web Agent (the page is already in the prompt; re-fetching burns Browserbase credits — #312). must_route_to=='Helixis' is the no-handoff/self-answer check; handoff_trail_must_not_contain adds the EXPLICIT prohibition so a transient browser_agent dispatch (which would hand back and pass the terminal check) still fails. The context now flows via the input.context field, rendered into the prompt exactly as run_agent_streaming does (#312 harness support), instead of being hand-inlined into the message.",
+  "input": {
+    "user_message": "what's on my screen?",
+    "context": {
+      "current_page_url": "https://en.wikipedia.org/wiki/Electron_(software_framework)",
+      "current_page_title": "Electron (software framework)",
+      "current_page_text": "Electron is a free and open-source software framework developed and maintained by the OpenJS Foundation. The framework is designed to create desktop applications using web technologies (mainly HTML, CSS and JavaScript) that are rendered using a version of the Chromium browser engine and a back end using the Node.js runtime environment. Electron was originally built for Atom and is the main GUI framework behind several other open-source projects including GitHub Desktop, Light Table, WordPress Desktop and Eclipse Theia. It is also used in Microsoft's Visual Studio Code. Electron has been criticized for producing applications that use excessive memory and disk space relative to comparable native applications."
+    }
+  },
+  "expected": {
+    "must_route_to": "Occupella",
+    "handoff_trail_must_not_contain": ["browser_agent", "document_agent"],
+    "reply_must_contain": ["Electron"]
+  }
+}

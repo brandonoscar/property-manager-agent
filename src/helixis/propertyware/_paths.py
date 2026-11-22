@@ -1,0 +1,1113 @@
+"""Every operation in Propertyware's official spec. GENERATED -- do not edit.
+
+Regenerate with ``python scripts/propertyware_paths.py --write``. Its
+``--check`` fails when this file and the spec differ, and
+``tests/unit/test_propertyware_paths.py`` rebuilds it from the spec.
+
+Source: docs/propertyware/vendor/app.propertyware.com/openapi.json
+sha256 4ab5e2c85731fb56a6305be387f3669a8c8e029f8023d5015920ad77c0577936
+"""
+
+from __future__ import annotations
+
+SPEC_SHA256 = "4ab5e2c85731fb56a6305be387f3669a8c8e029f8023d5015920ad77c0577936"
+
+#: The credential headers, in the order the spec's Authentication section
+#: lists them. The spec declares no securitySchemes; its prose names them.
+AUTH_HEADERS: tuple[str, ...] = (
+    "x-propertyware-client-id",
+    "x-propertyware-client-secret",
+    "x-propertyware-system-id",
+)
+
+#: ``"<METHOD> <path>"``, path case exact -> the query parameters it declares.
+QUERY_PARAMS: dict[str, frozenset[str]] = {
+    "DELETE /accounting/bankdeposits/{bankDepositID}": frozenset(),
+    "DELETE /accounting/glaccounts/{glAccount}": frozenset(),
+    "DELETE /accounting/ownercontributions/{ownerContributionID}": frozenset(),
+    "DELETE /bills/{billID}": frozenset(),
+    "DELETE /buildings/{buildingID}": frozenset(),
+    "DELETE /buildings/{buildingID}/conversations/{conversationID}": frozenset(),
+    "DELETE /contacts/{contactID}": frozenset(),
+    "DELETE /contacts/{contactID}/conversations/{conversationID}": frozenset(),
+    "DELETE /docs/{documentId}": frozenset(),
+    "DELETE /leases/charges/{chargeID}": frozenset(),
+    "DELETE /leases/{leaseID}": frozenset(),
+    "DELETE /leases/{leaseID}/conversations/{conversationID}": frozenset(),
+    "DELETE /portfolios/{portfolioID}/conversations/{conversationID}": frozenset(),
+    "DELETE /prospects/{prospectID}/conversations/{conversationID}": frozenset(),
+    "DELETE /units/{unitID}": frozenset(),
+    "DELETE /units/{unitID}/conversations/{conversationID}": frozenset(),
+    "DELETE /workorders/{workOrderID}": frozenset(),
+    "DELETE /workorders/{workOrderID}/tasks/{taskID}": frozenset(),
+    "GET /accounting/generalledger": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "offset",
+            "orderby",
+            "ownerID",
+            "portfolioID",
+            "postDateEnd",
+            "postDateStart",
+            "vendorID",
+        }
+    ),
+    "GET /accounting/glaccounts": frozenset(
+        {
+            "accountCode",
+            "accountNumber",
+            "includeDeactivated",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "parentGLAccountId",
+        }
+    ),
+    "GET /accounting/glaccounts/{glAccountID}": frozenset(),
+    "GET /accounting/ownercontributions": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "postDateEnd",
+            "postDateStart",
+        }
+    ),
+    "GET /accounting/ownerdraws": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "postDateEnd",
+            "postDateStart",
+        }
+    ),
+    "GET /bills": frozenset(
+        {
+            "attachedToWorkOrder",
+            "billDateEnd",
+            "billDateStart",
+            "dueDateEnd",
+            "dueDateStart",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "markupGLAccountID",
+            "offset",
+            "orderby",
+            "paid",
+            "portfolioID",
+            "vendorID",
+            "workOrderID",
+        }
+    ),
+    "GET /bills/payments": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "paymentDateEnd",
+            "paymentDateStart",
+            "paymentGLAccountID",
+            "vendorID",
+        }
+    ),
+    "GET /bills/payments/{billPaymentID}": frozenset(),
+    "GET /bills/vendorchecks": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "postDateEnd",
+            "postDateStart",
+            "vendorID",
+        }
+    ),
+    "GET /bills/{billID}": frozenset(),
+    "GET /buildings": frozenset(
+        {
+            "abbreviation",
+            "address",
+            "category",
+            "includeCustomFields",
+            "includeDeactivated",
+            "lastModifiedBy",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "name",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "propertyType",
+            "publishedForRent",
+            "searchTag",
+            "type",
+            "vacant",
+        }
+    ),
+    "GET /buildings/amenities": frozenset(),
+    "GET /buildings/{buildingID}": frozenset({"includeCustomFields"}),
+    "GET /buildings/{buildingID}/conversations": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "type",
+        }
+    ),
+    "GET /buildings/{buildingID}/conversations/{conversationID}": frozenset(),
+    "GET /buildings/{buildingID}/managementfees": frozenset(),
+    "GET /buildings/{buildingID}/managers": frozenset(),
+    "GET /buildings/{buildingID}/notes": frozenset(),
+    "GET /contacts": frozenset(
+        {
+            "email",
+            "firstName",
+            "includeCustomFields",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "lastName",
+            "limit",
+            "offset",
+            "orderby",
+            "searchTag",
+            "type",
+        }
+    ),
+    "GET /contacts/categories": frozenset(),
+    "GET /contacts/{contactID}": frozenset({"includeCustomFields"}),
+    "GET /contacts/{contactID}/conversations": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "type",
+        }
+    ),
+    "GET /contacts/{contactID}/conversations/{conversationID}": frozenset(),
+    "GET /customfields/{entityType}/definitions": frozenset(),
+    "GET /docs": frozenset(
+        {
+            "entityId",
+            "entityType",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+        }
+    ),
+    "GET /docs/{documentId}": frozenset(),
+    "GET /docs/{documentId}/download": frozenset(),
+    "GET /health": frozenset(),
+    "GET /inspections": frozenset(
+        {
+            "buildingID",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "status",
+            "type",
+        }
+    ),
+    "GET /inspections/{inspectionId}": frozenset({"includeCustomFields"}),
+    "GET /leases": frozenset(
+        {
+            "buildingID",
+            "endDateEnd",
+            "endDateStart",
+            "includeCustomFields",
+            "includeOtherBalances",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "moveInDateEnd",
+            "moveInDateStart",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "scheduleMoveOutDateEnd",
+            "scheduleMoveOutDateStart",
+            "startDateEnd",
+            "startDateStart",
+            "status",
+            "unitID",
+        }
+    ),
+    "GET /leases/adjustments": frozenset(
+        {
+            "glAccountID",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "postDateEnd",
+            "postDateStart",
+            "status",
+        }
+    ),
+    "GET /leases/autocharges": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "offset",
+            "orderby",
+        }
+    ),
+    "GET /leases/charges": frozenset(
+        {
+            "glAccountID",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "postDateEnd",
+            "postDateStart",
+            "status",
+        }
+    ),
+    "GET /leases/creditmemos": frozenset(
+        {
+            "glAccountID",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "postDateEnd",
+            "postDateStart",
+            "status",
+        }
+    ),
+    "GET /leases/discounts": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "offset",
+            "orderby",
+            "postDateEnd",
+            "postDateStart",
+        }
+    ),
+    "GET /leases/journalentries": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "offset",
+            "orderby",
+            "postDateEnd",
+            "postDateStart",
+        }
+    ),
+    "GET /leases/journalentries/{leaseID}": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "offset",
+            "orderby",
+            "postDateEnd",
+            "postDateStart",
+        }
+    ),
+    "GET /leases/payments": frozenset(
+        {
+            "glAccountID",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "postDateEnd",
+            "postDateStart",
+            "status",
+        }
+    ),
+    "GET /leases/refunds": frozenset(
+        {
+            "glAccountID",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "leaseID",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "postDateEnd",
+            "postDateStart",
+            "status",
+        }
+    ),
+    "GET /leases/statuses": frozenset(),
+    "GET /leases/{leaseID}/conversations": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "type",
+        }
+    ),
+    "GET /leases/{leaseID}/conversations/{conversationID}": frozenset(),
+    "GET /leases/{leaseId}": frozenset({"includeCustomFields", "includeOtherBalances"}),
+    "GET /leases/{leaseId}/autocharges": frozenset(),
+    "GET /leases/{leaseId}/autoepayments": frozenset(),
+    "GET /leases/{leaseId}/autojournalentries": frozenset(),
+    "GET /leases/{leaseId}/contacts": frozenset({"includeCustomFields"}),
+    "GET /leases/{leaseId}/customfields": frozenset(),
+    "GET /leases/{leaseId}/document": frozenset(),
+    "GET /leases/{leaseId}/latefeerule": frozenset(),
+    "GET /leases/{leaseId}/notes": frozenset(),
+    "GET /leases/{leaseId}/workorders": frozenset(),
+    "GET /portfolios": frozenset(
+        {
+            "abbreviation",
+            "includeBalances",
+            "includeCustomFields",
+            "includeDeactivated",
+            "lastModifiedBy",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "name",
+            "offset",
+            "orderby",
+        }
+    ),
+    "GET /portfolios/{portfolioID}": frozenset({"includeBalances", "includeCustomFields"}),
+    "GET /portfolios/{portfolioID}/conversations": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "type",
+        }
+    ),
+    "GET /portfolios/{portfolioID}/conversations/{conversationID}": frozenset(),
+    "GET /prospects": frozenset(
+        {
+            "buildingID",
+            "includeCustomFields",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "status",
+            "type",
+        }
+    ),
+    "GET /prospects/statuses": frozenset(),
+    "GET /prospects/{prospectID}": frozenset({"includeCustomFields"}),
+    "GET /prospects/{prospectID}/campaign": frozenset(),
+    "GET /prospects/{prospectID}/conversations": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "type",
+        }
+    ),
+    "GET /prospects/{prospectID}/conversations/{conversationID}": frozenset(),
+    "GET /units": frozenset(
+        {
+            "buildingID",
+            "includeCustomFields",
+            "includeDeactivated",
+            "lastModifiedBy",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "publishedForRent",
+            "type",
+            "vacant",
+        }
+    ),
+    "GET /units/amenities": frozenset(),
+    "GET /units/{unitID}": frozenset({"includeCustomFields"}),
+    "GET /units/{unitID}/conversations": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "type",
+        }
+    ),
+    "GET /units/{unitID}/conversations/{conversationID}": frozenset(),
+    "GET /units/{unitID}/customFields": frozenset(),
+    "GET /vendors": frozenset(
+        {
+            "active",
+            "includeCustomFields",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "type",
+        }
+    ),
+    "GET /vendors/{vendorID}": frozenset({"includeCustomFields"}),
+    "GET /vendors/{vendorID}/account": frozenset(),
+    "GET /vendors/{vendorID}/conversations": frozenset(
+        {
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "type",
+        }
+    ),
+    "GET /vendors/{vendorID}/conversations/{conversationID}": frozenset(),
+    "GET /workorders": frozenset(
+        {
+            "buildingID",
+            "completedDateEnd",
+            "completedDateStart",
+            "includeCustomFields",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+            "portfolioID",
+            "priority",
+            "status",
+            "type",
+        }
+    ),
+    "GET /workorders/{workOrderID}/tasks/{taskID}": frozenset(),
+    "GET /workorders/{workOrderId}": frozenset({"includeCustomFields"}),
+    "GET /workorders/{workOrderId}/tasks": frozenset(
+        {
+            "completed",
+            "dueDate",
+            "lastModifiedDateTimeEnd",
+            "lastModifiedDateTimeStart",
+            "limit",
+            "offset",
+            "orderby",
+        }
+    ),
+    "PATCH /bills/payment/{billPaymentID}": frozenset(),
+    "PATCH /bills/{billID}": frozenset(),
+    "PATCH /buildings/{buildingID}": frozenset(),
+    "PATCH /contacts/{contactID}": frozenset(),
+    "PATCH /leases/{leaseId}": frozenset(),
+    "PATCH /portfolios/{portfolioID}": frozenset(),
+    "PATCH /prospects/{prospectId}": frozenset(),
+    "PATCH /units/{unitID}": frozenset(),
+    "PATCH /vendors/{vendorID}": frozenset(),
+    "PATCH /workorders/{workOrderID}": frozenset(),
+    "POST /accounting/bankdeposits": frozenset(),
+    "POST /accounting/glaccounts": frozenset(),
+    "POST /accounting/glaccounts/bulk": frozenset(),
+    "POST /accounting/ownercontributions": frozenset(),
+    "POST /accounting/ownerdraws": frozenset(),
+    "POST /bills": frozenset(),
+    "POST /bills/autobills": frozenset(),
+    "POST /bills/bulk": frozenset(),
+    "POST /bills/credit": frozenset(),
+    "POST /bills/payment": frozenset(),
+    "POST /bills/payments/bulk": frozenset(),
+    "POST /bills/vendorchecks": frozenset(),
+    "POST /buildings": frozenset(),
+    "POST /buildings/bulk": frozenset(),
+    "POST /contacts": frozenset(),
+    "POST /contacts/bulk": frozenset(),
+    "POST /docs": frozenset(
+        {
+            "entityId",
+            "entityType",
+            "publishToOwnerPortal",
+            "publishToTenantPortal",
+        }
+    ),
+    "POST /leases": frozenset(),
+    "POST /leases/adjustments": frozenset(),
+    "POST /leases/autocharges": frozenset(),
+    "POST /leases/charges": frozenset(),
+    "POST /leases/charges/bulk": frozenset(),
+    "POST /leases/discounts": frozenset(),
+    "POST /leases/journalentries": frozenset(),
+    "POST /leases/payments": frozenset(),
+    "POST /leases/refunds": frozenset(),
+    "POST /leases/{leaseID}/conversations": frozenset(),
+    "POST /leases/{leaseID}/conversations/{conversationID}/comments": frozenset(),
+    "POST /portfolios": frozenset(),
+    "POST /portfolios/bulk": frozenset(),
+    "POST /prospects": frozenset(),
+    "POST /prospects/bulk": frozenset(),
+    "POST /prospects/{prospectID}/conversations": frozenset(),
+    "POST /units": frozenset(),
+    "POST /units/bulk": frozenset(),
+    "POST /vendors": frozenset(),
+    "POST /vendors/bulk": frozenset(),
+    "POST /workorders": frozenset(),
+    "POST /workorders/bulk": frozenset(),
+    "POST /workorders/{workOrderId}/tasks": frozenset(),
+    "POST /workorders/{workOrderId}/tasks/{taskId}/comments": frozenset(),
+    "PUT /accounting/glaccounts/{glAccountID}": frozenset(),
+    "PUT /accounting/ownerdraws/{drawID}": frozenset(),
+    "PUT /bills/credit/{creditID}": frozenset(),
+    "PUT /bills/payment/{billPaymentID}": frozenset(),
+    "PUT /bills/vendorchecks/{vendorCheckID}": frozenset(),
+    "PUT /bills/{billId}": frozenset(),
+    "PUT /buildings/customfields": frozenset(),
+    "PUT /buildings/{buildingID}": frozenset(),
+    "PUT /contacts/customfields": frozenset(),
+    "PUT /contacts/{contactID}": frozenset(),
+    "PUT /docs/{documentId}": frozenset(),
+    "PUT /leases/adjustments/{adjustmentID}": frozenset(),
+    "PUT /leases/autocharges/{autoChargeID}": frozenset(),
+    "PUT /leases/charges/{chargeID}": frozenset(),
+    "PUT /leases/customfields": frozenset(),
+    "PUT /leases/discounts/{discountID}": frozenset(),
+    "PUT /leases/journalentries/{journalentryID}": frozenset(),
+    "PUT /leases/payments/{entityID}": frozenset(),
+    "PUT /leases/refunds/{refundID}": frozenset(),
+    "PUT /leases/{leaseId}": frozenset(),
+    "PUT /portfolios/customfields": frozenset(),
+    "PUT /portfolios/customfields/bulk": frozenset(),
+    "PUT /portfolios/{portfolioID}": frozenset(),
+    "PUT /prospects/customfields": frozenset(),
+    "PUT /units/customfields": frozenset(),
+    "PUT /units/{unitID}": frozenset(),
+    "PUT /vendors/customfields": frozenset(),
+    "PUT /workorders/closeworkorder/{workOrderID}": frozenset(),
+    "PUT /workorders/customfields": frozenset(),
+    "PUT /workorders/{workOrderId}/tasks/{taskId}": frozenset(),
+}
+
+#: Operations whose summary or description carries the beta marker.
+BETA: frozenset[str] = frozenset(
+    {
+        "DELETE /accounting/bankdeposits/{bankDepositID}",
+        "DELETE /accounting/glaccounts/{glAccount}",
+        "DELETE /accounting/ownercontributions/{ownerContributionID}",
+        "DELETE /bills/{billID}",
+        "DELETE /buildings/{buildingID}",
+        "DELETE /buildings/{buildingID}/conversations/{conversationID}",
+        "DELETE /contacts/{contactID}",
+        "DELETE /contacts/{contactID}/conversations/{conversationID}",
+        "DELETE /docs/{documentId}",
+        "DELETE /leases/charges/{chargeID}",
+        "DELETE /leases/{leaseID}",
+        "DELETE /leases/{leaseID}/conversations/{conversationID}",
+        "DELETE /portfolios/{portfolioID}/conversations/{conversationID}",
+        "DELETE /prospects/{prospectID}/conversations/{conversationID}",
+        "DELETE /units/{unitID}",
+        "DELETE /units/{unitID}/conversations/{conversationID}",
+        "DELETE /workorders/{workOrderID}",
+        "DELETE /workorders/{workOrderID}/tasks/{taskID}",
+        "POST /bills/autobills",
+        "POST /leases/autocharges",
+        "POST /leases/discounts",
+        "PUT /leases/payments/{entityID}",
+        "PUT /leases/refunds/{refundID}",
+        "PUT /portfolios/customfields/bulk",
+        "PUT /workorders/closeworkorder/{workOrderID}",
+    }
+)
+
+#: Operations whose 2xx response declares the ``X-Total-Count`` header.
+TOTAL_COUNT: frozenset[str] = frozenset(
+    {
+        "GET /accounting/generalledger",
+        "GET /accounting/glaccounts",
+        "GET /accounting/ownercontributions",
+        "GET /accounting/ownerdraws",
+        "GET /bills",
+        "GET /bills/payments",
+        "GET /bills/vendorchecks",
+        "GET /buildings",
+        "GET /buildings/{buildingID}/conversations",
+        "GET /contacts",
+        "GET /contacts/categories",
+        "GET /contacts/{contactID}/conversations",
+        "GET /docs",
+        "GET /inspections",
+        "GET /leases",
+        "GET /leases/adjustments",
+        "GET /leases/charges",
+        "GET /leases/discounts",
+        "GET /leases/journalentries",
+        "GET /leases/journalentries/{leaseID}",
+        "GET /leases/payments",
+        "GET /leases/refunds",
+        "GET /leases/{leaseID}/conversations",
+        "GET /portfolios",
+        "GET /portfolios/{portfolioID}/conversations",
+        "GET /prospects",
+        "GET /prospects/{prospectID}/conversations",
+        "GET /units",
+        "GET /units/{unitID}/conversations",
+        "GET /vendors",
+        "GET /vendors/{vendorID}/conversations",
+        "GET /workorders",
+        "GET /workorders/{workOrderId}/tasks",
+    }
+)
+
+#: The API-key permission each operation's description names. An
+#: operation that names none is absent.
+PERMISSIONS: dict[str, str] = {
+    "DELETE /accounting/bankdeposits/{bankDepositID}": "GENERAL LEDGER - Delete",
+    "DELETE /accounting/glaccounts/{glAccount}": "GL ACCOUNTS - Delete",
+    "DELETE /accounting/ownercontributions/{ownerContributionID}": "PORTFOLIOS - Delete",
+    "DELETE /bills/{billID}": "BILLS - Delete",
+    "DELETE /buildings/{buildingID}": "BUILDINGS - Delete",
+    "DELETE /buildings/{buildingID}/conversations/{conversationID}": "BUILDINGS - Delete",
+    "DELETE /contacts/{contactID}": "CONTACTS - Delete",
+    "DELETE /contacts/{contactID}/conversations/{conversationID}": "CONTACTS - Delete",
+    "DELETE /docs/{documentId}": "DOCUMENTS - Delete",
+    "DELETE /leases/charges/{chargeID}": "LEASES - Delete",
+    "DELETE /leases/{leaseID}": "LEASES - Delete",
+    "DELETE /leases/{leaseID}/conversations/{conversationID}": "LEASES - Delete",
+    "DELETE /portfolios/{portfolioID}/conversations/{conversationID}": "PORTFOLIOS - Delete",
+    "DELETE /prospects/{prospectID}/conversations/{conversationID}": "PROSPECTS - Delete",
+    "DELETE /units/{unitID}": "UNITS - Delete",
+    "DELETE /units/{unitID}/conversations/{conversationID}": "UNITS - Delete",
+    "DELETE /workorders/{workOrderID}": "WORK ORDERS - Delete",
+    "DELETE /workorders/{workOrderID}/tasks/{taskID}": "WORK ORDERS - Delete",
+    "GET /accounting/generalledger": "GENERAL LEDGER - Read",
+    "GET /accounting/glaccounts": "GL ACCOUNTS - Read",
+    "GET /accounting/glaccounts/{glAccountID}": "GL ACCOUNTS - Read",
+    "GET /accounting/ownercontributions": "PORTFOLIOS - Read",
+    "GET /accounting/ownerdraws": "PORTFOLIOS - Read",
+    "GET /bills": "BILLS - Read",
+    "GET /bills/payments": "BILLS - Read",
+    "GET /bills/payments/{billPaymentID}": "BILLS - Read",
+    "GET /bills/vendorchecks": "VENDORS - Read",
+    "GET /bills/{billID}": "BILLS - Read",
+    "GET /buildings": "BUILDINGS - Read",
+    "GET /buildings/amenities": "BUILDINGS - Read",
+    "GET /buildings/{buildingID}": "BUILDINGS - Read",
+    "GET /buildings/{buildingID}/conversations": "BUILDINGS - Read",
+    "GET /buildings/{buildingID}/conversations/{conversationID}": "BUILDINGS - Read",
+    "GET /buildings/{buildingID}/managementfees": "BUILDINGS - Read",
+    "GET /buildings/{buildingID}/managers": "BUILDINGS - Read",
+    "GET /buildings/{buildingID}/notes": "BUILDINGS - Read",
+    "GET /contacts": "CONTACTS - Read",
+    "GET /contacts/categories": "CONTACTS - Read",
+    "GET /contacts/{contactID}": "CONTACTS - Read",
+    "GET /contacts/{contactID}/conversations": "CONTACTS - Read",
+    "GET /contacts/{contactID}/conversations/{conversationID}": "CONTACTS - Read",
+    "GET /customfields/{entityType}/definitions": "CUSTOM FIELD - Read",
+    "GET /docs": "DOCUMENTS - Read",
+    "GET /docs/{documentId}": "DOCUMENTS - Read",
+    "GET /docs/{documentId}/download": "DOCUMENTS - Read",
+    "GET /inspections": "INSPECTIONS - Read",
+    "GET /inspections/{inspectionId}": "INSPECTIONS - Read",
+    "GET /leases": "LEASES - Read",
+    "GET /leases/adjustments": "LEASES - Read",
+    "GET /leases/autocharges": "LEASES - Read",
+    "GET /leases/charges": "LEASES - Read",
+    "GET /leases/creditmemos": "LEASES - Read",
+    "GET /leases/discounts": "LEASES - Read",
+    "GET /leases/journalentries": "LEASES - Read",
+    "GET /leases/journalentries/{leaseID}": "LEASES - Read",
+    "GET /leases/payments": "LEASES - Read",
+    "GET /leases/refunds": "LEASES - Read",
+    "GET /leases/statuses": "LEASES - Read",
+    "GET /leases/{leaseID}/conversations": "LEASES - Read",
+    "GET /leases/{leaseID}/conversations/{conversationID}": "LEASES - Read",
+    "GET /leases/{leaseId}": "LEASES - Read",
+    "GET /leases/{leaseId}/autocharges": "LEASES - Read",
+    "GET /leases/{leaseId}/autoepayments": "LEASES - Read",
+    "GET /leases/{leaseId}/autojournalentries": "LEASES - Read",
+    "GET /leases/{leaseId}/contacts": "LEASES - Read",
+    "GET /leases/{leaseId}/customfields": "LEASES - Read",
+    "GET /leases/{leaseId}/document": "LEASES - Read",
+    "GET /leases/{leaseId}/latefeerule": "LEASES - Read",
+    "GET /leases/{leaseId}/notes": "LEASES - Read",
+    "GET /leases/{leaseId}/workorders": "LEASES - Read",
+    "GET /portfolios": "PORTFOLIOS - Read",
+    "GET /portfolios/{portfolioID}": "PORTFOLIOS - Read",
+    "GET /portfolios/{portfolioID}/conversations": "PORTFOLIOS - Read",
+    "GET /portfolios/{portfolioID}/conversations/{conversationID}": "PORTFOLIOS - Read",
+    "GET /prospects": "PROSPECTS - Read",
+    "GET /prospects/statuses": "PROSPECTS - Read",
+    "GET /prospects/{prospectID}": "PROSPECTS - Read",
+    "GET /prospects/{prospectID}/campaign": "PROSPECTS - Read",
+    "GET /prospects/{prospectID}/conversations": "PROSPECTS - Read",
+    "GET /prospects/{prospectID}/conversations/{conversationID}": "PROSPECTS - Read",
+    "GET /units": "UNITS - Read",
+    "GET /units/amenities": "UNITS - Read",
+    "GET /units/{unitID}": "UNITS - Read",
+    "GET /units/{unitID}/conversations": "UNITS - Read",
+    "GET /units/{unitID}/conversations/{conversationID}": "UNITS - Read",
+    "GET /units/{unitID}/customFields": "UNITS - Read",
+    "GET /vendors": "VENDORS - Read",
+    "GET /vendors/{vendorID}": "VENDORS - Read",
+    "GET /vendors/{vendorID}/account": "VENDORS - Read",
+    "GET /vendors/{vendorID}/conversations": "VENDORS - Read",
+    "GET /vendors/{vendorID}/conversations/{conversationID}": "VENDORS - Read",
+    "GET /workorders": "WORK ORDERS - Read",
+    "GET /workorders/{workOrderID}/tasks/{taskID}": "WORK ORDERS - Read",
+    "GET /workorders/{workOrderId}": "WORK ORDERS - Read",
+    "GET /workorders/{workOrderId}/tasks": "WORK ORDERS - Read",
+    "PATCH /bills/payment/{billPaymentID}": "VENDORS - Write",
+    "PATCH /bills/{billID}": "BILLS - Write",
+    "PATCH /buildings/{buildingID}": "BUILDINGS - Write",
+    "PATCH /contacts/{contactID}": "CONTACTS - Write",
+    "PATCH /leases/{leaseId}": "LEASES - Write",
+    "PATCH /portfolios/{portfolioID}": "PORTFOLIOS - Write",
+    "PATCH /prospects/{prospectId}": "PROSPECTS - Write",
+    "PATCH /units/{unitID}": "BUILDINGS - Write",
+    "PATCH /vendors/{vendorID}": "VENDORS - Write",
+    "PATCH /workorders/{workOrderID}": "WORK ORDERS - Write",
+    "POST /accounting/bankdeposits": "GENERAL LEDGER - Write",
+    "POST /accounting/glaccounts": "GL ACCOUNTS - Write",
+    "POST /accounting/glaccounts/bulk": "GL ACCOUNTS - Write",
+    "POST /accounting/ownercontributions": "PORTFOLIOS - Write",
+    "POST /accounting/ownerdraws": "PORTFOLIOS - Write",
+    "POST /bills": "BILLS - Write",
+    "POST /bills/autobills": "BILLS - Write",
+    "POST /bills/bulk": "BILLS - Write",
+    "POST /bills/credit": "BILLS - Write",
+    "POST /bills/payment": "VENDORS - Write",
+    "POST /bills/payments/bulk": "VENDORS - Write",
+    "POST /bills/vendorchecks": "VENDORS - Write",
+    "POST /buildings": "BUILDINGS - Write",
+    "POST /buildings/bulk": "BUILDINGS - Write",
+    "POST /contacts": "CONTACTS - Write",
+    "POST /contacts/bulk": "CONTACTS - Write",
+    "POST /docs": "DOCUMENTS - Write",
+    "POST /leases": "LEASES - Write",
+    "POST /leases/adjustments": "LEASES - Write",
+    "POST /leases/autocharges": "LEASES - Write",
+    "POST /leases/charges": "LEASES - Write",
+    "POST /leases/charges/bulk": "LEASES - Write",
+    "POST /leases/discounts": "LEASES - Write",
+    "POST /leases/journalentries": "LEASES - Write",
+    "POST /leases/payments": "LEASES - Write",
+    "POST /leases/refunds": "LEASES - Write",
+    "POST /leases/{leaseID}/conversations": "LEASES - Write",
+    "POST /leases/{leaseID}/conversations/{conversationID}/comments": "LEASES - Write",
+    "POST /portfolios": "PORTFOLIOS - Write",
+    "POST /portfolios/bulk": "PORTFOLIOS - Write",
+    "POST /prospects": "PROSPECTS - Write",
+    "POST /prospects/bulk": "UNITS - Write",
+    "POST /prospects/{prospectID}/conversations": "PROSPECTS - Write",
+    "POST /units": "UNITS - Write",
+    "POST /units/bulk": "BUILDINGS - Write",
+    "POST /vendors": "VENDORS - Write",
+    "POST /vendors/bulk": "VENDORS - Write",
+    "POST /workorders": "WORK ORDERS - Write",
+    "POST /workorders/bulk": "WORK ORDERS - Write",
+    "POST /workorders/{workOrderId}/tasks": "WORK ORDERS - Write",
+    "POST /workorders/{workOrderId}/tasks/{taskId}/comments": "WORK ORDERS - Write",
+    "PUT /accounting/glaccounts/{glAccountID}": "GL ACCOUNTS - Write",
+    "PUT /accounting/ownerdraws/{drawID}": "PORTFOLIOS - Write",
+    "PUT /bills/credit/{creditID}": "BILLS - Write",
+    "PUT /bills/payment/{billPaymentID}": "VENDORS - Write",
+    "PUT /bills/vendorchecks/{vendorCheckID}": "VENDORS - Write",
+    "PUT /bills/{billId}": "BILLS - Write",
+    "PUT /buildings/customfields": "BUILDINGS - Write",
+    "PUT /buildings/{buildingID}": "BUILDINGS - Write",
+    "PUT /contacts/customfields": "CONTACTS - Write",
+    "PUT /contacts/{contactID}": "CONTACTS - Write",
+    "PUT /docs/{documentId}": "DOCUMENTS - Write",
+    "PUT /leases/adjustments/{adjustmentID}": "LEASES - Write",
+    "PUT /leases/autocharges/{autoChargeID}": "LEASES - Write",
+    "PUT /leases/charges/{chargeID}": "LEASES - Write",
+    "PUT /leases/customfields": "LEASES - Write",
+    "PUT /leases/discounts/{discountID}": "LEASES - Write",
+    "PUT /leases/journalentries/{journalentryID}": "LEASES - Write",
+    "PUT /leases/payments/{entityID}": "LEASES - Write",
+    "PUT /leases/refunds/{refundID}": "LEASES - Write",
+    "PUT /leases/{leaseId}": "LEASES - Write",
+    "PUT /portfolios/customfields": "PORTFOLIOS - Write",
+    "PUT /portfolios/customfields/bulk": "PORTFOLIOS - Write",
+    "PUT /portfolios/{portfolioID}": "PORTFOLIOS - Write",
+    "PUT /prospects/customfields": "PROSPECTS - Write",
+    "PUT /units/customfields": "UNITS - Write",
+    "PUT /units/{unitID}": "UNITS - Write",
+    "PUT /vendors/customfields": "VENDORS - Write",
+    "PUT /workorders/closeworkorder/{workOrderID}": "WORK ORDERS - Write",
+    "PUT /workorders/customfields": "WORK ORDERS - Write",
+    "PUT /workorders/{workOrderId}/tasks/{taskId}": "WORK ORDERS - Write",
+}
+
+#: The fields each operation's description says it can be sorted by, as
+#: written. An operation that declares none is absent.
+SORTABLE: dict[str, frozenset[str]] = {
+    "GET /accounting/glaccounts": frozenset({"accountcode", "accountnumber", "id"}),
+    "GET /accounting/ownercontributions": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "postdate",
+        }
+    ),
+    "GET /accounting/ownerdraws": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "portfolioid",
+            "postdate",
+        }
+    ),
+    "GET /bills": frozenset(
+        {
+            "billdate",
+            "billnumber",
+            "createddate",
+            "duedate",
+            "id",
+            "lastmodifieddatetime",
+        }
+    ),
+    "GET /bills/payments": frozenset(
+        {
+            "checknumber",
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "paymentdate",
+            "vendorid",
+        }
+    ),
+    "GET /bills/vendorchecks": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "postdate",
+            "vendorid",
+        }
+    ),
+    "GET /buildings": frozenset(
+        {
+            "abbreviation",
+            "createddate",
+            "id",
+            "idnumber",
+            "lastmodifieddatetime",
+            "name",
+        }
+    ),
+    "GET /buildings/{buildingID}/conversations": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+        }
+    ),
+    "GET /contacts": frozenset(
+        {
+            "createddate",
+            "email",
+            "firstname",
+            "id",
+            "lastmodifieddatetime",
+            "lastname",
+            "type",
+        }
+    ),
+    "GET /contacts/{contactID}/conversations": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+        }
+    ),
+    "GET /docs": frozenset({"createddate", "id", "lastmodifieddatetime"}),
+    "GET /inspections": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "number",
+            "status",
+        }
+    ),
+    "GET /leases": frozenset(
+        {
+            "enddate",
+            "id",
+            "idnumber",
+            "lastmodifieddatetime",
+            "moveindate",
+            "moveoutdate",
+            "scheduledmoveoutdate",
+            "startdate",
+            "status",
+        }
+    ),
+    "GET /leases/adjustments": frozenset({"id", "leaseid", "postdate"}),
+    "GET /leases/autocharges": frozenset({"createddate", "id", "lastmodifieddatetime"}),
+    "GET /leases/charges": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "leaseid",
+            "postdate",
+        }
+    ),
+    "GET /leases/creditmemos": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "leaseid",
+            "postdate",
+        }
+    ),
+    "GET /leases/discounts": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "leaseid",
+            "postdate",
+        }
+    ),
+    "GET /leases/journalentries": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "postdate",
+        }
+    ),
+    "GET /leases/journalentries/{leaseID}": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "postdate",
+        }
+    ),
+    "GET /leases/payments": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "leaseid",
+            "postdate",
+        }
+    ),
+    "GET /leases/refunds": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "leaseid",
+            "postdate",
+        }
+    ),
+    "GET /leases/{leaseID}/conversations": frozenset({"createddate", "id", "lastmodifieddatetime"}),
+    "GET /portfolios": frozenset(
+        {
+            "abbreviation",
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "name",
+        }
+    ),
+    "GET /portfolios/{portfolioID}/conversations": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+        }
+    ),
+    "GET /prospects": frozenset({"createddate", "id", "lastmodifieddatetime", "status", "type"}),
+    "GET /prospects/{prospectID}/conversations": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+        }
+    ),
+    "GET /units": frozenset(
+        {
+            "abbreviation",
+            "createddate",
+            "id",
+            "idnumber",
+            "lastmodifieddatetime",
+            "name",
+        }
+    ),
+    "GET /units/{unitID}/conversations": frozenset({"createddate", "id", "lastmodifieddatetime"}),
+    "GET /vendors": frozenset({"createddate", "id", "lastmodifieddatetime", "vendortype"}),
+    "GET /vendors/{vendorID}/conversations": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+        }
+    ),
+    "GET /workorders": frozenset(
+        {
+            "createddate",
+            "id",
+            "lastmodifieddatetime",
+            "number",
+            "status",
+            "type",
+        }
+    ),
+    "GET /workorders/{workOrderId}/tasks": frozenset({"createddate", "id", "lastmodifieddatetime"}),
+}

@@ -1,0 +1,32 @@
+{
+  "id": "032_document_reference_routes_to_document",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Routing case (c) — an explicit document reference routes to Document Agent. The extract_document_fields tool is mocked to return a populated lease so the specialist's reply names the tenant and address.",
+  "input": {
+    "user_message": "Please read the lease at /tmp/maria_lopez_lease.pdf and summarize the key terms.",
+    "tool_mocks": {
+      "extract_document_fields": {
+        "doc_type": "lease",
+        "confidence": 0.92,
+        "fields": {
+          "tenant_name": "Maria J. Lopez",
+          "property_address": "240 Elm Street, Brooklyn, NY 11215",
+          "unit": "2A",
+          "monthly_rent": 2450.00,
+          "lease_start": "2026-04-01",
+          "lease_end": "2027-03-31",
+          "signed_date": "2026-03-12"
+        },
+        "summary": "Twelve-month lease for Maria J. Lopez at 240 Elm Street unit 2A, $2,450/mo starting April 1 2026.",
+        "warnings": []
+      }
+    }
+  },
+  "expected": {
+    "must_route_to": "document_agent",
+    "must_not_route_to": ["web_agent", "buildium_agent"],
+    "reply_must_contain": ["Maria", "240 Elm", "2,450"],
+    "reply_must_not_contain": ["Task #", "Tenant #", "Lease #"]
+  }
+}

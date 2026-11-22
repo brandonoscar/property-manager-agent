@@ -1,0 +1,89 @@
+{
+  "id": "055_buildium_resident_request_lookup_flow",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": true,
+  "description": "Closes part of #410 — the resident-requests leg (#401). 'Show me open tenant requests' one-shots buildium_list_resident_requests (the first-class requests surface #401 added so the agent doesn't dump the full task list). The resident / rental-owner / contact request tools share one impl (_list_request_tasks_impl), which the harness mocks; the tool NAME in the trail is still buildium_list_resident_requests. ALL nine mirror aggregate tools mocked empty (040 pattern, extended to the full mirror set) to force the live-tool fallback regardless of which aggregate the model reaches for. Quality/K-of-N assertions; identifier guard critical. DOGFOOD 2026-07-08: the ask is anchored on 'open resident-submitted requests on the Buildium task board' (weak phrasings like 'show me the open resident requests' trip gemini-2.5-flash's empty-completion under the 57-tool schema). 6/6 sweep + 20/20 grid → single_run_gate:true.",
+  "input": {
+    "user_message": "What are the open resident-submitted requests on the Buildium task board?",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "buildium_list_resident_requests": [
+        {
+          "return": "Open resident requests (3):\n- \"Dishwasher not draining\" — Unit 2C, reported Jul 6, In Progress.\n- \"Bedroom window won't latch\" — Unit 9, reported Jul 5, New.\n- \"Hallway light out\" — Unit 4, reported Jul 4, New.",
+          "repeat": 5
+        }
+      ],
+      "property_snapshot": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "portfolio_overview": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "delinquency_report": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "expiring_leases": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "unpaid_bills": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "spending_report": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "open_tasks": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "contact_lookup": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ],
+      "bank_balances": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 6
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "buildium_list_resident_requests"
+    ],
+    "reply_must_match_regex": [
+      "(?i)(dishwasher|window|hallway|request|unit)"
+    ],
+    "reply_must_not_be_empty": true,
+    "reply_must_not_contain": [
+      "Task #",
+      "Tenant #"
+    ]
+  },
+  "_single_run_gate_note": "THAT EVIDENCE IS VOID — measured on live Gemini, and the Google account was cut off 2026-07-21 (gotcha 18). Never re-validated on Anthropic, and PRs run the Haiku PR-gate tier, which gotcha 10 records as drifting from the production model. The gate stays ON because this case PASSED the run that surfaced the stale note (gotcha 48's precedent: a stale justification is not itself evidence of instability). Re-validate on the current tier or quarantine it — do not read the grid above as live proof."
+}

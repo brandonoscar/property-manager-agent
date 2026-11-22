@@ -1,0 +1,17 @@
+{
+  "id": "036_clarify_missing_task_details",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Clarify-then-continue. The user asks to CREATE a task but gives no details (no property/unit, no description of the work). The assistant must ASK for the missing details (a clarifying question) and must NOT fabricate write arguments or fire the write. The create tool is mocked to a sentinel string so a wrongful call returns immediately instead of blocking on the confirm gate; a correct run never triggers it. Verifies the Buildium write-clarification rule. The 'continue after the user answers' half rides on the existing cross-turn history replay (PR #71/#72) and is exercised in normal multi-turn chat.",
+  "input": {
+    "user_message": "Create a maintenance task.",
+    "tool_mocks": {
+      "buildium_create_to_do_task": "Done — the to-do task was created in Buildium."
+    }
+  },
+  "expected": {
+    "must_route_to_one_of": ["buildium_agent", "Occupella"],
+    "reply_must_match_regex": ["\\?"],
+    "reply_must_not_contain": ["was created in Buildium", "Task #", "Tenant #", "Property #"]
+  }
+}

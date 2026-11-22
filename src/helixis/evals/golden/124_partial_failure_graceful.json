@@ -1,0 +1,36 @@
+{
+  "id": "124_partial_failure_graceful",
+  "case_type": "orchestrator_routing",
+  "reasoning_loop": true,
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "description": "W2 probe F8 (graceful partial failure). A two-source question — the tenant's balance (Buildium, succeeds) plus current comparable listings on the open market (web, FAILS). The web failure is modeled the only way the routing seam supports: an empty WebSearchResult (answer null, zero sources) carrying an explicit warning, matching the tool's real degraded shape (cf. case 012). The market half is deliberately 'this week' data the model cannot know parametrically. A good reply still answers the balance AND says the market check couldn't be completed — it neither drops the question half silently nor invents listings. browser_agent is NOT forbidden: web-fails -> browser fallback is sanctioned routing (case 050), so it may appear in the trail and even terminate it.",
+  "_todo": "MISSING PRIMITIVE: no structured error-injection seam — mocks can only return VALUES, so tool errors must be encoded in the value (empty WebSearchResult + warnings here; error-text strings for Buildium string tools); a raise/exception mock mode would let this probe cover the exception path too. Still open — that is finding #44. ⚠ CORRECTED 2026-08-29: this note also claimed there was no routing-side trail cap. That was OVER-BROAD rather than simply wrong. specialist_call_count_max is implemented and gates as SAFETY, but it caps SPECIALIST dispatches — so a retry storm INSIDE one specialist (hammering web_search after the error) is still invisible, and agent_flow's tool_call_count_max has no routing-side equivalent. The gap is narrower than the note said, and real.",
+  "input": {
+    "user_message": "How much does the tenant in unit 4B owe right now, and what are comparable one-bedroom units near 118 Crescent Avenue listed for on the market this week?",
+    "tool_mocks": {
+      "buildium_find_tenant_for_unit": "Unit 4B at 118 Crescent Avenue — Robert Kim. Current open balance: $2,400 (July 2026 rent, past due).",
+      "web_search": {
+        "answer": null,
+        "sources": [],
+        "query": "comparable one-bedroom listings near 118 Crescent Avenue",
+        "warnings": [
+          "search provider unavailable: upstream timeout (503) — no results retrieved"
+        ]
+      }
+    }
+  },
+  "expected": {
+    "must_route_to_one_of": [
+      "buildium_agent",
+      "web_agent",
+      "browser_agent"
+    ],
+    "reply_must_match_regex": [
+      "2,?400",
+      "(couldn'?t|could not|unable|wasn'?t able|was not able|not.{0,30}(check|verify|reach|retrieve|complete|available)|unavailable)"
+    ],
+    "synthesis_footer_required": true
+  }
+}

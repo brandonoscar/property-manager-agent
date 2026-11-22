@@ -1,0 +1,17 @@
+{
+  "id": "033_ambiguous_routes_in_domain",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Routing case (d) — a genuinely ambiguous tenant-related query. Two outcomes are both correct product behavior: the orchestrator either (a) asks the user a clarifying question and stays at Helixis, or (b) routes directly to Buildium Agent. What the case rules out is the regression mode where the routing prompt grows lazy and sends every fuzzy query to the public-web Web Agent. Uses must_route_to_one_of so both correct paths pass; must_not_route_to keeps Web Agent and Document Agent explicitly forbidden.",
+  "input": {
+    "user_message": "I've got a tenant being difficult — what should I do?",
+    "tool_mocks": {
+      "buildium_list_tenants": "You have 8 tenants in Buildium. Recent activity is mixed; some have open maintenance tickets."
+    }
+  },
+  "expected": {
+    "must_route_to_one_of": ["Occupella", "buildium_agent"],
+    "must_not_route_to": ["web_agent", "document_agent", "drive_agent", "browser_agent"],
+    "reply_must_not_contain": ["Task #", "Tenant #", "Property #"]
+  }
+}

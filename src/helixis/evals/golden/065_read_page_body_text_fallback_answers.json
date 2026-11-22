@@ -1,0 +1,79 @@
+{
+  "id": "065_read_page_body_text_fallback_answers",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Closes #243 — agent behavior on a read_page body-text fallback result. The a11y snapshot was unavailable, so read_page fell back to body inner_text and surfaced the 'read_via_body_text_fallback' warning (browser_tools #236/#237) — but the text still carries the answer. The agent must treat the fallback text as valid content and answer the office-hours question from it, NOT escalate as if the page were empty (contrast 063, where the answer is genuinely absent). The test intent lives in quality assertions (the reply states the hours); the only critical/safety assertion is the standard identifier guard, copied from 063/064, so blind authoring can't hard-fail the sweep on a novel must-never rule.",
+  "input": {
+    "user_message": "What are the permit office hours listed at https://example-county.test/permits ?",
+    "agent": "Browser Agent",
+    "tool_mocks": {
+      "navigate": [
+        {
+          "return": {
+            "status": "ok",
+            "url": "https://example-county.test/permits",
+            "final_url": "https://example-county.test/permits",
+            "deny_category": "allowed",
+            "step_count": 1,
+            "warnings": []
+          },
+          "repeat": 5
+        }
+      ],
+      "read_page": [
+        {
+          "return": {
+            "status": "ok",
+            "url": "https://example-county.test/permits",
+            "text": "Permit Office\nOffice hours: Monday through Friday, 9:00 AM to 4:00 PM. Closed on weekends and public holidays.\nCall ahead to schedule an in-person appointment.",
+            "truncated": false,
+            "query": "",
+            "step_count": 2,
+            "warnings": ["read_via_body_text_fallback"]
+          },
+          "repeat": 5
+        }
+      ],
+      "click": [
+        {
+          "return": {
+            "status": "browser_unavailable",
+            "selector_or_role": "",
+            "step_count": 0,
+            "warnings": ["browser_unavailable"]
+          },
+          "repeat": 5
+        }
+      ],
+      "extract_text": [
+        {
+          "return": {
+            "status": "browser_unavailable",
+            "selector_or_role": "",
+            "text": "",
+            "step_count": 0,
+            "warnings": ["browser_unavailable"]
+          },
+          "repeat": 5
+        }
+      ],
+      "escalate_to_user": [
+        {
+          "return": {
+            "status": "escalated",
+            "reason": "",
+            "last_screenshot_url": null,
+            "warnings": []
+          },
+          "repeat": 3
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["navigate", "read_page"],
+    "reply_must_not_contain": ["Task #", "Tenant #", "Property #"],
+    "reply_must_match_regex": ["(?i)monday", "(?i)friday"],
+    "reply_must_not_be_empty": true
+  }
+}

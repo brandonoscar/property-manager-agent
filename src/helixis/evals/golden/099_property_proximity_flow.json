@@ -1,0 +1,31 @@
+{
+  "id": "099_property_proximity_flow",
+  "case_type": "agent_flow",
+  "single_run_gate": true,
+  "_single_run_gate_note": "Promoted OUT of quarantine 2026-07-11 after a dogfood tuning pass: a §4 20x grid against live Gemini scored 20/20 PASS (the tool-mock catalog also had to gain properties_near/find_places_near_property so the case could run at all — a #532 oversight). All assertions remain quality-class, so single_run_gate:true opts this model-driven case back INTO quality-gating now that it's proven stable (gotcha #10). Re-quarantine (flip to false) if it starts flaking. ⚠ THAT EVIDENCE IS VOID (noted 2026-08-27). The grid was run against live GEMINI on 2026-07-11; the Google account died 2026-07-21 (gotcha 18) and every model here is Anthropic now. So the measurement that authorised this gate was taken on a provider that no longer exists, and the case has never been validated on Anthropic — least of all on the HAIKU PR-gate tier, which gotcha 10 already records as drifting from the production model. RE-PROMOTION REQUIRES a fresh §4 20x grid on the PR-gate tier specifically, not the production model: the tier is what actually runs on a pull request. The gate is LEFT ON here because this case passed the 2026-08-27 run — there is no evidence it is unstable, only that its stated proof expired. Flip to false at the first flake, as the line above already says.",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "description": "Maps Lane A (#532): a property-proximity question ('which of my properties are near <place>') must reach the properties_near mirror tool. properties_near is mocked so the reply is deterministic and the tool's real runtime Maps-key/PostGIS requirements don't apply in the harness (same mocking pattern as 040's buildium_get_property). Quality/K-of-N assertions only — the agent legitimately surfaces its own properties to the user, so no must-never applies. Dogfood-proven (20/20 live-Gemini grid) and single-run-gated.",
+  "input": {
+    "user_message": "Which of my properties are within 10 miles of downtown Austin?",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "properties_near": [
+        {
+          "return": "Your properties within 10 miles of Austin, TX (closest first):\n- Garden Row — 1 Garden Way, Austin, TX (1.2 mi)\n- Birch Lane — 88 Birch Lane, Austin, TX (6.4 mi)\n(from Helixis's synced Buildium data, updated moments ago)",
+          "repeat": 5
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "properties_near"
+    ],
+    "reply_must_match_regex": [
+      "(?i)(garden|birch|mile|mi\\b|near|austin)"
+    ],
+    "reply_must_not_be_empty": true
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "CockpitSummary": [
+    "address_line1",
+    "city",
+    "delinquent_leases",
+    "delinquent_total",
+    "name",
+    "state"
+  ],
+  "CockpitDetail": [
+    "delinquency_list",
+    "pms_name",
+    "rent_collected_mtd",
+    "rent_scheduled",
+    "tenants"
+  ],
+  "UnitDetail": [
+    "balance",
+    "current_lease",
+    "open_tasks",
+    "pms_name",
+    "tenants"
+  ],
+  "TenantDetail": [
+    "leases",
+    "open_work_orders",
+    "pms_name",
+    "recent_transactions"
+  ],
+  "VendorOps": [
+    "avg_days_to_complete",
+    "bill_count_12m",
+    "category_name",
+    "email",
+    "is_active",
+    "jobs_90d",
+    "last_bill_date",
+    "name",
+    "open_work_orders",
+    "phone",
+    "spend_12m",
+    "total_work_orders"
+  ],
+  "TenantOps": [
+    "balance",
+    "email",
+    "first_name",
+    "last_name",
+    "lease_to_date",
+    "oldest_bucket",
+    "phone",
+    "property_buildium_id",
+    "property_name",
+    "rent",
+    "unit_number"
+  ],
+  "TeamOps": [
+    "email",
+    "first_name",
+    "is_active",
+    "last_name",
+    "user_role_name"
+  ]
+}

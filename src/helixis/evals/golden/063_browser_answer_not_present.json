@@ -1,0 +1,97 @@
+{
+  "id": "063_browser_answer_not_present",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Early escalation when the page provably lacks the answer. The agent navigates to a zoning index whose accessibility tree shows only a heading and a handful of generic links — no calendar, no agenda, no notice, no time information. Per browser_agent rule 6 (grounding) and the discipline that escalation is success, the agent should read the page once or twice, conclude the information isn't surfaced anywhere on this site at this depth, and escalate voluntarily with 'I couldn't find it' framing — distinct from case 062 (budget actually exhausts). The bound on read_page calls catches the failure mode where the agent grinds through bare pages instead of cutting losses. Vocabulary check verifies the reply uses natural 'not present' phrasing rather than budget-language (which would be inaccurate — no budget was hit).",
+  "input": {
+    "user_message": "Find the meeting time for the May zoning board public hearing at the county website https://example-county.test/zoning",
+    "agent": "Browser Agent",
+    "tool_mocks": {
+      "navigate": [
+        {
+          "return": {
+            "status": "ok",
+            "url": "https://example-county.test/zoning",
+            "final_url": "https://example-county.test/zoning",
+            "deny_category": "allowed",
+            "step_count": 1,
+            "warnings": []
+          },
+          "repeat": 5
+        }
+      ],
+      "read_page": [
+        {
+          "return": {
+            "status": "ok",
+            "url": "https://example-county.test/zoning",
+            "text": "heading: Zoning Board\n  link: Past meetings\n  link: Resources\n  link: Contact",
+            "truncated": false,
+            "query": "",
+            "step_count": 2,
+            "warnings": [],
+            "next_step": ""
+          },
+          "repeat": 2
+        },
+        {
+          "return": {
+            "status": "ok",
+            "url": "https://example-county.test/zoning",
+            "text": "heading: Zoning Board\n  link: Past meetings\n  link: Resources\n  link: Contact",
+            "truncated": false,
+            "query": "",
+            "step_count": 4,
+            "warnings": [],
+            "next_step": "You have read this same page 3 times and its content has not changed — the information the user asked for is not present here. Do NOT read it again. Your next action MUST be escalate_to_user with a brief explanation that you could not find the requested information on the page(s) you reviewed."
+          },
+          "repeat": 5
+        }
+      ],
+      "click": [
+        {
+          "return": {
+            "status": "browser_unavailable",
+            "selector_or_role": "",
+            "step_count": 0,
+            "warnings": ["browser_unavailable"]
+          },
+          "repeat": 5
+        }
+      ],
+      "extract_text": [
+        {
+          "return": {
+            "status": "browser_unavailable",
+            "selector_or_role": "",
+            "text": "",
+            "step_count": 0,
+            "warnings": ["browser_unavailable"]
+          },
+          "repeat": 5
+        }
+      ],
+      "screenshot": [
+        {
+          "return": {
+            "status": "ok",
+            "signed_url": "https://example-supabase.test/storage/sign/browser_screenshots/co-eval/sess-063/1.png?token=xyz",
+            "expires_at": "2026-05-25T00:00:00+00:00",
+            "step_count": 4,
+            "screenshot_count": 1,
+            "warnings": [],
+            "next_step": "You have read multiple pages without finding the information the user asked for. Taking a screenshot will not surface missing content. Your next action MUST be escalate_to_user with a brief explanation that the requested information was not present on the pages you reviewed (screenshot_url='https://example-supabase.test/storage/sign/browser_screenshots/co-eval/sess-063/1.png?token=xyz')."
+          },
+          "repeat": 3
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["navigate", "read_page", "escalate_to_user"],
+    "tool_call_count_max": {"read_page": 5},
+    "reply_must_not_contain": ["Task #", "Tenant #", "Property #"],
+    "reply_must_match_regex": ["(?i)(could ?n[o']?t|did ?n[o']?t|was ?n[o']?t|do(es)? ?n[o']?t|cannot|unable to (find|locate|see|determine)|not (found|available|present|surfaced|listed|shown|mentioned|displayed)|no (information|answer)|don'?t (see|find|have)|recommend (checking|contacting))"],
+    "reply_must_not_be_empty": true
+  }
+}

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accessibility — Occupella</title>
+  <meta name="description" content="What Occupella has built for accessibility, what has not been tested, and how to tell us something is unusable." />
+  <link rel="stylesheet" href="/legal/legal.css" />
+  <!--
+    ⚠ THIS PAGE MUST NOT OVERCLAIM, and that is the whole reason it reads the
+    way it does. The standard accessibility statement asserts WCAG 2.1 AA
+    conformance. We have not measured that: no screen-reader pass has been
+    run, colour contrast is now measured and one token fails it, and touch
+    targets have never been checked on a real device.
+
+    Claiming AA here would be a false statement about a legal standard, made
+    to the exact audience least able to verify it and most harmed by it —
+    somebody decides the product will work for them, buys it, and finds out
+    it does not. A statement that says plainly what is untested is worth
+    something to that person; one that says "we are committed to
+    accessibility" and asserts a grade is worth less than nothing.
+
+    So: when a section here moves from "not tested" to "tested", it moves
+    because somebody ran the test, and the date changes with it.
+  -->
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <p class="wordmark">Occupella</p>
+      <h1>Accessibility</h1>
+      <p class="updated">Last updated: September 8, 2026</p>
+    </div>
+  </header>
+
+  <main>
+  <p class="intro">Occupella is a property-management platform operated by
+  <strong>Oscar Ventures LLC</strong>. This page says what we have actually
+  built for accessibility and — just as important — what we have
+  <strong>not tested</strong>. We would rather you knew the second list before
+  you depend on the product than after.</p>
+
+  <h2>1. What we do not claim</h2>
+  <p><strong>We do not claim WCAG 2.1 AA conformance, and we have not
+  published a VPAT.</strong> Both are specific, testable assertions, and we
+  have not run the tests that would let us make them honestly. If you need a
+  formal conformance statement for a procurement process, write to us and we
+  will tell you exactly where we are rather than sending you a document we
+  cannot stand behind.</p>
+
+  <h2>2. What is built and working</h2>
+  <p>These are deliberate and in the product today:</p>
+  <ul>
+    <li><strong>Keyboard focus is always visible.</strong> Every interactive
+    element takes a visible focus ring; we do not remove outlines.</li>
+    <li><strong>A skip-to-content link</strong> is the first thing in the tab
+    order, so you are not required to tab through the whole sidebar to reach
+    the page.</li>
+    <li><strong>Colour is never the only signal.</strong> Where state is shown
+    in colour — password requirements, status pills — a shape, glyph or word
+    carries the same meaning.</li>
+    <li><strong>Reduced motion is respected.</strong> If your system asks for
+    less animation, the interface stops animating.</li>
+    <li><strong>Errors are announced.</strong> Form errors and the agent's
+    status use live regions, so they are read out rather than only appearing.</li>
+    <li><strong>Every page has its own title</strong>, so browser history and
+    tab switching are usable.</li>
+    <li><strong>The interface works at browser zoom</strong>, and text scales
+    with it.</li>
+  </ul>
+
+  <h2>3. What we know is not good enough yet</h2>
+  <p>Named individually, because "some areas may not be fully accessible" tells
+  you nothing:</p>
+  <ul>
+    <li><strong>No screen-reader pass has been run.</strong> Nobody has driven
+    Occupella end to end with VoiceOver, NVDA or JAWS. Parts will be wrong and
+    we do not yet know which parts.</li>
+    <li><strong>Colour contrast is now measured, and one token fails.</strong>
+    Every colour in the palette was checked against the page background on
+    8 September 2026. Body text, links, error text and the warning colour all
+    clear the AA bar of 4.5:1 — most of them comfortably. <strong>The faintest
+    grey used for hints and captions does not: it measures 2.61:1</strong>,
+    which is below even the 3:1 bar that applies to large text. Where that grey
+    carried something you have to read — the unmet password rules — it has been
+    changed to a colour that passes. Everywhere else it is still there, because
+    every value dark enough to pass is darker than the grey one step above it,
+    and fixing that properly means re-spacing the whole scale rather than
+    patching one value. That is scheduled, not forgotten, and the measurement
+    now runs on every change so it cannot quietly get worse.</li>
+    <li><strong>Tap-target sizes are measured against one bar and not the
+    other.</strong> Every button and link that states its own height was checked
+    on 8 September 2026. One was below the 24&times;24 minimum that WCAG 2.2
+    requires at the level we aim for — a small dismiss button, now enlarged.
+    Many are below the separate 44&times;44 <em>guideline</em>, which is a
+    stricter bar we do not claim: this is a dense desktop tool with tables that
+    put a lot on screen at once, and 44 pixels everywhere would change what it
+    is. Roughly 120 more controls take their size from spacing rather than
+    stating it, and those can only be measured on a real device, which has not
+    been done.</li>
+    <li><strong>Tab order has not been audited</strong> across the whole app,
+    only on the sign-in and password screens.</li>
+    <li><strong>Some forms label their fields with placeholder text alone</strong>,
+    which disappears once you start typing and is not a substitute for a label.</li>
+    <li><strong>Modal focus is now held, with one deliberate exception.</strong>
+    Dialogs keep the keyboard inside them and give focus back to whatever opened
+    them when they close; Escape closes every one, including the connector
+    panels, where it previously did nothing. The exception is the narrow-screen
+    navigation drawer: it is the same element as the desktop sidebar, so
+    trapping focus there could strand somebody who resizes their window. Escape
+    and tapping outside both close it.</li>
+    <li><strong>The product walkthrough video has no captions</strong> or
+    transcript.</li>
+    <li><strong>The interface is English only</strong>, with US date, number and
+    address formats.</li>
+  </ul>
+
+  <h2>4. If something is unusable, tell us</h2>
+  <p>Email <a href="mailto:team@occupella.com">team@occupella.com</a> with what
+  you were trying to do, the page you were on, and the assistive technology you
+  were using if any. A person reads that inbox.</p>
+  <p>We will reply, and if the fix is small we would rather ship it than add it
+  to a list. If you are blocked from something you are entitled to do in your
+  own account, say so plainly in the subject line and we will treat it that
+  way — the point of this page is that you should not have to argue for it.</p>
+
+  <h2>5. How this page changes</h2>
+  <p>Every line in section 3 moves to section 2 only when somebody has run the
+  relevant test, and the date at the top changes when it does. We will not
+  quietly upgrade a claim because the code looks better.</p>
+  </main>
+
+  <footer>
+    <a href="/legal/terms.html">Terms of Service</a>
+    <a href="/legal/privacy.html">Privacy Policy</a>
+    <a href="/legal/billing.html">Billing &amp; Refunds</a>
+    <a href="/legal/sms.html">SMS Program &amp; Consent</a>
+    <a href="/legal/subprocessors.html">Subprocessors</a>
+    <a href="mailto:team@occupella.com">team@occupella.com</a>
+  </footer>
+</body>
+</html>

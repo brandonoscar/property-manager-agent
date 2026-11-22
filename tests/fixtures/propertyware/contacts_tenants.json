@@ -1,0 +1,16 @@
+{
+  "_synthetic": true,
+  "_about": "Hand-built from ContactDTO in Propertyware's official spec, as GET /contacts?type=TENANT returns it. Never exported from any Propertyware account (terms rule 17). Emails are example.com, phones 555-01xx. Quirks: a tenant with only a home phone and only an alternate email; a row with no type; a row typed OWNER (the filter ignored for it); a date of birth that must not reach raw.",
+  "rows": [
+    {"id": 990400001, "type": "TENANT", "firstName": "Jordan", "lastName": "Example",
+     "email": "jordan.example@example.com", "mobilePhone": "555-0101", "homePhone": "555-0191",
+     "namedOnLease": true, "lastModifiedDateTime": "2026-09-08T10:00:00Z"},
+    {"id": 990400002, "type": "TENANT", "firstName": "Riley", "lastName": "Sample",
+     "email": null, "altEmail": "riley.sample@example.com", "homePhone": "555-0102",
+     "lastModifiedDateTime": "2026-09-08T10:00:00Z"},
+    {"id": 990400003, "firstName": "Casey", "lastName": "Fixture", "email": "casey.fixture@example.com",
+     "workPhone": "555-0103", "birthDate": "1990-01-01", "lastModifiedDateTime": "2026-09-08T10:00:00Z"},
+    {"id": 990400004, "type": "OWNER", "firstName": "Morgan", "lastName": "Testcase",
+     "email": "morgan.testcase@example.com", "lastModifiedDateTime": "2026-09-08T10:00:00Z"}
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "122_trivial_no_overloop",
+  "case_type": "orchestrator_routing",
+  "reasoning_loop": true,
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "description": "W2 probe F1/F5 (trivial question, no over-looping). A single-fact question — the open balance for unit 4B — needs exactly one Buildium consult and a direct answer. The loop must NOT wander into web/document/browser research for a fact its own system of record answers in one call; that half is the critical handoff_trail_must_not_contain list, and an ATTEMPTED consult of a forbidden specialist counts there even if the cap refuses it. specialist_call_count_max is the over-loop bound and gates on consults that EXECUTED (see _todo); attempts ride a separate non-gating assertion.",
+  "_todo": "RESOLVED 2026-09-04. History, because two earlier fixes each read as final and were not. (1) The cap was called a MISSING PRIMITIVE; it is not — specialist_call_count_max is implemented and gates as SAFETY. (2) 2026-08-30 found the structural cap (agents/specialist_budget.py, LOW_EFFORT_SPECIALIST_CAP=2) had NEVER ONCE EXECUTED here: create_orchestrator wraps the specialists, but the wrapper is a no-op without a bound ledger and bind_specialist_ledger lived only in run_agent_streaming, which this harness does not call. The harness now mirrors that binding (gotcha 66). (3) ⚠ THAT WAS NECESSARY AND NOT SUFFICIENT, which is why the case kept reding main afterwards. The assertion counted len(handoff_trail), and in reasoning-loop mode that trail is built from ToolCallItems — which the SDK creates at turn resolution FROM THE MODEL'S OUTPUT, before any tool runs. A consult the cap REFUSES is therefore still in the trail, so cap=2 plus a third attempt is 2 executed and a trail of 3: a fail. The cap could only avoid failure by never firing, i.e. the case passed exactly when the model behaved WITHOUT it — the fix was unobservable to the test built to measure it. The SAFETY gate now counts consults that EXECUTED (the nested agent runs, which are the cost — gotcha 37), and attempts are kept as a separate non-critical assertion so a model that batters the cap still FAILS, still prints, and eval-flake.yml still counts it. Nothing was deleted; the two numbers were separated. Guard: tests/unit/test_specialist_cap_counts_executions.py. Gotcha 84. Sentence that still stands: a TODO asserting a check works, when it does not, is exactly as misleading as one asserting it does not when it does.",
+  "input": {
+    "user_message": "What's the current open balance for the tenant in unit 4B?",
+    "tool_mocks": {
+      "buildium_find_tenant_for_unit": "Unit 4B at 118 Crescent Avenue — Robert Kim. Current open balance: $2,400 (July 2026 rent, past due)."
+    }
+  },
+  "expected": {
+    "must_route_to": "buildium_agent",
+    "handoff_trail_must_not_contain": [
+      "web_agent",
+      "document_agent",
+      "browser_agent"
+    ],
+    "reply_must_match_regex": [
+      "2,?400"
+    ],
+    "specialist_call_count_max": 2
+  }
+}

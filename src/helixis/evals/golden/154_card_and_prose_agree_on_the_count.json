@@ -1,0 +1,47 @@
+{
+  "id": "154_card_and_prose_agree_on_the_count",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-09-06. Quarantined by default per gotcha 48. ⚠ CORRECTED before shipping: this note originally claimed the count prohibitions were digit-dominant and therefore unconditional SAFETY. They are not — `_is_disclosure_needle('4 open')` is False, because the needle is mostly prose. Measured rather than assumed, and the classifier is right: '4 open' is a CLAIM about a count, so a reply that quotes it to reject one may re-roll. The call cap is what gates every run.",
+  "description": "When the answer renders a table AND describes it in prose, the two must say the same thing. Six rows on the card, six in the sentence.",
+  "_why": "Cards and prose are separate channels that reach the same screen, and gotcha 56 records how far apart they can drift: `final_text` is the prose only, cards ride their own events, and a turn can answer almost entirely in cards. Nothing has ever asserted that the two AGREE.\n\nThe reader trusts the sentence more than the table — it is above it and it is in words — so a prose count that disagrees with the rows is a wrong answer delivered in the most believable position on the page. This is the presentation-layer form of the same fabrication 153 bounds in money: a number that no tool produced.\n\n⚠ #936 made this materially more likely by putting four card renderers on the router (`show_chart`, `show_detail_card`, `show_checklist`, `suggest_next_steps` alongside `show_table`). Every one of them is another surface that can disagree with the prose beside it.",
+  "input": {
+    "user_message": "Show me the open work orders by property as a table, and tell me how many there are.",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "buildium_list_open_work_orders": [
+        {
+          "return": "Open work orders (6):\n- 200 E Colfax Ave — water heater leaking — New\n- 1700 W Washington St — AC not cooling — InProgress\n- 1700 W Washington St — garage door stuck — New\n- 88 Chestnut Row — fence panel down — New\n- 14 Alder Court — dishwasher fault — InProgress\n- 9 Beacon Hill Rd — gutter overflow — New",
+          "repeat": 2
+        }
+      ],
+      "open_work_orders": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors)."
+        }
+      ]
+    }
+  },
+  "expected": {
+    "reply_must_contain": [
+      "6"
+    ],
+    "reply_must_not_contain": [
+      "4 open",
+      "five open",
+      "seven open"
+    ],
+    "reply_must_not_be_empty": true,
+    "tool_call_total_max": 4
+  },
+  "_assertion_notes": {
+    "reply_must_contain": "QUALITY. The count, as a digit. Deliberately just `6` and not 'six work orders': a model may write the number or the word, may say 'six open work orders across five properties', and pinning a phrasing would measure vocabulary (gotcha 48).\n\n⚠ This is the WEAK half. A reply containing '6' anywhere passes it, including '6 September'. The prohibitions below are what actually bound the case.",
+    "reply_must_not_contain": "The three miscounts a model actually produces: dropping a duplicate property (1700 W Washington appears twice, which is the whole reason it is in the fixture), rounding down, and double-counting one.\n\n⚠ These classify as CLAIMS, not disclosures — checked against `_is_disclosure_needle` rather than assumed, after an earlier draft of this file asserted the opposite. That is the right answer: a count is an assertion, so 'it is not 4 open work orders, it is 6' is a compliant reply and must be free to re-roll (gotcha 65's split). What gates unconditionally here is the call cap.\n\n⚠ Each needle carries the WORD 'open' so the digit cannot match a date, an address number, or a dollar figure. `'7'` alone would fire on '2026-09-07'. Gotcha 38's lesson: test what the guard must SPARE, not only what it must catch.\n\n⚠ Deliberately NOT `card_must_contain`. The table's own content is 140's job; this case is about the two channels agreeing, and asserting the card here would make a card-render failure report as a counting failure.",
+    "tool_call_total_max": "SAFETY. One bulk read answers this. Four leaves room for a retry and the card tool.",
+    "reply_must_not_be_empty": "Three of the four bounds are prohibitions or caps, all vacuously satisfied by silence (gotcha 83)."
+  },
+  "_the_duplicate_property_is_the_fixture": "1700 W Washington St holds two of the six work orders. That is the row a model collapses when it counts PROPERTIES and reports the number as work orders — five properties, six orders — which is gotcha 50's per-property/per-unit conflation arriving in a count instead of in a join. A fixture with six distinct properties would let a wrong method produce the right number and the case would prove nothing."
+}

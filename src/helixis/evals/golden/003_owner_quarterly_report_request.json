@@ -1,0 +1,46 @@
+{
+  "id": "003_owner_quarterly_report_request",
+  "description": "Staff-created task on behalf of an owner asking for the Q1 financial summary. Not a maintenance issue. Planner should NOT propose maintenance dispatch / vendor work / priority changes. A low-confidence information_need (e.g. confirm scope) or zero actions is acceptable.",
+  "input": {
+    "event_time_iso": "2026-04-05T10:05:00+00:00",
+    "payload": {
+      "EventName": "Task.Created",
+      "EventDate": "2026-04-05T10:05:00Z",
+      "EventEntityId": 52211,
+      "EventEntityType": "Task"
+    },
+    "enrichment": {
+      "schema_version": 1,
+      "event_name": "Task.Created",
+      "company_id": "company-eval",
+      "task": {
+        "id": 52211,
+        "title": "Owner request — Q1 financial summary",
+        "description": "Owner Sarah Pike asked for the Q1 financial summary across all three properties she owns. She mentioned she wants it before her tax filing in mid-April.",
+        "status": "New",
+        "category": "Owner Communication",
+        "priority": "Normal",
+        "property_id": 4610,
+        "unit_id": null,
+        "requested_by_tenant_id": null,
+        "requested_by_first_name": null,
+        "requested_by_last_name": null,
+        "raw": {}
+      },
+      "unit": null,
+      "active_lease": null,
+      "history_unit": [],
+      "history_property": [],
+      "errors": [],
+      "fetched_at": "2026-04-05T10:07:00+00:00"
+    }
+  },
+  "expected": {
+    "summary_must_mention": ["Q1"],
+    "summary_must_not_mention": ["Task #", "Tenant #", "Property ID", "Unit ID", "Property #", "Lease #", "vendor", "maintenance dispatch"],
+    "summary_max_words": 100,
+    "action_surface_must_contain_action_type": [],
+    "action_surface_must_not_suggest": ["dispatch", "plumber", "vendor", "emergency", "raise priority", "recategorize"],
+    "signals_must_reference": []
+  }
+}

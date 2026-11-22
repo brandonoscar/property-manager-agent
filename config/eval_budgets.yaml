@@ -1,0 +1,124 @@
+# Per-task-class cost / latency budgets (release-gate Tier-3 #14).
+#
+# Each task class stores a BASELINE (the median of a golden run) per metric. A live
+# measured run is flagged when it exceeds the baseline by more than
+# `over_budget_threshold` (spec: >25%). A `null` baseline means "not yet measured"
+# → that metric is NOT gated, so this file ships as a scaffold and starts gating
+# each metric only once a real number is wired in (from the state-based-scoring
+# run). Fill baselines with the observed medians; keep them conservative.
+#
+# Metrics per task class:
+#   tokens         total LLM tokens (prompt + completion)
+#   tool_calls     number of tool invocations
+#   wall_clock_ms  end-to-end latency
+#   usd            estimated LLM cost in dollars
+#
+# ⚠ "not yet measured" IS THE WRONG READING FOR MOST OF THIS FILE, and it sent
+# the last reader looking for a battery run to fill it. Measured against the
+# live table 2026-08-29, two limits are STRUCTURAL — no amount of measuring
+# moves them:
+#
+#   * ⚠ CORRECTION (same day). This header first said `tokens` and `usd` were
+#     NOT RECORDABLE per run and needed a schema change. THAT WAS WRONG.
+#     `helixis_llm_usage` (company_id, day) is not the only source:
+#     `llm/turn_cost.py` writes a `usage` object into `orchestrator_runs.raw`
+#     — cost_usd, prompt_tokens, completion_tokens, calls, cached_tokens,
+#     cache_write_tokens, cost_is_floor — on 213 of 213 runs since it landed.
+#     The column list and the daily ledger were both checked and `raw` was
+#     not: absence concluded from an incomplete lookup, gotcha 47's exact
+#     shape. The real limit is HISTORY — per-run usage starts 2026-08-26, so
+#     the sample is three days deep, and a run without it is SKIPPED rather
+#     than counted as zero (a missing cost read as 0 makes the median improve
+#     the further back you look).
+#   * SIX OF THE SEVEN CLASSES ARE UNOBSERVABLE. They are named for WRITES, and
+#     writes execute inside specialist sub-runs while `orchestrator_runs.
+#     tool_calls` records the ORCHESTRATOR's calls only — **1 write tool call
+#     in 1,620**, across every run ever recorded. A classifier reading that
+#     column cannot see a write, so it declines to name one
+#     (`evals/cost_drift.classify_task_class` returns None, never a guess).
+#
+# So `chat_read` is the one class with real numbers below, on the two metrics
+# that exist. The rest stay null with the reason attached, so the next session
+# does not spend money re-discovering that the schema cannot hold the answer.
+#
+# MEASURED BASELINE — chat_read (live orchestrator_runs, helixis-test,
+# 2026-08-29). ANTHROPIC ERA ONLY (>= 2026-07-21, gotcha 18): the Gemini months
+# are a different system and would poison the median. n=315 ANSWERED turns,
+# where answered = prose OR a card tool (gotcha 56 — cards are not in
+# `final_text`, and counting prose alone biases the sample against card-heavy
+# turns).
+#   wall_clock_ms  p50 40,290   p90 183,174   min 2,275   max 808,902
+#   tool_calls     p50 2        p90 6
+#
+# ⚠ 40 SECONDS IS A CEILING-OF-TODAY, NOT A TARGET. The point of a regression
+# gate is to freeze the current number so the NEXT slide is loud, and the
+# current number is bad. The trend is the finding, and it holds under both the
+# old filter and the new one:
+#
+#   month     n    p50 wall_clock   p50 tool_calls
+#   2026-06   36        3,298 ms          1
+#   2026-07  108       20,795 ms          3
+#   2026-08  295       40,290 ms          2
+#
+# 12x slower in three months while the tool count did NOT grow — consistent
+# with gotcha 37 (the clock is in model turns and specialist consults, not tool
+# fan-out). The old anchor recorded here, p50 ≈ 18,700 at 2026-07-14, was
+# ACCURATE for July and is now 2.2x stale. This file is the control built to
+# catch exactly that, and it sat inert while the thing it watches doubled.
+#
+# ⚠ The baseline is p50 and the MEASUREMENT must also be a window p50
+# (`evals/cost_drift.summarise`). Checking a single run against a median fires
+# on half of all runs — noise, not a gate.
+
+over_budget_threshold: 0.25
+
+task_classes:
+  chat_read: # a read-only Buildium/query turn
+    # Measured p50, Anthropic era, n=315 answered turns.
+    tool_calls: 2
+    wall_clock_ms: 40290
+    # Measured p50 from orchestrator_runs.raw->'usage' (llm/turn_cost), n=181
+    # answered read turns, 0 of them floor-priced. p90 was $0.4803 / 957,414
+    # tokens — nearly a million tokens for one question, and the gap between
+    # p50 and p90 is the tail worth watching.
+    usd: 0.0892
+    tokens: 154456
+  # ── the six write classes ──────────────────────────────────────────
+  # ⚠ NOT "not yet measured" — UNOBSERVABLE. Each of these is named for a
+  # write, and writes execute inside specialist sub-runs that
+  # `orchestrator_runs.tool_calls` does not record (1 write call in 1,620,
+  # whole history). Populating them needs the run record to carry the
+  # specialist's calls, or a per-run spend/latency row — a telemetry change,
+  # not a measurement run. `cost_drift.classify_task_class` returns None
+  # rather than guessing one of these, so nothing can silently file a read
+  # turn's cheap latency under a write baseline.
+  work_order_create:
+    tokens: null
+    tool_calls: null
+    wall_clock_ms: null
+    usd: null
+  to_do_task_create:
+    tokens: null
+    tool_calls: null
+    wall_clock_ms: null
+    usd: null
+  task_status_update:
+    tokens: null
+    tool_calls: null
+    wall_clock_ms: null
+    usd: null
+  tenant_message: # drafted email reply (never auto-sent)
+    tokens: null
+    tool_calls: null
+    wall_clock_ms: null
+    usd: null
+  note_add:
+    tokens: null
+    tool_calls: null
+    wall_clock_ms: null
+    usd: null
+  email_triage: # inbound email → planner surface
+    tokens: null
+    tool_calls: null
+    wall_clock_ms: null
+    usd: null

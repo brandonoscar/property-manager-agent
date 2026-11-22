@@ -1,0 +1,26 @@
+{
+  "id": "100_property_location_routes_to_buildium",
+  "case_type": "orchestrator_routing",
+  "single_run_gate": true,
+  "_single_run_gate_note": "Promoted OUT of quarantine 2026-07-11 after a dogfood tuning pass: a §4 20x grid against live Gemini scored 20/20 route-to-buildium_agent (the routing mock catalog also had to gain properties_near so the case could run at all — a #532 oversight). Now that routing is proven, the must_not_route_to guard is re-added (a 'which of MY properties' question must never leak to the public-web / browser research agents) and single_run_gate:true opts it back into gating. Re-quarantine (flip to false) + drop the guard if it starts flaking. ⚠ THAT EVIDENCE IS VOID (noted 2026-08-27). The grid was run against live GEMINI on 2026-07-11; the Google account died 2026-07-21 (gotcha 18) and every model here is Anthropic now. So the measurement that authorised this gate was taken on a provider that no longer exists, and the case has never been validated on Anthropic — least of all on the HAIKU PR-gate tier, which gotcha 10 already records as drifting from the production model. RE-PROMOTION REQUIRES a fresh §4 20x grid on the PR-gate tier specifically, not the production model: the tier is what actually runs on a pull request. The gate is LEFT ON here because this case passed the 2026-08-27 run — there is no evidence it is unstable, only that its stated proof expired. Flip to false at the first flake, as the line above already says.",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "description": "Maps routing (#532): a property-location question should route to the Buildium Agent — property proximity + find-a-vendor-near-a-property are Buildium-agent tools (properties_near / find_places_near_property), so 'which of my properties are near downtown' is in-domain, not public-web research. properties_near is mocked so the specialist reply is deterministic. Dogfood-proven (20/20 live-Gemini grid routed to buildium_agent); the must_not_route_to guard now enforces that 'near downtown Austin' (which has web-research flavor) never misroutes to the public-web / browser agents.",
+  "input": {
+    "user_message": "Which of my properties are near downtown Austin?",
+    "tool_mocks": {
+      "properties_near": "Your properties within 5 miles of Austin, TX (closest first):\n- Garden Row — 1 Garden Way, Austin, TX (1.2 mi)"
+    }
+  },
+  "expected": {
+    "must_route_to": "buildium_agent",
+    "must_not_route_to": [
+      "web_agent",
+      "browser_agent"
+    ],
+    "reply_must_contain": [
+      "Garden Row"
+    ]
+  }
+}

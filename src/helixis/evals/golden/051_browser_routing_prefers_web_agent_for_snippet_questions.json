@@ -1,0 +1,28 @@
+{
+  "id": "051_browser_routing_prefers_web_agent_for_snippet_questions",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Browser Agent must NOT fire when a snippet answer suffices. A market-data question about typical service costs lives in Web Agent's lane (Tavily search returns the price range as a snippet). Browser Agent is tool of last resort; the orchestrator's routing prompt is explicit about preferring Web Agent for snippet-level questions. This case catches a regression where the prompt grows lazy and routes everything to Browser Agent when Web Agent would do.",
+  "input": {
+    "user_message": "What's a typical service-call cost for a clogged drain in residential plumbing?",
+    "tool_mocks": {
+      "web_search": {
+        "answer": "Clogged drain service calls typically run $100-$300 in most US markets.",
+        "sources": [
+          {
+            "title": "HomeAdvisor — Drain cleaning cost guide",
+            "url": "https://example.test/drain-cleaning-cost",
+            "snippet": "Average residential drain cleaning service calls run $100 to $300 depending on the location of the clog and whether the plumber needs to use a snake."
+          }
+        ],
+        "warnings": []
+      }
+    }
+  },
+  "expected": {
+    "must_route_to": "web_agent",
+    "must_not_route_to": ["browser_agent", "buildium_agent", "document_agent"],
+    "reply_must_contain": ["100", "300"],
+    "reply_must_not_contain": ["Task #", "Tenant #"]
+  }
+}

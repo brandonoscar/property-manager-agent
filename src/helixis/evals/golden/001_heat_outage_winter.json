@@ -1,0 +1,72 @@
+{
+  "id": "001_heat_outage_winter",
+  "description": "Tenant reports no heat overnight in mid-winter; outdoor temps in the 20s. Strong urgency cues in the task description. Expects an information_need / communication-shaped suggestion (V2 forbids re-prioritizing or re-categorizing).",
+  "input": {
+    "event_time_iso": "2026-01-14T07:18:00+00:00",
+    "payload": {
+      "EventName": "Task.Created",
+      "EventDate": "2026-01-14T07:18:00Z",
+      "EventEntityId": 51201,
+      "EventEntityType": "Task"
+    },
+    "enrichment": {
+      "schema_version": 1,
+      "event_name": "Task.Created",
+      "company_id": "company-eval",
+      "task": {
+        "id": 51201,
+        "title": "No heat in unit 2A",
+        "description": "Heat went out around 11pm last night. Vents are running cold air only. Outdoor temperature in the 20s — apartment is freezing. Two young children in the unit. Need someone out today.",
+        "status": "New",
+        "category": "Maintenance Request",
+        "priority": "High",
+        "property_id": 4401,
+        "unit_id": 9120,
+        "requested_by_tenant_id": 7301,
+        "requested_by_first_name": "Maria",
+        "requested_by_last_name": "Lopez",
+        "raw": {}
+      },
+      "unit": {
+        "id": 9120,
+        "property_id": 4401,
+        "unit_number": "2A",
+        "address_line1": "240 Elm Street"
+      },
+      "active_lease": {
+        "id": 14820,
+        "unit_id": 9120,
+        "status": "Active",
+        "tenants": [
+          {
+            "id": 7301,
+            "first_name": "Maria",
+            "last_name": "Lopez",
+            "email": "maria.lopez@example.test",
+            "phone": "555-0142"
+          }
+        ]
+      },
+      "history_unit": [
+        {
+          "id": 51050,
+          "title": "Annual HVAC inspection",
+          "category": "Maintenance Request",
+          "status": "Completed",
+          "created_date": "2025-11-10T14:00:00Z"
+        }
+      ],
+      "history_property": [],
+      "errors": [],
+      "fetched_at": "2026-01-14T07:20:00+00:00"
+    }
+  },
+  "expected": {
+    "summary_must_mention": ["heat"],
+    "summary_must_not_mention": ["Task #", "Tenant #", "Property ID", "Unit ID", "Property #", "Lease #"],
+    "summary_max_words": 100,
+    "action_surface_must_contain_action_type": ["send_tenant_message"],
+    "action_surface_must_not_suggest": ["recategorize", "re-categorize", "raise priority", "lower priority"],
+    "signals_must_reference": []
+  }
+}

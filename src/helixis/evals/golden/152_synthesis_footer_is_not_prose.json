@@ -1,0 +1,39 @@
+{
+  "id": "152_synthesis_footer_is_not_prose",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-09-06. Quarantined by default per gotcha 48. Its one prohibition is prose-shaped, so it re-rolls under gotcha 65's split rather than gating on a single roll — see the note below.",
+  "description": "The answer a specialist hands back is what the user reads. It must not carry the model's own scaffolding — no 'Sources:' / 'Confidence:' / 'Unverified:' footer, no bare tool names, no leftover step headings.",
+  "_why": "The 2026-09-06 demo take shows an answer trailing off into 'Sources: Buildium (portfolio occupancy snapshot); stored company memory … Confidence: likely — the data is internally consistent, but the sync lag means…'. To us that is the SYNTHESIZE contract. To a property manager it reads as unfinished internals leaking onto the screen, and it was the most obviously wrong-looking thing in the recording after the grey placeholder blocks.\n\nThe client half is fixed: the `disclosure` event already carries a footer-stripped copy of the answer and the reply bubble now uses it. But that fix is one line in a store, and NOTHING asserts the property end to end — so it can silently come back the day someone changes which event carries the answer, or the day a specialist reply (which never reaches the disclosure path at all) starts emitting the footer.\n\n⚠ This case measures the SPECIALIST's reply, which is deliberate. The disclosure strip only applies to the orchestrator's final answer; a specialist that appends the footer to what it hands the orchestrator puts it somewhere no strip runs.",
+  "input": {
+    "user_message": "Are any of my units vacant right now?",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "portfolio_overview": [
+        {
+          "return": "Portfolio (mirror, synced 2026-09-06T01:12:00Z):\n- 50 properties, 50 units\n- 50 units occupied, 0 vacant\n- 9 leases expiring within 90 days",
+          "repeat": 2
+        }
+      ]
+    }
+  },
+  "expected": {
+    "reply_must_not_match_regex": [
+      "(?m)^\\s*(?:Sources|Confidence|Unverified)\\s*:",
+      "(?m)^\\s*#{0,3}\\s*(?:GATHER|ANALYZE|DECIDE|SYNTHESIZE)\\b"
+    ],
+    "reply_must_not_contain": [
+      "portfolio_overview"
+    ],
+    "reply_must_not_be_empty": true
+  },
+  "_assertion_notes": {
+    "reply_must_not_match_regex": "The footer labels, anchored at LINE START under `(?m)` — which is the whole of the precision here. A reply that says 'my sources for this were the Buildium sync and…' is ordinary English and must be spared; a line that BEGINS 'Sources:' is the machine-readable contract landing in prose. Verified both directions before shipping (gotcha 38).\n\nThe second pattern catches the other scaffolding that leaks from the same place: the reasoning loop's four step names used as headings. `reasoning_loop` is ON in production (gotcha 29) and its contract runs on every question, so this is a live risk rather than a hypothetical one.\n\n⚠ Classed by the runner, not by me. `_forbidden_prohibition_criticality` (gotcha 65) reads a prose-shaped needle against what the reply actually says, so a compliant reply that QUOTES a label to explain itself re-rolls instead of red-gating, while a real footer gates. That split is exactly why this can ship as a prohibition at all.",
+    "reply_must_not_contain": "The tool's own identifier. A reply that names `portfolio_overview` is showing the user a function name — the same class of leak as the footer, and the one most likely to survive review because it looks like a citation. Digit-free and prose-shaped, so it re-rolls under the same split.",
+    "reply_must_not_be_empty": "Every bound here is a prohibition and an empty reply satisfies all of them vacuously — the 470/471 shape gotcha 83 records."
+  },
+  "_what_is_NOT_asserted_and_why": "There is no `reply_must_contain` for the answer itself. The point of the case is the SHAPE of what reaches the screen; pinning 'all 50 units are occupied' would make it a correctness case that happens to also notice formatting, and a correctness failure would then be reported as a presentation one. The mock is unambiguous so the model has no reason to get the fact wrong, and if it does, 150 and the battery are where that shows up."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "010_web_search_succeeds_with_key",
+  "case_type": "tool_invocation",
+  "tool": "web_search",
+  "description": "Real-network smoke test for the Tavily-backed web_search tool. Requires HELIXIS_WEB__TAVILY_API_KEY to be set; otherwise this case skips (so CI without secrets stays green). With a valid key, asserts the tool returns ≥1 source with a URL, an unredacted query, and zero warnings.",
+  "requires_env": ["HELIXIS_WEB__TAVILY_API_KEY"],
+  "input": {
+    "kwargs": {
+      "query": "what is the average HVAC service call cost in New York City",
+      "max_results": 5,
+      "search_depth": "basic"
+    }
+  },
+  "expected": {
+    "result_must_contain": ["http"],
+    "warnings_must_not_include": ["search_unavailable", "search_unauthorized"],
+    "sources_min_count": 1
+  }
+}

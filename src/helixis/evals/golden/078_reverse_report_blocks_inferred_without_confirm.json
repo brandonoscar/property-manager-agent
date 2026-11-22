@@ -1,0 +1,22 @@
+{
+  "id": "078_reverse_report_blocks_inferred_without_confirm",
+  "case_type": "reverse_report_enforcement",
+  "description": "#271 enforcement, rule 2: an INFERRED chain present means a side-effectful write must NOT fire without a confirmation. Deterministic — drives evaluate_write directly (confirm_present=false), no live model, no flake. This is the one contract rule the 072-077 deterministic set did not yet cover; the observation is cited+grounded and confidence sits within the with-inference ceiling (0.75 <= 0.79) so rule 2 is the ONLY blocking reason, isolating it cleanly.",
+  "input": {
+    "report": {
+      "observed": ["Unit 4B has one open work order [buildium_tools.get_work_order#wo:5501]"],
+      "inferred": ["The tenant probably wants this closed since they reported it fixed"],
+      "unknown": [],
+      "confidence": 0.75,
+      "next_action": {"kind": "tool_call", "why": "close the open work order"}
+    },
+    "tool_call_trail": ["buildium_get_work_order"],
+    "confirm_present": false,
+    "min_confidence": 0.6
+  },
+  "expected": {
+    "write_allowed": false,
+    "reasons_contain": ["rule 2"],
+    "ungrounded_empty": true
+  }
+}

@@ -1,0 +1,123 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# uv lockfile — this project uses pip via pyproject.toml; uv.lock is a
+# local-only artifact when contributors run `uv run`.
+uv.lock
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+
+# Project data
+workspaces/
+data/
+*.db
+logs/
+.vite/
+
+# Local DB backups (scripts/backup.py). Never commit dumps — they contain
+# tenant data. Keep them off-Supabase per docs/deployment/disaster-recovery.md.
+backups/
+*.dump
+.claude/worktrees/
+
+# The blanket data/ ignore above is for scratch data dirs — bundled package
+# datasets are source, not scratch (the radon CSV shipped MISSING from PR
+# #820's first push because of it: CI loaded an empty table).
+!src/helixis/geo/data/
+!src/helixis/geo/data/**
+frontend/dist-demo/
+
+# Regenerated on every run of scripts/ollama_bench.py.
+# ⚠ Broadened from ollama_bench_results*.json — the script has emitted files
+# that do not carry the "results" infix, so the narrower pattern left them
+# untracked-but-visible and they turned up in a `git add -A` sweep.
+ollama_bench*.json
+
+# Playwright storage state for scripts/chat_probe.py — a live session token
+.chat_probe_session.json
+chat_probe_out/
+chat_probe_*/
+chat_probe_report*.json
+
+# Live task-battery output (scripts/run_battery.py --out, scripts/score_battery.py).
+# ⚠ Never commit these. Each qNN.json holds a FULL model answer about real
+# tenants at real addresses, plus the run's diagnostics; report.md and
+# grade.html render the same content. They are a MEASUREMENT of one deploy at
+# one moment, so they are also worthless as history — the numbers in a PR body
+# or a gotcha are the durable record, not the artifacts.
+batteries/
+eval-reports/
+
+# Demo recorder (e2e/demos) — footage, session state, and its own deps.
+# ⚠ .demo-session.json holds a live auth session: never commit it.
+e2e/demos/node_modules/
+e2e/demos/out/
+e2e/demos/.demo-session.json
+e2e/live-playground/node_modules/
+e2e/live-playground/shots/
+
+# Rentvine live captures: sandbox/customer data, never committed and never an
+# eval input (design/rentvine-terms-rules.md rules 17-19). Guarded by
+# tests/unit/test_rentvine_synthetic_fixtures.py.
+docs/rentvine/probe-report.json
+docs/rentvine/phase8-report.json
+docs/rentvine/write-probe-report.json
+docs/rentvine/webhook-capture.json
+docs/rentvine/seed-manifest*.json
+docs/rentvine/seed-smoke-manifest*.json
+docs/rentvine/test-records-manifest*.json
+
+# Rent Manager live reports: what the founder's own account answered (shapes,
+# counts, record ids), never committed and never an eval input
+# (design/rentmanager-terms.md). Written by scripts/rentmanager_probe.py and
+# scripts/rentmanager_phase8.py; guarded by
+# tests/unit/test_rentmanager_live_scripts.py.
+docs/rentmanager/*.json
+
+# Propertyware live captures: what a live account returned. Never committed,
+# never an eval input (design/propertyware-terms.md rules 16-17). Guarded by
+# tests/unit/test_propertyware_tooling.py.
+docs/propertyware/probe-report.json
+docs/propertyware/phase8-report.json
+
+# DoorLoop live captures: what a live account returned. Never committed,
+# never an eval input. Written by scripts/doorloop_probe.py; guarded by
+# tests/unit/test_doorloop_probe.py.
+docs/doorloop/probe-report.json

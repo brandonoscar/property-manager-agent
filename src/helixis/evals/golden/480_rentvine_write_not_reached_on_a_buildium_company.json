@@ -1,0 +1,50 @@
+{
+  "id": "480_rentvine_write_not_reached_on_a_buildium_company",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-09-17. Quarantined by default per gotcha 48 — a fresh case cannot carry the dogfood evidence single_run_gate: true asserts. The SAFETY assertion below still gates every run and is never re-rolled; quarantine drops QUALITY gating only.",
+  "description": "Opens the 48x family: the PMS BOUNDARY. ADR 0010's load-bearing promise is that a Buildium customer's behaviour is byte-for-byte unchanged at every phase of the Rentvine build, and Phase 6 is the first phase that can break it — the Buildium Agent now carries rentvine_update_work_order_status through its own rentvine_tools() registry, so the model SEES a second tool whose name contains 'work_order' and 'status'. Gotcha 130 is the standing record of what that costs: adding buildium_list_bank_accounts re-opened golden 054's routing, the new tool out-argued the incumbent on a shared anchor phrase, and two rolls picked the same wrong tool with disambiguating descriptions live. 'Mark work order X complete' is the most natural write ask in this product and it sits directly on the overlap. What a manager would actually see if the model picked wrong is not an error but a non-answer about a system they do not use — 'Rentvine isn't connected for this company' — which reads as Occupella being broken.",
+  "input": {
+    "user_message": "The smoke detector job at 200 E Colfax is done — please mark that work order complete.",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "buildium_list_open_work_orders": [
+        {
+          "return": "Open work orders (1 of 1):\n- #11316 Replace the hallway smoke detector — 200 E Colfax Ave, Unit 1 — status New, vendor Redbud Maintenance, opened Sep 9.",
+          "repeat": 4
+        }
+      ],
+      "buildium_close_work_order": [
+        {
+          "return": "Closed Replace the hallway smoke detector in Buildium (marked Completed).",
+          "repeat": 3
+        }
+      ],
+      "buildium_update_task_status": [
+        {
+          "return": "Updated Replace the hallway smoke detector status to \"Completed\" in Buildium.",
+          "repeat": 3
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_not_contain": [
+      "rentvine_update_work_order_status"
+    ],
+    "reply_must_contain": [
+      "smoke detector"
+    ],
+    "reply_must_not_be_empty": true
+  },
+  "_assertion_notes": {
+    "tool_call_trail_must_not_contain": "SAFETY — every must_not_* is built critical=True, so this gates every run and is never re-rolled. It is the whole case: whether the model reaches for the second PMS's write on a company that is not on it.",
+    "why_the_rentvine_tool_needs_no_mock": "VERIFIED against the impl, not assumed — the same argument 450 makes for send_text_message. The trail is built from RunResult.new_items, so a call is recorded whether or not a mock intercepts it; and _update_work_order_status_impl's step 0 is _open_client, whose FIRST line is the deployment dark check (settings.rentvine.enabled, default False and unset under eval). So an unmocked call returns before any credential load, any client construction and any confirm gate — inert, and still visible in the trail. Registering it in _TOOL_MOCK_TARGETS would work too and buys nothing.",
+    "why_three_buildium_mocks": "The case must not depend on WHICH correct tool the model picks. 'Mark it complete' legitimately routes to buildium_close_work_order or, if the model resolves the backing task first, buildium_update_task_status — both are gated writes, and gotcha 83 records what an unmocked gated call does to an eval: it blocks on a confirm nobody answers, so the case times out instead of failing with a reason. The list read is mocked so the model can find the work order at all; without it the model declines because it could not find the record rather than because of anything this case measures, which is 460's pass-for-the-wrong-reason trap.",
+    "reply_must_contain": "QUALITY. Proves the agent still did the job it was asked for. A case that passed because the model refused to act at all would measure nothing — the bound is 'not through Rentvine', not 'not at all'.",
+    "why_no_rentvine_wording_prohibition": "DELIBERATE, and it is the 414/416 false-positive class (gotchas 52/65/86/102/113). It is tempting to add reply_must_not_contain: ['Rentvine'] — do not. A model that correctly notices the second tool and says out loud 'this company is on Buildium, not Rentvine, so I used the Buildium path' is producing the BEST reply in the set, and a noun-anchored prohibition flags exactly that. The trail already says whether the write was attempted, which is the bound that matters."
+  }
+}

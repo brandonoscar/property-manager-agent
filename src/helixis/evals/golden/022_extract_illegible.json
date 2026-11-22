@@ -1,0 +1,36 @@
+{
+  "id": "022_extract_illegible",
+  "case_type": "tool_invocation",
+  "tool": "extract_document_fields",
+  "description": "Carry-over assertion from PR #143 audit (#2): the model must NOT invent values when the document is illegible. Feeds a deliberately scrambled lease-shaped fixture. Asserts confidence is below the 0.6 threshold, the 'low_confidence' warning fires, and that the specific known-illegible field positions in the fixture come back null (NOT populated with plausible-looking fabricated values). Note: the schema's model_validator additionally enforces at the type layer that any null required field has a corresponding warning entry — a populated tenant_name (for instance) would fail the substring assertion below, AND a null tenant_name without a warning naming it would have been rejected by the schema before reaching the runner. Requires HELIXIS_LLM__ANTHROPIC_API_KEY — SKIPs in CI without secrets.",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "input": {
+    "kwargs": {
+      "file_path": "src/helixis/evals/fixtures/documents/illegible_scan.txt",
+      "mime_type": "text/plain",
+      "extraction_hint": "this is a lease, but the scan quality is very poor"
+    }
+  },
+  "expected": {
+    "result_must_contain": [
+      "low_confidence"
+    ],
+    "result_must_not_contain": [
+      "\"tenant_name\": \"Maria",
+      "\"tenant_name\": \"M",
+      "\"property_address\": \"240 Elm",
+      "\"monthly_rent\": 2450",
+      "\"monthly_rent\": 2500",
+      "Task #",
+      "Tenant #",
+      "Property #",
+      "Lease #"
+    ],
+    "warnings_must_include": [
+      "low_confidence"
+    ]
+  },
+  "_single_run_gate_note": " ⚠ TEXT BRANCH ONLY — this case does NOT exercise the path a real upload takes. It passes mime_type='text/plain', and api/routes/agent.py builds its upload allowlist by excluding exactly that value ('text/plain is eval-only fixtures'), so production can never reach the branch this case runs. _build_messages splits on the same value: text is inlined as a text block, everything else is base64'd into an image_url. use_docling defaults False, so a production PDF takes the base64 branch too. Live-verified 2026-08-29: company_documents holds 0 rows for all time and 0 orchestrator_runs have ever called either document tool, across every tenant. The multimodal branch IS covered structurally (test_document_tools feeds real PDF bytes and asserts an image_url block); what has never happened is that branch meeting a live model. Both sides are pinned in tests/unit/test_document_eval_reaches_production.py."
+}

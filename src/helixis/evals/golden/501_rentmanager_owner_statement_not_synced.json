@@ -1,0 +1,82 @@
+{
+  "id": "501_rentmanager_owner_statement_not_synced",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-10-05. Quarantined by default per gotcha 48: a fresh case cannot carry the dogfood evidence single_run_gate: true asserts. Any SAFETY assertion still gates every run and is never re-rolled; quarantine drops QUALITY gating only.",
+  "description": "A Rent Manager workspace asks for an owner statement. Occupella does not sync Rent Manager owner statements (design R5 defers them) and the run note lists them as not available, so the reply says so, sends the user to Rent Manager, and never shows $0: the design's \"'owner statement' -> not synced, never zero\" item. The reads a model could try to assemble one from decline as not synced (spending, ledgers, bank accounts) or carry no rent (RM-11). input.pms is 'rentmanager', so the harness binds the run as production does: bind_run_pms before the agent is built, the specialist reworded to the Rent Manager Agent, rentmanager.sync.RUN_NOTE on the input, the live Buildium tools hidden (agent_flow.run_agent_flow_case). Synthetic fixture only: invented names, 880000xxx-style ids, no Rent Manager export, no recorded response. Every mock is what the real mirror tool says on a Rent Manager company holding the same rows (tests/unit/test_rentmanager_golden_cases.py).",
+  "input": {
+    "user_message": "Can you pull September's owner statement for Priya Example?",
+    "agent": "Buildium Agent",
+    "pms": "rentmanager",
+    "tool_mocks": {
+      "contact_lookup": [
+        {
+          "return": "People matching 'Priya Example':\n- Priya Example (owner)\n(from Occupella's synced property data, updated 2h ago)",
+          "repeat": 2
+        }
+      ],
+      "spending_report": [
+        {
+          "return": "Occupella doesn't sync spending by category or property from Rent Manager yet, so I can't say either way. Check your expense reports in Rent Manager.",
+          "repeat": 3
+        }
+      ],
+      "lease_payment_history": [
+        {
+          "return": "Occupella doesn't sync charges and payments from Rent Manager yet, so I can't say either way. Check any lease in Rent Manager.",
+          "repeat": 2
+        }
+      ],
+      "bank_balances": [
+        {
+          "return": "Occupella doesn't sync bank accounts from Rent Manager yet, so I can't say either way. Check your bank accounts in Rent Manager.",
+          "repeat": 2
+        }
+      ],
+      "rent_roll": [
+        {
+          "return": "Rent roll: 7 active leases. No lease's rent has been read yet, so there is no rent total:\n- Avery Placeholder — Harbor View Flats · Unit 1A: rent not read yet, lease ends 2027-02-28\n- Quinn Test — Harbor View Flats · Unit 1B: rent not read yet, lease ends 2026-12-31\n- Marisol Example — Harbor View Flats · Unit 2B: rent not read yet, lease ends 2027-05-31, owes $2,450\n- Casey Demo — Harbor View Flats · Unit 3A: rent not read yet\n- Jordan Fictional — Lindenwood Court · Unit 1: rent not read yet, past its 2026-08-31 end date and still active\n- Riley Mock — Lindenwood Court · Unit 2: rent not read yet, lease ends 2027-09-30\n- Dev Sample — Lindenwood Court · Unit 4: rent not read yet, lease ends 2027-03-31, owes $675.50\nNo amount owed means the lease is not in the synced balance snapshot, i.e. it owes nothing.\n(from Occupella's synced property data, updated 2h ago)",
+          "repeat": 2
+        }
+      ],
+      "unpaid_bills": [
+        {
+          "return": "Unpaid bills (soonest due first):\n- Bayside Plumbing Co: $480, due 2026-10-20, ref INV-2041 [bill 880000801]\n- Northline Roofing: $1,260, due 2026-11-02 [bill 880000802]\nTotal unpaid: $1,740 across 2 bills.\nEach row ends with its bill id. Those ids are for EXPORTS and lookups, not for prose — identifiers are stripped from chat replies, so quoting one into a sentence drops it. If the user wants to reconcile or hand this to an accountant, call export_table and include the id column.\n(from Occupella's synced property data, updated 2h ago)",
+          "repeat": 2
+        }
+      ],
+      "portfolio_overview": [
+        {
+          "return": "Portfolio overview:\n- Harbor View Flats: 4/5 occupied, 1 vacant, 1 open work orders, 1 leases expiring ≤90d, $2,450 delinquent\n- Lindenwood Court: 3/4 occupied, 1 vacant, $676 delinquent\nTotals: 2 properties, 7/9 units occupied, 1 open work orders, 1 leases expiring ≤90d, $3,126 outstanding.\n(from Occupella's synced property data, updated 2h ago)",
+          "repeat": 2
+        }
+      ]
+    }
+  },
+  "expected": {
+    "reply_must_not_contain": [
+      "$0"
+    ],
+    "reply_must_match_regex": [
+      "(?:not|n't)\\b[^.!?\\n]{0,30}?\\b(?:read|sync(?:ed|s|ing)?|available|have|pull|carry)\\b|\\bunavailable\\b"
+    ],
+    "reply_must_contain": [
+      "Rent Manager"
+    ],
+    "reply_should_not_contain": [
+      "Buildium",
+      "Rentvine"
+    ],
+    "reply_must_not_be_empty": true
+  },
+  "_assertion_notes": {
+    "reply_must_not_contain": "SAFETY. An owner statement Occupella does not have is not $0 (rule 14: unknown never renders as zero); '$0' here is a false statement about an owner's money, the shape of gotcha 26. Until e186862b the rent roll's head read '$0 a month in rent' on a roll with no rent read, and a model assembling a statement repeats a tool's words; the bound holds whatever a tool prints. A mention the reply puts in quotes in order to reject it re-rolls instead (agent_flow._phrase_is_disowned); a reply that states it gates.",
+    "reply_must_match_regex": "QUALITY. The reply says the statement is not available (not synced, not in Occupella yet), as the run note tells it to.",
+    "reply_must_contain": "QUALITY. It names where the user can get the statement: Rent Manager (rule 16: an instruction names an action the user can take).",
+    "reply_should_not_contain": "QUALITY, non-gating. A Rent Manager run never names another PMS (rentmanager.sync.RUN_NOTE); a slip is worth counting, not red-gating CI.",
+    "why_these_mocks": "contact_lookup finds the owner; the others are the reads a model might assemble a statement from. An unmocked mirror read has no memory context in evals and stops at 'which company?', which would fail the case for a reason it does not measure."
+  }
+}

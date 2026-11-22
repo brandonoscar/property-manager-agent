@@ -1,0 +1,28 @@
+{
+  "id": "056_calendar_create_event_flow",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": true,
+  "description": "Closes the Calendar leg of #359 — the Composio WRITE path had no coverage (only GOOGLECALENDAR_EVENTS_LIST was stubbed). Adds the GOOGLECALENDAR_CREATE_EVENT eval stub (connector_stub_tools) and exercises the happy path: a scheduling request one-shots the create tool. The confirm gate fires automatically per the Calendar prompt, so no explicit confirm assertion. Quality/K-of-N only (tool_call_trail + non-empty reply). DESIGN NOTE (mirrors 040's write finding): a confirm/ask-first specialist prompt may NOT one-shot a write on live Gemini — if the agent asks for details first, the trail is empty and the quality assertion fails NON-GATING until a dogfood tune confirms one-shot behavior. DOGFOOD 2026-07-08: the original 'tomorrow at 2pm' phrasing made the agent reach for the unstubbed GOOGLECALENDAR_GET_CURRENT_DATE_TIME (ModelBehaviorError) instead of one-shotting; giving an ABSOLUTE date ('on 2026-07-09 from 2:00pm to 2:30pm') removes that dependency and the Calendar prompt (action-oriented for writes) one-shots GOOGLECALENDAR_CREATE_EVENT — 20/20 on the live grid → single_run_gate:true.",
+  "input": {
+    "user_message": "Create a calendar event titled 'Showing — 123 Main St' on 2026-07-09 from 2:00pm to 2:30pm.",
+    "agent": "Calendar Agent",
+    "tool_mocks": {
+      "GOOGLECALENDAR_CREATE_EVENT": [
+        {
+          "return": "Created event 'Showing — 123 Main St' on 2026-07-09 from 2:00pm to 2:30pm. Event id evt_eval_056.",
+          "repeat": 4
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "GOOGLECALENDAR_CREATE_EVENT"
+    ],
+    "reply_must_not_be_empty": true
+  },
+  "_single_run_gate_note": "THAT EVIDENCE IS VOID — measured on live Gemini, and the Google account was cut off 2026-07-21 (gotcha 18). Never re-validated on Anthropic, and PRs run the Haiku PR-gate tier, which gotcha 10 records as drifting from the production model. The gate stays ON because this case PASSED the run that surfaced the stale note (gotcha 48's precedent: a stale justification is not itself evidence of instability). Re-validate on the current tier or quarantine it — do not read the grid above as live proof."
+}

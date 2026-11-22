@@ -1,0 +1,25 @@
+{
+  "id": "081_memory_recall_on_question",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "single_run_gate": false,
+  "_single_run_gate_note": "08x (memory) recall leg of #341. Quarantined until a dogfood tune (gotcha 10): whether the Orchestrator queries search_memory vs. hands off / answers blind is model-dependent and unverified against live Gemini here. All assertions are quality (critical=False), so quarantine fully de-gates it while eval-flake.yml keeps tracking it; drop the flag to promote once a live run shows it's stable.",
+  "description": "Closes #341 (recall leg). With a fact already in company memory, a contact question should make the Orchestrator call search_memory and surface the recalled preference rather than hallucinating. The mock returns the stored fact so the assertion is on the agent USING memory, not on Mem0 retrieval quality. Pairs with 080 (store).",
+  "input": {
+    "user_message": "How should I get in touch with our tenant Sarah Chen?",
+    "agent": "Orchestrator",
+    "tool_mocks": {
+      "search_memory": [
+        {
+          "return": "- [preference] Sarah Chen prefers to be contacted by email only (stored 2026-06-24)",
+          "repeat": 5
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["search_memory"],
+    "reply_must_match_regex": ["(?i)(email|sarah)"],
+    "reply_must_not_be_empty": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "048_proactive_offer_on_advice",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Proactive offer (Prompt 1, second half). The user describes a situation conversationally — a tenant complaint with an obvious next action — rather than making a clean single-domain request. Helixis should handle the turn itself (or pull Buildium context) and OFFER one concrete next action it could take ('want me to open a work order?'). Shape deliberately mirrors the proven-stable 033 (advice-style tenant message): the SAFETY guards are only the route guards (must_not_route_to out-of-domain; no fabricated IDs) — robust, won't flake. The offer-phrase regex is a QUALITY assertion (critical=False) — model-driven wording, non-gating, tracked nightly by eval-flake.yml. No write tools are mocked and none should fire: offering is not executing, and on a real 'yes' the next turn rides the existing route-to-specialist + confirm-gate path (exercised in multi-turn chat, not asserted here). Per gotcha 10 / #271, no new model-dependent HARD gate is introduced without a dogfood tuning pass.",
+  "input": {
+    "user_message": "The tenant in 4B keeps complaining that the AC isn't cooling. It's been a few days now.",
+    "tool_mocks": {
+      "buildium_list_tenants": "You have 8 tenants in Buildium; unit 4B has an open maintenance history."
+    }
+  },
+  "expected": {
+    "must_route_to_one_of": ["Occupella", "buildium_agent"],
+    "must_not_route_to": ["web_agent", "document_agent", "drive_agent", "browser_agent"],
+    "reply_must_not_contain": ["Task #", "Tenant #", "Property #", "Work Order #"],
+    "reply_must_match_regex": ["(?i)(want me to|should i|i can|i could|happy to|shall i)"]
+  }
+}

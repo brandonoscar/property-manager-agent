@@ -1,0 +1,24 @@
+{
+  "id": "049_outlook_recent_email_flow",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "single_run_gate": false,
+  "description": "Closes #386 (Outlook agent_flow leg) — the Outlook specialist (#380/#382) had zero coverage. Mirrors 042 (Gmail): Composio is disabled in evals so the Outlook agent boots with zero tools; this case relies on the eval-stub OUTLOOK_LIST_MESSAGES tool (helixis.evals.connector_stub_tools) injected by the harness, with its _impl mocked to return a recent-inbox summary. Asserts the happy path: a 'recent emails' ask one-shots the fetch tool and the reply surfaces the messages. Quality/K-of-N assertions only — like 042, presenting inbox contents (including sender names) IS the job, so this does NOT assert reply_must_not_contain on a sender address (that would contradict the 042 precedent and false-positive on legitimate output). A PII-stripping guard is a hardening follow-up once a dogfood pass confirms the Outlook agent's echo behavior.",
+  "input": {
+    "user_message": "Show me my recent Outlook emails from tenants.",
+    "agent": "Outlook Agent",
+    "tool_mocks": {
+      "OUTLOOK_LIST_MESSAGES": [
+        {
+          "return": "1. Priya Raman <priya.raman@example.com> — \"Parking spot reassignment for Unit 6\" — Jul 7 — Hi, I was told my parking spot is changing next month, can you confirm the new spot number?\n2. Marcus Bell <marcus.bell@example.com> — \"Re: dishwasher not draining, Unit 2C\" — Jul 6 — It's still holding water at the bottom after a cycle, when can someone come by?\n3. Building Front Desk <frontdesk@example.com> — \"Package held for pickup\" — Jul 6 — A package for Unit 11 is at the front desk.",
+          "repeat": 4
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["OUTLOOK_LIST_MESSAGES"],
+    "reply_must_not_be_empty": true,
+    "reply_must_match_regex": ["(?i)(priya|marcus|parking|dishwasher|package)"]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "id": "123_multisource_no_underloop",
+  "case_type": "orchestrator_routing",
+  "reasoning_loop": true,
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "description": "W2 probe F5 (multi-source question, no under-looping). Answering 'what late fee was the tenant in 4B charged, and is it consistent with the lease?' genuinely needs TWO sources: the charged amount ($150) lives ONLY in the Buildium mock, and the lease policy ($120 cap = 5% of rent) lives ONLY in the document mock — the question deliberately states neither fact, so a reply containing both proves both specialists were consulted. The correct synthesis notices the charge EXCEEDS the lease cap.",
+  "_todo": "RESOLVED — corrected 2026-08-29. This note claimed 'MISSING PRIMITIVE: no handoff_trail_must_contain'. It is implemented in orchestrator_routing.py, it landed in the same W2 S5 '#676 _todo closures' batch the note predates, and THIS CASE ALREADY USES IT (see expected.handoff_trail_must_contain). So the case was asserting positive trail membership directly while its own TODO said it could not. Gotcha 34's rule, third instance: nothing reads case metadata, so prose in a JSON file cannot fail.",
+  "input": {
+    "user_message": "What late fee was the tenant in unit 4B charged this month, and is it consistent with what their lease at /docs/unit_4b_lease.pdf says about late fees?",
+    "tool_mocks": {
+      "buildium_find_tenant_for_unit": "Unit 4B at 118 Crescent Avenue — Robert Kim. Ledger July 2026: $2,400 rent past due; late fee of $150.00 charged on 2026-07-06.",
+      "extract_document_fields": {
+        "doc_type": "lease",
+        "confidence": 0.93,
+        "fields": {
+          "tenant_name": "Robert Kim",
+          "property_address": "118 Crescent Avenue",
+          "unit": "4B",
+          "monthly_rent": 2400.0,
+          "lease_start": "2024-06-01",
+          "lease_end": "2026-05-31",
+          "signed_date": "2024-05-20",
+          "late_fee_policy": "5% of monthly rent, capped at $120, after a 5-day grace period",
+          "grace_period_days": 5
+        },
+        "summary": "Lease for Robert Kim at 118 Crescent Avenue unit 4B, $2,400/mo; late fee capped at $120 (5% of rent) after a 5-day grace period.",
+        "warnings": []
+      }
+    }
+  },
+  "expected": {
+    "must_route_to_one_of": [
+      "buildium_agent",
+      "document_agent"
+    ],
+    "handoff_trail_must_not_contain": [
+      "web_agent",
+      "browser_agent"
+    ],
+    "reply_must_contain": [
+      "150"
+    ],
+    "reply_must_match_regex": [
+      "(120|5\\s?%|five percent)"
+    ],
+    "handoff_trail_must_contain": [
+      "buildium_agent",
+      "document_agent"
+    ],
+    "specialist_call_count_min": 2,
+    "synthesis_footer_required": true
+  }
+}

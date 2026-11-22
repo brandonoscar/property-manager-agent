@@ -1,0 +1,11 @@
+{
+  "_synthetic": true,
+  "_about": "Hand-built from VendorDTO in Propertyware's official spec. Never exported from any Propertyware account (terms rule 17). Quirks: a tax id that must not reach raw; an inactive vendor with no company name and only another phone.",
+  "rows": [
+    {"id": 990500001, "name": "Synthetic Plumbing Co", "companyName": "Synthetic Plumbing Co", "type": "Plumber",
+     "active": true, "phone": "555-0120", "email": "dispatch@synthetic-plumbing.example.com", "taxId": "00-0000000",
+     "lastModifiedDateTime": "2026-09-09T10:00:00Z"},
+    {"id": 990500002, "name": "Pat Handy", "companyName": null, "type": "Handyman",
+     "active": false, "otherPhone": "555-0121", "email": null, "lastModifiedDateTime": "2026-09-09T10:00:00Z"}
+  ]
+}

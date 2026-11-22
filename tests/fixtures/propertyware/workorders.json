@@ -1,0 +1,17 @@
+{
+  "_synthetic": true,
+  "_about": "Hand-built from WorkOrderDTO in Propertyware's official spec. Never exported from any Propertyware account (terms rule 17). Quirks: a single-family work order whose unitID is its building id; a status in the customer's own words; a priority outside the spec's enum; no lastModifiedDateTime.",
+  "rows": [
+    {"id": 990700001, "number": 1001, "buildingID": 990100001, "unitID": 990200003, "portfolioID": 990300001,
+     "status": "Open", "priority": "HIGH", "type": "Service Request", "category": "Plumbing",
+     "description": "Synthetic leak under the kitchen sink", "publishToTenantPortal": false, "publishToOwnerPortal": false,
+     "createdDateTime": "2026-09-28T09:00:00Z", "lastModifiedDateTime": "2026-09-30T14:02:11Z"},
+    {"id": 990700002, "number": 1002, "buildingID": 990100002, "unitID": 990100002, "portfolioID": 990300002,
+     "status": "Completed", "priority": "LOW", "type": "General", "category": "Landscaping",
+     "description": "Synthetic hedge trim", "completedDate": "2026-09-02",
+     "lastModifiedDateTime": "2026-09-01T09:00:00+00:00"},
+    {"id": 990700003, "number": 1003, "buildingID": 990100003, "unitID": null, "portfolioID": 990300001,
+     "status": "Waiting on Parts", "priority": "URGENT", "type": "Turnover", "category": null,
+     "description": "Synthetic make-ready for C-B"}
+  ]
+}

@@ -1,0 +1,282 @@
+services:
+  - type: web
+    name: occupella-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    # standard = 2 GB / 1 CPU. The memory chat turn (Gemini + mem0/presidio
+    # spaCy models + ~200 cached Composio tool schemas) pinned RAM against the
+    # 512 MiB free/starter ceiling and got OOM-killed mid-turn, which killed the
+    # post-turn memory auto_extract before it could persist (helixis_memories /
+    # memory_audit stayed empty). Pinned here so a blueprint sync can't silently
+    # revert the plan to free and re-introduce the OOM. Free also cold-spins-down
+    # on idle, which a chat product can't tolerate.
+    plan: standard
+    region: oregon
+    # Route verified: health router is mounted at /api/v1 + @router.get("/health").
+    # ⚠ Blueprint-linkage caveat (Langfuse/Render audit 2026-07-03, gotcha 9): the
+    # LIVE dashboard was observed with healthCheckPath EMPTY and the service named
+    # "occupella" (this yaml says occupella-api) — signs the Blueprint may
+    # NOT be linked to the running service, in which case edits here (incl. plan +
+    # this path) do NOT reach prod. Before trusting a render.yaml change, confirm the
+    # Blueprint is linked; if the dashboard still shows this empty, set it there.
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: HELIXIS_ENV
+        value: production
+      # Guarded Buildium writes REQUIRE the durable idempotency ledger —
+      # without this, a DB-pool hiccup would let writes pass confirm-only
+      # with no dedup record (pre-launch audit 2026-07-08).
+      - key: HELIXIS_IDEMPOTENCY__REQUIRED
+        value: "true"
+      # Haiku fast-router (D#13): a ~300ms routing-only precheck that
+      # direct-runs the Buildium/Analyst specialist for an unambiguous
+      # single-source read, skipping the orchestrator model turn + toolkit
+      # fetches. FAIL-OPEN by design (agents/fast_router.py): any doubt,
+      # error, timeout, or unparseable reply routes to the full orchestrator,
+      # so it can only ever save a hop, never change behavior — and specialist
+      # write tools keep their own confirm gates, so the fast path changes
+      # latency, not safety. Reversible by flipping this to "false".
+      # ⚠ Calibration: validate the 03x routing golden cases hold under live
+      # Anthropic before trusting it broadly (the "8× fail-open reps"); this
+      # enables it — the reps run in CI / with a key, not offline.
+      - key: HELIXIS_AGENT__FAST_ROUTER
+        value: "true"
+      - key: HELIXIS_API__HOST
+        value: 0.0.0.0
+      - key: HELIXIS_API__PORT
+        value: "8000"
+      # ⚠ SET EXPLICITLY BECAUSE THE FALLBACK IS POSITIONAL, and must stay in
+      # step with `api.public_app_url` in config/production.yaml — an env var
+      # SHADOWS the YAML leaf (gotcha 6). Blank, `_invite_redirect_url` takes
+      # the FIRST https:// entry in CORS_ORIGINS below, which is a vercel.app
+      # host: every invite would name Vercel rather than the product, and
+      # reordering that list would silently move where new teammates land.
+      - key: HELIXIS_API__PUBLIC_APP_URL
+        value: "https://app.occupella.com"
+      # ⚠ No localhost origins (removed 2026-11-11, in step with
+      # config/production.yaml). This var SHADOWS that file (gotcha 6), and
+      # whether this Blueprint reaches the service is unconfirmed (gotcha 80):
+      # the value on the service itself is what is live.
+      - key: HELIXIS_API__CORS_ORIGINS
+        value: '["https://your-app.vercel.app","https://your-onboarding.vercel.app","https://occupella.com","https://www.occupella.com","https://setup.occupella.com","https://app.occupella.com"]'
+      # ⚠ MUST stay byte-identical to `api.cors_origin_regex` in
+      # config/production.yaml — an env var SHADOWS the YAML leaf
+      # (`_drop_env_shadowed`, gotcha 6), so whichever of the two is live
+      # depends on whether this var is actually set on the service, which the
+      # Render API does not expose (gotcha 80). Two different values for one
+      # setting means nobody can say what the deployment enforces.
+      #
+      # ⚠ This one was MISSING the `-your-team` team segment, and
+      # that segment is the whole security boundary. Vercel subdomains are
+      # globally unique and anyone can create a project: without it,
+      # `your-app-evil.vercel.app` — registerable by a stranger — was
+      # allowed to call this API from a browser with the user's credentials
+      # attached. Measured 2026-09-09 against both patterns.
+      - key: HELIXIS_API__CORS_ORIGIN_REGEX
+        value: '^https://(your-app|your-onboarding)(-[a-z0-9-]+-your-team)?\.vercel\.app$'
+      - key: HELIXIS_LLM__OPENAI_API_KEY
+        sync: false
+      - key: HELIXIS_LLM__ANTHROPIC_API_KEY
+        sync: false
+      - key: HELIXIS_COMPOSIO__API_KEY
+        sync: false
+      - key: HELIXIS_SUPABASE__URL
+        sync: false
+      - key: HELIXIS_SUPABASE__ANON_KEY
+        sync: false
+      - key: HELIXIS_SUPABASE__SERVICE_KEY
+        sync: false
+      - key: HELIXIS_SUPABASE__DB_URL
+        sync: false
+      - key: HELIXIS_AUTH__JWT_SECRET
+        sync: false
+      - key: HELIXIS_DATA_KEY
+        sync: false
+      - key: HELIXIS_BROWSER__BROWSERBASE_API_KEY
+        sync: false
+      - key: HELIXIS_BROWSER__BROWSERBASE_PROJECT_ID
+        sync: false
+      # Langfuse observability. Keys are secret (dashboard-set); HOST is
+      # region-specific (e.g. https://us.cloud.langfuse.com) so it's owner-set
+      # too. MASK_GENERATION_CONTENT is redundant with the code default (now
+      # True) but pinned here so the PII-safe posture is explicit IaC and can't
+      # be silently flipped off (audit finding Q25).
+      - key: HELIXIS_LANGFUSE__PUBLIC_KEY
+        sync: false
+      - key: HELIXIS_LANGFUSE__SECRET_KEY
+        sync: false
+      - key: HELIXIS_LANGFUSE__HOST
+        sync: false
+      - key: HELIXIS_LANGFUSE__MASK_GENERATION_CONTENT
+        value: "true"
+      # Billing (Stripe). Listed so the go-live configuration list exists at
+      # all — until 2026-09-05 nothing here named Stripe, and every way of
+      # getting it wrong is quiet: a missing price id 503s only for the
+      # customer who picks that plan, and a stale webhook secret 403s every
+      # event while the app goes on showing whatever the row last said.
+      # ⚠ `sync: false` on all five — they are secrets AND they differ between
+      # Stripe's test and live modes. A key from one mode with price ids from
+      # the other fails at checkout, not at boot.
+      - key: HELIXIS_BILLING__STRIPE_SECRET_KEY
+        sync: false
+      - key: HELIXIS_BILLING__STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: HELIXIS_BILLING__PRICE_STARTER
+        sync: false
+      - key: HELIXIS_BILLING__PRICE_PRO
+        sync: false
+      - key: HELIXIS_BILLING__PRICE_SCALE
+        sync: false
+      # THE LOCKOUT, pinned here rather than left to the dashboard: it is the
+      # switch that starts refusing unpaid companies, and it answers a
+      # different question from "are the keys present" (gotcha 67). Declared
+      # false so enabling it is a deliberate, reviewable change.
+      - key: HELIXIS_BILLING__ENFORCE
+        value: "false"
+      # THE RENTVINE KILL SWITCH. Declared rather than left to the code
+      # default for the reason gotchas 29/80 record: a flag's live value is
+      # not what the repo says, and a session cannot read Render's env from
+      # here — so an undeclared flag is one nobody can answer a question
+      # about. Writing it down makes "is Rentvine live?" readable from the
+      # repo, and turning it on a reviewable diff.
+      #
+      # ⚠ IT IS NOT THE PER-COMPANY GATE, and conflating the two is exactly
+      # what gotchas 72/73 record Twilio doing: whether THIS company is on
+      # Rentvine is whether a `company_rentvine_credentials` row exists.
+      # A company with credentials stays dark while this is false, which is
+      # what makes a rollback possible without disconnecting anybody.
+      #
+      # ⚠ MUST BE SET ON THE WORKER TOO — it gates the sync cycle
+      # (`rentvine/sync.py`) as well as the agent tool and the webhook route.
+      # Web-only would leave the connector half-on: chat answers from a
+      # mirror nothing is filling.
+      - key: HELIXIS_RENTVINE__ENABLED
+        value: "false"
+      # THE RENT MANAGER AND PROPERTYWARE SWITCHES (design/connector-shared-
+      # layer.md, P4). Two per connector, declared for the same reason as
+      # Rentvine's: `ENABLED` is connect, sync and reads; `WRITES_ENABLED`
+      # shows the gated write tools to the model and does nothing while
+      # `ENABLED` is false. Neither is the per-company gate: a credentials row
+      # is. ⚠ MUST MATCH THE WORKER, for the half-on reason above.
+      - key: HELIXIS_RENTMANAGER__ENABLED
+        value: "false"
+      - key: HELIXIS_RENTMANAGER__WRITES_ENABLED
+        value: "false"
+      - key: HELIXIS_PROPERTYWARE__ENABLED
+        value: "false"
+      - key: HELIXIS_PROPERTYWARE__WRITES_ENABLED
+        value: "false"
+      # DoorLoop's two (design/doorloop-connector.md), declared false for the
+      # same reasons. Its connector has no sync yet, so switching it on would
+      # offer a connection that fills nothing.
+      - key: HELIXIS_DOORLOOP__ENABLED
+        value: "false"
+      - key: HELIXIS_DOORLOOP__WRITES_ENABLED
+        value: "false"
+
+  - type: worker
+    name: helixis-webhooks-worker
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter
+    region: oregon
+    branch: main
+    dockerCommand: python -m helixis.webhooks.worker
+    # The worker reads pending rows from buildium_events, dispatches to
+    # the legacy per-event handlers, and persists retry state. It needs
+    # the same Supabase + Buildium + LLM env the API uses. We declare
+    # the vars inline (rather than via an env group) to mirror the
+    # ``web`` service block above — keeping IaC declarative and avoiding
+    # silent drift if a dashboard-only env group gets renamed.
+    envVars:
+      - key: HELIXIS_ENV
+        value: production
+      # Promote the invoice↔work-order detector from dark (D#6). It ships
+      # default_enabled=False like all mirror-state detectors; the designed
+      # promotion path is this per-id allowlist (runner._extra_enabled_ids),
+      # not flipping the class default — so the "dark by default" invariant
+      # and its tests stay intact and the enable is reversible by editing
+      # this one line. The attention-budget governor (detectors/attention.py)
+      # caps delivery at 8/day, dedups, and auto-flags the detector if its
+      # dismissal rate runs high, so turning it on can't flood the "Occupella
+      # noticed" surface. Set on the WORKER because it runs the reconciliation
+      # cycle. ⚠ Blueprint-linkage caveat (gotcha 9): if the Blueprint isn't
+      # linked, set HELIXIS_DETECTORS__ENABLED_IDS on the worker in the Render
+      # dashboard too.
+      - key: HELIXIS_DETECTORS__ENABLED_IDS
+        value: invoice_no_work_order
+      - key: HELIXIS_LLM__OPENAI_API_KEY
+        sync: false
+      - key: HELIXIS_LLM__ANTHROPIC_API_KEY
+        sync: false
+      - key: HELIXIS_COMPOSIO__API_KEY
+        sync: false
+      - key: HELIXIS_SUPABASE__URL
+        sync: false
+      - key: HELIXIS_SUPABASE__ANON_KEY
+        sync: false
+      - key: HELIXIS_SUPABASE__SERVICE_KEY
+        sync: false
+      - key: HELIXIS_SUPABASE__DB_URL
+        sync: false
+      - key: HELIXIS_AUTH__JWT_SECRET
+        sync: false
+      - key: HELIXIS_DATA_KEY
+        sync: false
+      # The worker's planner also emits LLM calls that trace to Langfuse;
+      # keep generation-content masking explicit here too (code default is
+      # True; this pins it). Q25.
+      - key: HELIXIS_LANGFUSE__MASK_GENERATION_CONTENT
+        value: "true"
+      # The worker half of the Rentvine kill switch — `rentvine/sync.py`
+      # checks it before every cycle. The two MUST agree: web-on/worker-off
+      # answers chat questions from a mirror nothing is filling, and
+      # web-off/worker-on syncs a connector the product will not surface.
+      # ⚠ Blueprint-linkage caveat (gotcha 9), same as the detector flag
+      # above: if the Blueprint is not linked, set this on the worker in the
+      # Render dashboard too.
+      - key: HELIXIS_RENTVINE__ENABLED
+        value: "false"
+      # The worker half of the Rent Manager and Propertyware switches
+      # (`pms/sync_cycle.py` reads `ENABLED` every tick). The same caveats:
+      # they MUST agree with the web service, and if the Blueprint is not
+      # linked (gotcha 9), set them in the Render dashboard too.
+      - key: HELIXIS_RENTMANAGER__ENABLED
+        value: "false"
+      - key: HELIXIS_RENTMANAGER__WRITES_ENABLED
+        value: "false"
+      - key: HELIXIS_PROPERTYWARE__ENABLED
+        value: "false"
+      - key: HELIXIS_PROPERTYWARE__WRITES_ENABLED
+        value: "false"
+      - key: HELIXIS_DOORLOOP__ENABLED
+        value: "false"
+      - key: HELIXIS_DOORLOOP__WRITES_ENABLED
+        value: "false"
+
+  - type: cron
+    name: occupella-backfill-buildium-account-id
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    region: oregon
+    # Manual-trigger pattern: schedule far in the future so the job never
+    # auto-fires. Brandon hits "Trigger Run" in the Render dashboard once
+    # after the connector form first deploys, then again any time a new
+    # connector row needs backfilling. The script is idempotent — re-
+    # running is a no-op once every row has account_id populated.
+    schedule: "0 0 1 1 *"  # Jan 1, 00:00 UTC — effectively never
+    startCommand: python scripts/backfill_buildium_account_id.py
+    envVars:
+      # Cron jobs do not inherit env from other services in render.yaml;
+      # each service declares its own. Only the two vars the script
+      # actually reads are listed — least-privilege.
+      - key: HELIXIS_ENV
+        value: production
+      - key: HELIXIS_SUPABASE__DB_URL
+        sync: false
+      - key: HELIXIS_DATA_KEY
+        sync: false

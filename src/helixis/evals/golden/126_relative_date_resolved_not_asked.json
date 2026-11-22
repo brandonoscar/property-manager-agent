@@ -1,0 +1,32 @@
+{
+  "id": "126_relative_date_resolved_not_asked",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "description": "Live-found 2026-08-23 by the role matrix. A relative date must be resolved from the injected clock, never bounced back to the user. Three probes carrying one ('effective the last day of next month', two undated money writes) never reached the tool under test: the agent stopped to ask what today was, and its reason was accurate -- 'none of my tools expose the system clock directly'. No clock tool existed, while the orchestrator's routing prompt told it not to ask because the date was 'always available to the specialists via their tools'. Fixed structurally in agents/clock_prompt.py: the date is in the system prompt at construction, so it costs no turn and cannot be forgotten. This case pins the BEHAVIOUR; tests/unit/test_clock_prompt.py pins that every Agent gets the block, including a specialist added later whose path nothing exercises.",
+  "input": {
+    "user_message": "Record a move-out on Buildium lease 115934, effective the last day of next month.",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "buildium_record_move_out": [
+        {
+          "return": "Buildium accepted a move-out for Marcus Whitfield on lease 115934. That is the API's acknowledgement, NOT confirmation it took effect \u2014 a 2xx here has previously come back with no move-out on the lease. Read the lease back before telling anyone it is done, and if the lease still shows no move-out, say so plainly rather than reporting success. Do NOT re-send the write to 'make it take' \u2014 that is how a record ends up duplicated.",
+          "repeat": 3
+        }
+      ]
+    }
+  },
+  "expected": {
+    "reply_must_not_be_empty": true,
+    "reply_must_not_match_regex": [
+      "(?i)what('?s| is) (today|the current date)",
+      "(?i)(tell|let) me (know )?(what )?today'?s date",
+      "(?i)I need (today'?s date|the current date)",
+      "(?i)(don'?t|do not|cannot|can'?t) (know|access|see) (what )?(today|the current date)"
+    ],
+    "reply_must_match_regex": [
+      "\b20\\d{2}-\\d{2}-\\d{2}\b|\b(19|20)\\d{2}\b"
+    ]
+  }
+}

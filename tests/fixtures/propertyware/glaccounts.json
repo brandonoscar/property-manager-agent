@@ -1,0 +1,15 @@
+{
+  "_synthetic": true,
+  "_about": "Hand-built from AccountDTO in Propertyware's official spec, as GET /accounting/glaccounts?includeDeactivated=true returns it. Never exported from any Propertyware account (terms rule 17). The bank numbers are all zeros and must not reach raw. Quirks: the security-deposit flag kept in raw; an inactive account with a parent.",
+  "rows": [
+    {"id": 990900001, "accountNumber": "1000", "accountCode": "CASH", "name": "Synthetic Operating Cash",
+     "accountType": "Asset", "active": true, "bankAccountNumber": "000000000000", "bankRoutingNumber": "000000000",
+     "bankInstitution": "Synthetic Bank", "securityDepositAccount": false},
+    {"id": 990900002, "accountNumber": "2100", "accountCode": "SECDEP", "name": "Synthetic Security Deposits Held",
+     "accountType": "Liability", "active": true, "securityDepositAccount": true},
+    {"id": 990900003, "accountNumber": "6100", "accountCode": "REPAIRS", "name": "Synthetic Repairs",
+     "accountType": "Expense", "active": false, "parentGLAccountId": 990900004, "securityDepositAccount": false},
+    {"id": 990900004, "accountNumber": "6000", "accountCode": "OPEX", "name": "Synthetic Operating Expenses",
+     "accountType": "Expense", "active": true, "securityDepositAccount": false}
+  ]
+}

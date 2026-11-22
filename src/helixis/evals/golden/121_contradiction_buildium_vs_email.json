@@ -1,0 +1,27 @@
+{
+  "id": "121_contradiction_buildium_vs_email",
+  "case_type": "orchestrator_routing",
+  "reasoning_loop": true,
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "description": "W2 probe F4 (contradiction surfacing). The tenant claims by email to have paid the full balance (confirmation #8891) while Buildium shows a $2,400 open balance with no July payments recorded. A good reply SURFACES the discrepancy (both sides + the mismatch) instead of flatly asserting either side alone. REFRAMED for current seams (see _todo): the tenant's email claim is pasted into the user message rather than mocked through Gmail, because the routing harness has no Gmail mock seam — the contradiction is still model-visible and the probe's synthesis behavior is identical.",
+  "_todo": "MISSING PRIMITIVE: no QUALITY-tier negative reply primitive — routing's reply_must_not_contain / reply_must_not_match_regex are critical=True (safety), so encoding 'must not flatly assert either side alone' as a negative would let a wording flake hard-gate PRs; a reply_should_not_match_regex (quality, like agent_flow's reply_should_not_contain) is needed to assert it safely. That half is still open — verified 2026-08-29: reply_should_not_match_regex exists in neither builder. ⚠ CORRECTED 2026-08-29: this note ALSO claimed there was no Gmail tool_mocks seam in orchestrator_routing._MOCK_TARGETS. GMAIL_FETCH_EMAILS is registered there and has been since the W2 S5 batch. Per gotcha 34, a stale TODO saying a check doesn't work when it does is worse than none — it invites the next reader to write the case off as toothless.",
+  "input": {
+    "user_message": "The tenant in unit 4B just emailed me: 'I paid the full balance on the 3rd, confirmation #8891.' Can you check what their ledger actually shows in Buildium?",
+    "tool_mocks": {
+      "buildium_find_tenant_for_unit": "Unit 4B at 118 Crescent Avenue — Robert Kim. Ledger as of 2026-07-18: OPEN balance $2,400 (July 2026 rent, unpaid). No payments recorded in July. No payment confirmation matching #8891 on file."
+    }
+  },
+  "expected": {
+    "must_route_to": "buildium_agent",
+    "handoff_trail_must_not_contain": [
+      "browser_agent"
+    ],
+    "reply_must_match_regex": [
+      "2,?400",
+      "(discrepan|conflict|mismatch|however|but |doesn'?t match|does not match|doesn'?t reflect|claims|no (payment|record)|not.{0,20}recorded)"
+    ],
+    "synthesis_footer_required": true
+  }
+}

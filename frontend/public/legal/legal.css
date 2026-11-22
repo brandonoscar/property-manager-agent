@@ -1,0 +1,189 @@
+/* Occupella legal pages — shared styling.
+ *
+ * Values mirror the product tokens in frontend/src/styles/globals.css:
+ * white canvas, navy chrome (#16243D) as the header island, blue accent
+ * (#1E73BC), ink ramp, 8px card radius, self-hosted Geist. These pages are
+ * static (served from /legal/, outside the SPA bundle) so the tokens are
+ * inlined here rather than imported — keep them in sync with globals.css.
+ *
+ * Deliberately LIGHT-ONLY, matching the app. `color-scheme: light` stops the
+ * browser forcing a dark UA theme. (An earlier version carried a
+ * prefers-color-scheme block placed BEFORE the base rules — same specificity,
+ * so the base rules won and dark-mode readers got pale ink on a near-white
+ * callout. Committing to one theme removes that whole failure class.)
+ */
+
+@font-face {
+  font-family: "Geist Variable";
+  src: url("./geist.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  --canvas: #ffffff;
+  --chrome: #16243d;
+  --chrome-ink: #e8edf4;
+  --chrome-ink-muted: #9aa8bc;
+
+  --ink: #0e1620;
+  --ink-secondary: #3e4854;
+  --ink-muted: #55606e;
+  --ink-faint: #98a1ae;
+
+  --iris: #1e73bc;
+  --iris-hover: #2a80cc;
+  --iris-tint: rgba(30, 115, 188, 0.06);
+
+  --line: rgba(14, 22, 32, 0.1);
+  --card-edge: rgba(14, 22, 32, 0.14);
+
+  --r-md: 8px;
+  --font-sans: "Geist Variable", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink-secondary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Navy header island — the product's chrome idiom. Light ink inside. */
+.masthead {
+  background: var(--chrome);
+  color: var(--chrome-ink);
+  padding: 2.25rem 1.5rem;
+}
+
+.masthead-inner {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.wordmark {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--chrome-ink-muted);
+  margin: 0 0 0.5rem;
+}
+
+.masthead h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--chrome-ink);
+}
+
+.masthead .updated {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  color: var(--chrome-ink-muted);
+}
+
+main {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 2.5rem 0 0.75rem;
+  letter-spacing: -0.005em;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+a {
+  color: var(--iris);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--iris-hover);
+}
+
+ul {
+  padding-left: 1.15rem;
+  margin: 0 0 1rem;
+}
+
+li {
+  margin: 0.4rem 0;
+}
+
+li::marker {
+  color: var(--ink-faint);
+}
+
+/* Callout — a plain bordered card on a faint brand tint. No coloured
+   left-border bar, no gradient, no glass (DESIGN.md forbidden list). */
+.callout {
+  background: var(--iris-tint);
+  border: 1px solid var(--card-edge);
+  border-radius: var(--r-md);
+  padding: 1.15rem 1.35rem;
+  margin: 1.25rem 0 1.5rem;
+}
+
+.callout p:last-child {
+  margin-bottom: 0;
+}
+
+.intro {
+  color: var(--ink-secondary);
+}
+
+footer {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 3rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+}
+
+footer a {
+  margin-right: 1rem;
+}
+
+@media (max-width: 640px) {
+  .masthead {
+    padding: 1.75rem 1.25rem;
+  }
+  .masthead h1 {
+    font-size: 1.5rem;
+  }
+  main {
+    padding: 2rem 1.25rem 3rem;
+  }
+}

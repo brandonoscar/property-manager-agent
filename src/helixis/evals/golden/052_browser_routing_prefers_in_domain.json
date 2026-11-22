@@ -1,0 +1,17 @@
+{
+  "id": "052_browser_routing_prefers_in_domain",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Browser Agent must NEVER fire when an in-domain specialist covers the question. Asking about the latest task status for a specific unit is Buildium territory — Browser Agent should not be chosen even though the query mentions a unit address. This case catches the regression where the routing prompt over-fires Browser Agent on anything that sounds web-shaped.",
+  "input": {
+    "user_message": "Look up the latest task status for 100 Main Ave Unit B.",
+    "tool_mocks": {
+      "buildium_find_tenant_for_unit": "100 Main Ave Unit B has an active lease; the most recent task is task 'Leaky faucet' opened 2026-05-10, status In Progress."
+    }
+  },
+  "expected": {
+    "must_route_to": "buildium_agent",
+    "must_not_route_to": ["browser_agent", "web_agent", "document_agent"],
+    "reply_must_not_contain": ["Task #", "Tenant #", "Property #"]
+  }
+}

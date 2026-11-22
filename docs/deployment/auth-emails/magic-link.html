@@ -1,0 +1,51 @@
+<!-- Supabase Auth → Email Templates → "Magic Link"
+     Subject: Your Occupella sign-in code
+     ⚠ Paste the BODY of this file (everything from the outer <div> down). The
+     console wraps its own document; a full <html> here would nest one.
+     ⚠ Sent by "Email me a code" on the app's sign-in screen
+     (services/auth.ts sendSignInCode → signInWithOtp, shouldCreateUser false,
+     so only an existing account ever gets one). {{ .Token }} is the 6-digit
+     code that screen asks for (verifyOtp type 'email'). The link signs in too:
+     emailRedirectTo is the app's own origin. -->
+<div style="margin:0;padding:24px 12px;background:#F6F7F9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <div style="max-width:520px;margin:0 auto;background:#FFFFFF;border:1px solid rgba(14,22,32,0.10);border-radius:8px;padding:32px;">
+    <p style="margin:0 0 24px;font-size:17px;font-weight:600;letter-spacing:-0.2px;color:#0E1620;">Occupella</p>
+
+    <h1 style="margin:0 0 12px;font-size:20px;font-weight:600;line-height:1.35;color:#0E1620;">Your sign-in code</h1>
+
+    <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#55606E;">
+      Enter this code on the Occupella sign-in screen.
+    </p>
+
+    <p style="margin:0 0 24px;padding:16px;background:#F6F7F9;border-radius:6px;text-align:center;font-family:Menlo,Consolas,'Courier New',monospace;font-size:28px;font-weight:600;letter-spacing:6px;color:#0E1620;">{{ .Token }}</p>
+
+    <p style="margin:0 0 12px;font-size:15px;line-height:1.6;color:#55606E;">
+      Or sign in with one click:
+    </p>
+
+    <p style="margin:0 0 24px;">
+      <a href="{{ .ConfirmationURL }}"
+         style="display:inline-block;background:#1957A0;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:500;padding:12px 22px;border-radius:6px;">Sign in to Occupella</a>
+    </p>
+
+    <p style="margin:0 0 8px;font-size:13px;line-height:1.6;color:#55606E;">
+      If the button doesn't work, paste this into your browser:
+    </p>
+    <p style="margin:0 0 24px;font-size:13px;line-height:1.6;word-break:break-all;">
+      <a href="{{ .ConfirmationURL }}" style="color:#1957A0;">{{ .ConfirmationURL }}</a>
+    </p>
+
+    <p style="margin:0;padding-top:20px;border-top:1px solid rgba(14,22,32,0.10);font-size:13px;line-height:1.6;color:#55606E;">
+      If you didn't ask to sign in, you can ignore this. Nobody can use the
+      code without access to this inbox, and it works once and expires.
+      Questions:
+      <a href="mailto:team@occupella.com" style="color:#1957A0;">team@occupella.com</a>.
+    </p>
+  </div>
+
+  <p style="max-width:520px;margin:16px auto 0;font-size:12px;line-height:1.6;color:#55606E;text-align:center;">
+    Occupella is operated by Oscar Ventures LLC ·
+    <a href="https://app.occupella.com/legal/privacy.html" style="color:#55606E;">Privacy</a> ·
+    <a href="https://app.occupella.com/legal/terms.html" style="color:#55606E;">Terms</a>
+  </p>
+</div>

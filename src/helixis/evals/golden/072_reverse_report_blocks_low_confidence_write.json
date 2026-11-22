@@ -1,0 +1,21 @@
+{
+  "id": "072_reverse_report_blocks_low_confidence_write",
+  "case_type": "reverse_report_enforcement",
+  "description": "#271 enforcement: a side-effectful write is blocked when REVERSE_REPORT confidence is below the floor (0.4 < 0.6). Deterministic — drives evaluate_write directly, no live model, no flake.",
+  "input": {
+    "report": {
+      "observed": ["Unit 4B has one open work order [buildium_tools.list_work_orders#wo:5501]"],
+      "inferred": [],
+      "unknown": [],
+      "confidence": 0.4,
+      "next_action": {"kind": "tool_call", "why": "close the open work order"}
+    },
+    "tool_call_trail": ["buildium_list_work_orders_for_unit"],
+    "min_confidence": 0.6
+  },
+  "expected": {
+    "write_allowed": false,
+    "reasons_contain": ["confidence 0.4"],
+    "ungrounded_empty": true
+  }
+}

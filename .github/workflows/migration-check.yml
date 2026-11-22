@@ -1,0 +1,62 @@
+name: Migration applied check
+
+# gotcha #8 / audit Q35 — migrations are applied MANUALLY, forward-only, with no
+# runner, so a committed migration file is NOT proof it ran (memory_audit was
+# missing from helixis-test for weeks). This verifies migrations by their effect:
+# every table/column a migration creates should exist in the live DB.
+#
+#   * STATIC (every PR touching migrations, + push to main): parse-only, no DB —
+#     confirms the checker still parses the migration set (a sanity gate; it
+#     can't see the live DB from a PR).
+#   * LIVE (scheduled / manual): with HELIXIS_SUPABASE__DB_URL set, fail on any
+#     expected table/column missing from the live DB — naming the migration.
+
+on:
+  pull_request:
+    paths:
+      - "supabase/migrations/**"
+      - "scripts/migration_check.py"
+      - ".github/workflows/migration-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "supabase/migrations/**"
+  schedule:
+    - cron: "41 13 * * 1" # Mondays ~13:41 UTC (off-minute, after rls-guard)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: migration-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  migration-check:
+    name: Migrations applied to prod
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Static parse (no DB)
+        run: python scripts/migration_check.py
+
+      - name: Live check (expected objects exist) — scheduled/manual only
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        env:
+          HELIXIS_SUPABASE__DB_URL: ${{ secrets.HELIXIS_SUPABASE__DB_URL }}
+        run: |
+          if [ -z "${HELIXIS_SUPABASE__DB_URL}" ]; then
+            echo "HELIXIS_SUPABASE__DB_URL not set — skipping live migration check."
+            exit 0
+          fi
+          pip install --quiet asyncpg
+          python scripts/migration_check.py --live

@@ -1,0 +1,37 @@
+{
+  "id": "120_reformulation_nickname_mismatch",
+  "case_type": "orchestrator_routing",
+  "reasoning_loop": true,
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "description": "W2 probe F2 (reformulation on lookup miss). User asks whether the tenant in unit 4B replied about the late rent. Buildium knows the tenant as 'Robert Kim' but the email thread lives under the nickname 'Bob Kim' — the full probe checks that a failed Gmail search for 'Robert Kim' is REFORMULATED (nickname/short form) instead of reported as 'no reply'. CURRENT SCOPE IS REDUCED (see _todo): the routing harness has no Gmail mock seam, so today this case only probes that the loop consults Buildium (tenant identity) and then the Gmail specialist, and replies honestly about the email side. The Buildium mock deliberately carries the 'goes by Bob' fact so the intended fixture data is already in place.",
+  "_todo": "RESOLVED (W2 S5): Gmail seam + sequenced mocks landed. The reformulation is proven by OUTCOME: only the second (re-formulated) query returns the Bob thread, so a reply containing the promise-to-pay implies the retry happened. A direct per-query assertion remains future work if outcome-proof ever flakes.",
+  "input": {
+    "user_message": "Did the tenant in unit 4B ever reply about the late rent?",
+    "tool_mocks": {
+      "buildium_find_tenant_for_unit": "Unit 4B at 118 Crescent Avenue — Robert Kim (tenant since 2024-06-01; goes by 'Bob'). Ledger: $2,400 rent past due for July 2026. Contact: bob.kim@example.test.",
+      "GMAIL_FETCH_EMAILS": [
+        "No emails found matching 'Robert Kim'.",
+        "1 thread found — From: Bob Kim <bob.kim@gmail.com>, Subject: 'rent', Jul 14: 'money's been tight but I promise I'll pay the full $2,400 by July 25.'"
+      ]
+    },
+    "connector_stubs": [
+      "GMAIL"
+    ]
+  },
+  "expected": {
+    "must_route_to": "gmail_agent",
+    "first_handoff_must_be": "buildium_agent",
+    "handoff_trail_must_not_contain": [
+      "browser_agent"
+    ],
+    "reply_must_match_regex": [
+      "(promise|pay|Bob|email|connect)"
+    ],
+    "handoff_trail_must_contain": [
+      "gmail_agent"
+    ],
+    "synthesis_footer_required": true
+  }
+}

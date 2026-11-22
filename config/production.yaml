@@ -1,0 +1,91 @@
+llm:
+  max_retries: 5
+  request_timeout: 180
+
+browser:
+  headless: true
+  screenshot_on_action: false
+
+memory:
+  enabled: true
+  search_top_k: 15
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  # Where an invite email returns the invitee (api/routes/company.py
+  # ::_invite_redirect_url).
+  #
+  # ⚠ SET EXPLICITLY BECAUSE THE FALLBACK IS POSITIONAL. Left blank, that
+  # helper takes the FIRST https:// entry in cors_origins — which is
+  # `your-app.vercel.app`, so every invite named Vercel rather than the
+  # product, and reordering this list below would silently change where new
+  # teammates land with nothing reporting it. The 2026-09-15 domain swap moved
+  # the web app to app.occupella.com; an invite has to land on the APP's
+  # set-password screen, never the marketing site.
+  public_app_url: "https://app.occupella.com"
+  # Primary clients in production: the Helixis web frontend on Vercel,
+  # the helixis-onboarding provisioning wizard (a pure API client of this
+  # backend since ADR 0003), and the helixis-sidebar chrome extension.
+  cors_origins:
+    - "https://your-app.vercel.app"
+    - "https://your-onboarding.vercel.app"
+    - "https://occupella.com"
+    - "https://www.occupella.com"
+    - "https://setup.occupella.com"
+    # Added before the host exists — see the note on CONTRACT_ORIGINS in
+    # api/middleware.py. The apex and setup.* are trading places; the web app
+    # moves here. Listing it early is free, listing it late is a dark app.
+    - "https://app.occupella.com"
+    # ⚠ NO localhost and NO wildcard, both removed 2026-11-11 (the founder's
+    # auth hardening). `http://localhost` told browsers that any page served
+    # from the visitor's own machine may read this API's answers, credentials
+    # mode included; nothing in production is served from there. `chrome-extension://*`
+    # allowed NOTHING: Starlette compares each entry to the Origin header as a
+    # literal string (it globs only a bare "*"), so no extension ever matched it
+    # (`tests/unit/test_cors_preview_origins.py` pins both). The sidebar
+    # extension's own origin, `chrome-extension://<its 32-letter id>`, goes here
+    # once its id is recorded in docs/topology.md: it is not recorded anywhere in
+    # this repo today, so nothing was guessed.
+  # Vercel preview deployments get a generated URL of the form
+  # <project>-<slug>-your-team.vercel.app — matched with a regex
+  # so we don't have to update env vars per deploy. Trailing $ pins the host
+  # so subdomain attacks aren't possible, and the team segment
+  # `-your-team` is the actual security boundary: a Vercel
+  # subdomain under any other team cannot end in it.
+  #
+  # ⚠ **`[a-z0-9-]`, WITH the hyphen — it was `[a-z0-9]` and that refused
+  # every BRANCH preview.** A per-commit URL's slug is a bare hash
+  # (`helixis-onboarding-abc123-…`) and matched; a per-BRANCH one embeds the
+  # branch name (`helixis-onboarding-git-claude-sen-ebeb4f-…`) and does not,
+  # because a branch slug contains hyphens. So the wizard's own preview
+  # deploys — the only way to look at a change before it reaches main — hit a
+  # CORS refusal that surfaces in the browser as a bare "Failed to fetch",
+  # with no server log and nothing on screen naming CORS. The comment above
+  # claimed it "match[es] them all", which is exactly the sentence that stops
+  # anyone re-reading it (founder report, 2026-09-09).
+  cors_origin_regex: "^https://(your-app|your-onboarding)(-[a-z0-9-]+-your-team)?\\.vercel\\.app$"
+
+agent:
+  max_iterations: 30
+  # Browser automation is intentionally off in production for now.
+  # Composio supplies real API tools (Buildium / Gmail / Calendar) and
+  # the agent should prefer them; flipping this back to true requires
+  # the browser-use runtime + a CDP target to be wired up first.
+  browser_enabled: false
+
+dev:
+  # PR #141 — the /dev/runs orchestrator-telemetry page is staff-only
+  # and stays off in production. Flip via env override
+  # (HELIXIS_DEV__SHOW_RUNS_PAGE=true) when we want to inspect a
+  # specific incident, then flip back.
+  show_runs_page: false
+
+idempotency:
+  # Fail closed: a guarded write never runs without its dedup record. Set here
+  # as well as by HELIXIS_IDEMPOTENCY__REQUIRED in render.yaml, because that
+  # file may not reach the live services (gotcha 9) and its worker block never
+  # carried the var. Both services boot with env=production (Render logs,
+  # measured 2026-10-02), so this file is what they load. The env var, when
+  # set, still outranks this leaf.
+  required: true

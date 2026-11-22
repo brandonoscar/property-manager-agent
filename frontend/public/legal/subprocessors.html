@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subprocessors — Occupella</title>
+  <meta name="description" content="The third-party companies Occupella uses to run the service, what each one does, and what customer data it can see." />
+  <link rel="stylesheet" href="/legal/legal.css" />
+  <!--
+    ⚠ EVERY ENTRY HERE WAS READ OUT OF THE CODE, not recalled. The privacy
+    policy has always said we share data with "service providers"; this page
+    is the list that sentence is worthless without, and a business buying a
+    tool that holds their residents' details is entitled to it before signing
+    rather than after asking.
+
+    Two deliberate ABSENCES, stated so nobody adds them back by tidying:
+
+      * mem0 is NOT a subprocessor. It is an open-source library running
+        in our own process against our own pgvector store (memory/manager.py)
+        — no data leaves for it. Listing it would describe a data flow that
+        does not exist, which erodes the list's only value.
+
+      * E2B is NOT listed. Code execution ships switched off
+        (HELIXIS_CODEEXEC__ENABLED is false), so it receives nothing today.
+        It goes on this list in the same change that turns the flag on, not
+        before — naming a vendor that holds nothing is as misleading as
+        omitting one that holds something.
+
+    Buildium and Google are also deliberately not in the subprocessor list:
+    they are the CUSTOMER'S OWN systems, connected by the customer and
+    disconnectable by them. They are named in their own section instead,
+    because leaving them out entirely would read as concealment.
+  -->
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <p class="wordmark">Occupella</p>
+      <h1>Subprocessors</h1>
+      <p class="updated">Last updated: September 8, 2026</p>
+    </div>
+  </header>
+
+  <main>
+  <p class="intro">Occupella is operated by <strong>Oscar Ventures LLC</strong>.
+  Running the service means other companies handle some of your data on our
+  behalf — hosting it, storing it, answering a question about it. This page
+  names every one of them, says what it does, and says what it can see. It is
+  the specific version of the "service providers" sentence in our
+  <a href="/legal/privacy.html">Privacy Policy</a>.</p>
+
+  <h2>1. Where your data actually lives</h2>
+  <ul>
+    <li><strong>Supabase</strong> — the database, sign-in system and file
+    storage behind the whole product. Sees everything the service holds:
+    accounts, the property/lease/resident records synced from your
+    property-management system, chat history, and uploaded documents.
+    <a href="https://supabase.com/privacy" rel="noopener">Privacy</a></li>
+    <li><strong>Render</strong> — hosts the application server and the
+    background worker. Customer data passes through it in transit and in
+    memory while a request is being served.
+    <a href="https://render.com/privacy" rel="noopener">Privacy</a></li>
+    <li><strong>Vercel</strong> — hosts and delivers the web application
+    itself. It serves the page and the code; it is not where your records are
+    stored. <a href="https://vercel.com/legal/privacy-policy" rel="noopener">Privacy</a></li>
+  </ul>
+
+  <h2>2. The assistant</h2>
+  <ul>
+    <li><strong>Anthropic</strong> — the language model behind every answer,
+    summary and drafted message. Sees the text of your conversations and the
+    records the assistant looked up in order to answer.
+    <a href="https://www.anthropic.com/legal/privacy" rel="noopener">Privacy</a></li>
+    <li><strong>Voyage AI</strong> — turns saved notes and facts into the
+    numeric form that makes them findable later. Sees the text of what the
+    assistant remembers.
+    <a href="https://www.voyageai.com/privacy-policy" rel="noopener">Privacy</a></li>
+    <li><strong>Tavily</strong> — public web search, used when a question
+    needs something from the open internet. Sees the search terms, not your
+    records. <a href="https://tavily.com/privacy" rel="noopener">Privacy</a></li>
+    <li><strong>Browserbase</strong> — the hosted browser the assistant reads
+    public web pages in. Sees the addresses it is asked to open.
+    <a href="https://www.browserbase.com/privacy" rel="noopener">Privacy</a></li>
+  </ul>
+
+  <h2>3. Messaging, calls and payments</h2>
+  <ul>
+    <li><strong>Twilio</strong> — delivers text messages and handles phone
+    calls. Sees recipient phone numbers, message content, and call metadata
+    including voicemail recordings and their transcripts.
+    <a href="https://www.twilio.com/en-us/legal/privacy" rel="noopener">Privacy</a></li>
+    <li><strong>Stripe</strong> — subscription billing. Sees your billing
+    contact and payment details; card numbers go to Stripe directly and are
+    never stored by us.
+    <a href="https://stripe.com/privacy" rel="noopener">Privacy</a></li>
+    <li><strong>Composio</strong> — brokers the connection to Google Workspace
+    when you choose to connect Gmail, Calendar or Drive. Sees the content the
+    assistant reads from or writes to those accounts.
+    <a href="https://composio.dev/privacy-policy" rel="noopener">Privacy</a></li>
+  </ul>
+
+  <h2>4. Keeping the service working</h2>
+  <ul>
+    <li><strong>Sentry</strong> — error monitoring. Sees crash reports, which
+    can include the page you were on and technical details of the failure.
+    <a href="https://sentry.io/privacy/" rel="noopener">Privacy</a></li>
+    <li><strong>PostHog</strong> — product analytics: which features get used.
+    Sees usage events and account identifiers, not your property records.
+    <a href="https://posthog.com/privacy" rel="noopener">Privacy</a></li>
+    <li><strong>Langfuse</strong> — records what the assistant did during a
+    turn so we can debug a wrong answer. Sees prompts and model responses,
+    which include the records used to answer.
+    <a href="https://langfuse.com/privacy" rel="noopener">Privacy</a></li>
+    <li><strong>Apollo</strong> — tells us which company a visitor to our
+    public marketing site is from. Sees the IP address and page path of people
+    browsing occupella.com. <strong>It is not used inside the product and sees
+    nothing about your account</strong>; it is listed here because it is a
+    third party that receives an IP address, and a list of those that omitted
+    one would be the wrong shape of list.
+    <a href="https://www.apollo.io/privacy-policy" rel="noopener">Privacy</a></li>
+  </ul>
+
+  <h2>5. Maps and addresses</h2>
+  <ul>
+    <li><strong>United States Census Bureau</strong> — the public, keyless
+    geocoder that turns a property address into coordinates. Receives the
+    address being looked up.</li>
+    <li><strong>OpenStreetMap</strong> — the map imagery behind any map shown
+    in the product. Receives the map area being drawn, not the address.
+    <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">Privacy</a></li>
+  </ul>
+
+  <h2>6. Systems you connect yourself</h2>
+  <p>These are not our subprocessors — they are your own accounts, connected by
+  you and disconnectable by you at any time. We name them because your data
+  moves between them and us.</p>
+  <ul>
+    <li><strong>Buildium</strong> — your property-management system, and the
+    source of the property, lease, resident, vendor and financial records
+    Occupella works with. Disconnecting it deletes our copy.</li>
+    <li><strong>Google Workspace</strong> — Gmail, Calendar and Drive, reached
+    only after you authorize it and only for the features you use.</li>
+  </ul>
+
+  <h2>7. Changes to this list</h2>
+  <p>We update this page when a subprocessor is added or removed, and change
+  the date at the top. If you want to be told in advance rather than find out
+  here, email <a href="mailto:team@occupella.com">team@occupella.com</a> and we
+  will add you to the notice list.</p>
+
+  <h2>8. Questions</h2>
+  <p>Data-protection questions, including requests for a data-processing
+  agreement: <a href="mailto:team@occupella.com">team@occupella.com</a>.</p>
+  </main>
+
+  <footer>
+    <a href="/legal/terms.html">Terms of Service</a>
+    <a href="/legal/privacy.html">Privacy Policy</a>
+    <a href="/legal/sms.html">SMS Program &amp; Consent</a>
+    <a href="/legal/billing.html">Billing &amp; Refunds</a>
+    <a href="/legal/accessibility.html">Accessibility</a>
+    <a href="mailto:team@occupella.com">team@occupella.com</a>
+  </footer>
+</body>
+</html>

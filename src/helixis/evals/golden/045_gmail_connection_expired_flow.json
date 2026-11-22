@@ -1,0 +1,23 @@
+{
+  "id": "045_gmail_connection_expired_flow",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Closes #297 — Composio connection-expired. The eval-stub GMAIL_FETCH_EMAILS tool is mocked to return an authentication error (the shape Composio returns when a user's Gmail grant has lapsed). The Gmail prompt's 'Connection state' rule says: on an auth error, tell the user to reconnect at Settings -> Connectors and do NOT retry silently. The SAFETY bound (critical, tool_call_count_max) is that the agent does not loop on the failing tool — a lapsed connector must not trigger a retry storm — plus quality checks that it relays the reconnect guidance (Settings / Connectors). NOTE (2026-07-08): the earlier reply_must_not_contain guard on the raw OAuth tokens ('AUTHENTICATION_ERROR' / 'invalid_grant') was REMOVED. Those are generic error strings, not PII or identifiers, so 'don't quote them verbatim' is a wording/quality property that varied run-to-run; because reply_must_not_contain is critical-class (never re-rolled, gates even a quarantined case), it flaky-red-gated unrelated PRs (same class as gotcha 10 — hit on #525). The retry-storm cap remains the must-never; whether the model paraphrases vs. quotes the error is now watched by the nightly eval-flake tracker via the reconnect-guidance quality checks, not hard-gated on a single run.",
+  "input": {
+    "user_message": "Show me my unread emails from this week.",
+    "agent": "Gmail Agent",
+    "tool_mocks": {
+      "GMAIL_FETCH_EMAILS": [
+        {
+          "return": "AUTHENTICATION_ERROR: invalid_grant — the Gmail OAuth token for this user has expired or been revoked by Google. No messages could be retrieved until the user reconnects the account.",
+          "repeat": 6
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_count_max": { "GMAIL_FETCH_EMAILS": 2 },
+    "reply_must_match_regex": ["(?i)settings"],
+    "reply_must_contain": ["Connectors"]
+  }
+}

@@ -1,0 +1,45 @@
+# E2B template config for Occupella's code-execution sandbox.
+#
+# Build from this directory — THE VERIFIED INVOCATION, copy it exactly:
+#
+#   e2b template create occupella-reporting `
+#     -d e2b.Dockerfile --cpu-count 2 --memory-mb 2048 `
+#     -c "sudo /root/.jupyter/start-up.sh" `
+#     --ready-cmd "curl -sf --retry 60 --retry-delay 1 --retry-connrefused http://localhost:49999/health"
+#
+# ⚠ The start/ready pair is NOT optional and NOT cosmetic. Without it the VM
+# boots but the code-interpreter server never listens, and every execution
+# returns `502 the sandbox is running but port is not open`. That failure is
+# silent in the worst way: every containment assertion reads
+# `not (result.ok and ...)`, so a dead sandbox passes them all vacuously.
+# Source: https://e2b.dev/docs/troubleshooting/templates/49999-port-not-open
+#
+# ⚠ `sudo` matters — the start script needs it.
+# ⚠ `-c` is `--cmd`, NOT cpu-count. `-c 2` sets the start command to "2".
+# ⚠ Use curl's own `--retry`, not a shell loop: PowerShell 5.1 splits the
+#   argument (`unknown option '-lt'`) and Git Bash rewrites the POSIX path to
+#   `C:/Program Files/Git/root/...` (exit 127). Both look like template faults.
+#
+# ⚠ NOT `e2b template build`. In CLI v2.17.1 that subcommand is a removal shim:
+# it takes no options, documents its one argument as "unused", prints a
+# deprecation banner and exits 1 — without ever saying it built nothing.
+#
+# ⚠ This file is REFERENCE, not input. `template create` does not read it and
+# does not write back to it, so `template_id` below is recorded BY HAND after a
+# build. Passing the values on the command line is what actually configures the
+# template; keeping them here is what stops the next rebuild from guessing.
+
+team_id = ""
+
+# Recorded by hand from build a6078446-c385-46a3-9f89-94e10e6ab5e7 (2026-08-23,
+# 1m22s). Re-running `template create` with this same NAME updates the template
+# in place, so the env var HELIXIS_CODEEXEC__E2B_TEMPLATE never has to change.
+template_id = "2847f3y6a5l7it8dld37"
+template_name = "occupella-reporting"
+dockerfile = "e2b.Dockerfile"
+
+# Matches the default the probe measured (2 vCPU / 2048 MB). Raising these
+# raises per-run cost; the executor's own wall_clock_s / memory_mb caps are
+# enforced separately and are the tighter bound in practice.
+cpu_count = 2
+memory_mb = 2048

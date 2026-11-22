@@ -1,0 +1,140 @@
+llm:
+  # Gemini exit (2026-07-21): the Google account is gone — every Gemini call
+  # 403s with a billing "dunning" denial — so prod moved to Anthropic.
+  # Sonnet 5 primary ($2/$10 per MTok intro through 2026-08-31, then $3/$15);
+  # Haiku 4.5 ($1/$5) as the cheaper cross-SKU 503 fallback. PR-gate evals
+  # run on Haiku via the HELIXIS_EVAL_PR_MODEL repo variable (see ci.yml).
+  default_model: "anthropic/claude-sonnet-5"
+  models:
+    reasoning:
+      model: "anthropic/claude-sonnet-5"
+      description: "Primary reasoning model for orchestration"
+    browser:
+      # NOT browser automation — the browser agent runs on the reasoning
+      # model (browser_agent.py → get_reasoning_model). This slot's only
+      # live role is as the reasoning model's cross-SKU fallback: a distinct,
+      # cheaper SKU that a 503 on the primary falls through to (see
+      # configure_litellm_retries). Kept named "browser" for config/test
+      # stability; the dead get_browser_model accessor was removed (#540).
+      model: "anthropic/claude-haiku-4-5"
+      description: "Reasoning-model fallback SKU (cheaper Claude for 503 failover)"
+    analysis:
+      # Same SKU as reasoning today — kept as a named slot for config/test
+      # stability and so a future deep-analysis tier is a one-line change.
+      model: "anthropic/claude-sonnet-5"
+      description: "Deep analysis for complex property management tasks"
+  max_retries: 3
+  request_timeout: 120
+
+browser:
+  # PR #153 — Browserbase-backed browser_agent. Set the two
+  # credentials via env (HELIXIS_BROWSER__BROWSERBASE_API_KEY and
+  # HELIXIS_BROWSER__BROWSERBASE_PROJECT_ID); when either is blank
+  # the six browser_tools return 'browser_unavailable' gracefully.
+  browserbase_api_key: ""
+  browserbase_project_id: ""
+  # Per-task budgets — read-only specialist, fast escalation.
+  max_steps_per_task: 15
+  max_wall_clock_seconds: 75
+  max_screenshots_per_task: 8
+  # Legacy CDP fields — no reader since browser/automation.py was deleted.
+  cdp_url: "http://localhost:9222"
+  headless: false
+  default_timeout: 30
+  screenshot_on_action: false
+
+memory:
+  enabled: true
+  # Voyage embedding model — Mem0's embedder provider is our registered
+  # "voyage" (memory/voyage_embedder.py; Gemini exit, gotcha 18). ⚠ These
+  # YAML leaves OUTRANK the settings.py class defaults (gotcha 6 mechanics) —
+  # the first re-embed run failed precisely because #692 updated settings.py
+  # while this block still pinned the dead Gemini model. Change BOTH or
+  # neither.
+  embedding_model: "voyage-4-lite"
+  # Embedder output dim AND pgvector column dim — pinned explicitly on every
+  # Voyage call; must match the live helixis_memories vector(1024) tables.
+  # Changing either value requires the "Memory re-embed" workflow.
+  embedding_dims: 1024
+  search_top_k: 10
+  auto_inject: true
+  auto_extract: true
+  inject_top_k: 5
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  # Primary clients: the Helixis web frontend (localhost dev), the
+  # helixis-onboarding provisioning wizard (a pure API client of this
+  # backend since ADR 0003), and the helixis-sidebar chrome extension.
+  # localhost:5173 (Vite) covers both the frontend and the wizard in
+  # local dev; production origins live in production.yaml.
+  cors_origins:
+    - "http://localhost:5173"
+    - "http://localhost:3000"
+    - "chrome-extension://*"
+  rate_limits:
+    agent_run: 20        # requests per minute per user
+    agent_action: 60     # confirm/cancel per minute per user
+    connectors: 30       # per minute per user
+    # Per minute per SENDER IP, which for Buildium is one bucket shared by
+    # every customer. It bounds UNVERIFIED traffic only: the receiver refunds
+    # the slot once a signature verifies, so raising this widens what a
+    # forgery flood may cost in CPU, not what a customer may send.
+    webhooks: 1200
+
+agent:
+  max_iterations: 25
+  confirmation_required:
+    - "send_email"
+    - "update_buildium"
+    - "delete_record"
+    - "create_task"
+    - "modify_lease"
+    - "send_sms"
+
+langfuse:
+  enabled: true
+  # Do NOT set ``host`` here. A non-empty YAML value is injected as a kwarg
+  # that OUTRANKS the HELIXIS_LANGFUSE__HOST env var (empty leaves are pruned,
+  # non-empty ones are not — see Settings.__init__), so hardcoding a host
+  # makes it impossible to point prod at real Langfuse via env. The Pydantic
+  # field default (http://localhost:3000) already covers local dev.
+  default_tags:
+    - "helixis"
+
+posthog:
+  enabled: true
+  host: "https://us.i.posthog.com"
+  flush_per_request: true
+
+sentry:
+  enabled: true
+  traces_sample_rate: 0.2
+  send_default_pii: false
+
+web:
+  # Tavily Search API key. Set via HELIXIS_WEB__TAVILY_API_KEY in env;
+  # when blank, the web_search tool returns 'search_unavailable'
+  # gracefully instead of crashing the agent.
+  tavily_api_key: ""
+  default_max_results: 5
+  request_timeout_seconds: 6.0
+
+document:
+  # Document extraction (lease / invoice / inspection / work order).
+  # Uses the same Gemini key as the planner — no separate key required.
+  request_timeout_seconds: 30.0
+  # 8 MiB hard cap per document. Larger inputs return
+  # 'attachment_too_large' rather than being silently forwarded.
+  max_bytes: 8388608
+  # Below this the schema requires a 'low_confidence' warning.
+  min_confidence_for_pass: 0.6
+
+dev:
+  # PR #141 — gate the /dev/runs orchestrator-telemetry page. Default
+  # ``True`` in development so the inspection page is reachable
+  # locally without env-var fiddling. production.yaml pins this to
+  # ``False`` so the route 404s on the public deploy until we're
+  # ready to surface it.
+  show_runs_page: true

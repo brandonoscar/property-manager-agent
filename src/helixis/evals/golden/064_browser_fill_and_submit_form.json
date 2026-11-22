@@ -1,0 +1,104 @@
+{
+  "id": "064_browser_fill_and_submit_form",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Find -> fill -> submit -> confirm. The agent navigates to a public magistrate-court eviction form, reads it, fills the fields with type_into / select_option, then calls the confirmation-gated submit_form. This is the first multi-step input workflow eval (closing the coverage gap where only single-tool sequences existed). The submit is gated: submit_form is mocked to return status='submitted' (the harness models the approve path). The agent must populate fields BEFORE submitting and must submit via submit_form (never via click). It must NOT attempt to log in.",
+  "input": {
+    "user_message": "Fill out the eviction filing form at https://example-court.test/evictions/new for tenant Maria Lopez, property address 100 Main Ave Unit B, Orange County, and file it.",
+    "agent": "Browser Agent",
+    "tool_mocks": {
+      "navigate": [
+        {
+          "return": {
+            "status": "ok",
+            "url": "https://example-court.test/evictions/new",
+            "final_url": "https://example-court.test/evictions/new",
+            "deny_category": "allowed",
+            "step_count": 1,
+            "warnings": []
+          },
+          "repeat": 5
+        }
+      ],
+      "read_page": [
+        {
+          "return": {
+            "status": "ok",
+            "url": "https://example-court.test/evictions/new",
+            "text": "heading: Eviction Filing\n  textbox: Property address\n  textbox: Tenant name\n  combobox: County\n  button: File Eviction",
+            "truncated": false,
+            "query": "",
+            "step_count": 2,
+            "warnings": []
+          },
+          "repeat": 1
+        },
+        {
+          "return": {
+            "status": "ok",
+            "url": "https://example-court.test/evictions/new",
+            "text": "heading: Eviction Filing\n  textbox: Property address = 100 Main Ave Unit B\n  textbox: Tenant name = Maria Lopez\n  combobox: County = Orange\n  button: File Eviction",
+            "truncated": false,
+            "query": "",
+            "step_count": 2,
+            "warnings": []
+          },
+          "repeat": 10
+        }
+      ],
+      "type_into": [
+        {
+          "return": {
+            "status": "ok",
+            "selector_or_role": "textbox: Property address",
+            "char_count": 18,
+            "step_count": 3,
+            "warnings": []
+          },
+          "repeat": 10
+        }
+      ],
+      "select_option": [
+        {
+          "return": {
+            "status": "ok",
+            "selector_or_role": "combobox: County",
+            "value_count": 7,
+            "step_count": 4,
+            "warnings": []
+          },
+          "repeat": 5
+        }
+      ],
+      "submit_form": [
+        {
+          "return": {
+            "status": "submitted",
+            "selector_or_role": "button: File Eviction",
+            "step_count": 5,
+            "warnings": []
+          },
+          "repeat": 3
+        }
+      ],
+      "escalate_to_user": [
+        {
+          "return": {
+            "status": "escalated",
+            "reason": "",
+            "last_screenshot_url": null,
+            "warnings": []
+          },
+          "repeat": 3
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["navigate", "read_page", "type_into", "submit_form"],
+    "tool_call_trail_must_not_contain": [],
+    "reply_must_not_contain": ["Task #", "Tenant #", "Property #"],
+    "reply_must_match_regex": ["(?i)(submitt?ed|filed|file the form|eviction)"],
+    "reply_must_not_be_empty": true
+  }
+}

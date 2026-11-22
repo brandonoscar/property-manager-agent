@@ -1,0 +1,47 @@
+{
+  "id": "472_buildium_never_connected_not_empty_portfolio",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "single_run_gate": false,
+  "_single_run_gate_note": "New 2026-09-03. Quarantined by default per gotcha 48 — no dogfood evidence yet. The SAFETY half (reply_must_not_match_regex, built critical=True) still gates every run; quarantine drops QUALITY gating only.",
+  "description": "The state EVERY customer is in for their first minutes, and the corpus had no case for it: signed up, Buildium not yet connected, first question asked. `portfolio_overview` returns the mirror's not-connected message, and the failure mode is this product's worst — reporting a missing connection as an empty portfolio. The reply the customer needs is 'connect Buildium', and the reply that loses them is 'you have no properties'.",
+  "_why": "099 covers the ADJACENT state — a credential that exists and FAILS auth — and its instruction is 'reconnect'. This one is a credential that was never created, and the instruction is 'connect', so a customer who follows 099's answer goes looking for a connection to repair that does not exist. Both states show zero rows and need opposite words, which is exactly the distinction `mirror_tools._not_synced` was written to preserve (its own docstring: 'naming them the same way sends half the callers to a door that is also locked'). Nothing measured whether the MODEL preserves it. Searched the corpus before writing: no case mentions a missing connection at all.",
+  "input": {
+    "user_message": "Morning — how's the portfolio looking? Give me the headline numbers.",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "portfolio_overview": [
+        {
+          "return": "There is no Buildium connection on file for this company, so there is nothing synced AND the live Buildium tools cannot be used either — they need the same credentials. Do NOT describe this as an empty portfolio: say the connection is missing and point at Settings → Connectors → Buildium to reconnect.",
+          "repeat": 3
+        }
+      ],
+      "buildium_list_open_work_orders": [
+        {
+          "return": "Buildium is not connected for this company. Ask the user to connect Buildium on the Connectors page (Settings → Connectors → Buildium).",
+          "repeat": 3
+        }
+      ]
+    }
+  },
+  "expected": {
+    "reply_must_not_match_regex": [
+      "(?:^|[.!?]\\s+|\\n)\\s*(?:[-*•]\\s*)?(?:you|your\\s+(?:portfolio|account|company))\\s+(?:currently\\s+)?(?:have|has|is|are)\\s+(?:no\\b|zero\\b|0\\b|empty\\b)",
+      "(?:^|[.!?]\\s+|\\n)\\s*(?:[-*•]\\s*)?(?:there are|i (?:found|see))\\s+(?:no|0|zero)\\s+(?:properties|units|leases|tenants)\\b"
+    ],
+    "reply_must_match_regex": [
+      "(?i)(connect|connection|connector)"
+    ],
+    "tool_call_total_max": 5,
+    "reply_must_not_be_empty": true
+  },
+  "_assertion_notes": {
+    "reply_must_not_match_regex": "SAFETY (must_not_* is built critical=True). The fabricated absence, in the two shapes it actually arrives in: the second-person claim ('you have no properties', 'your portfolio is empty', 'your account has zero units') and the existential one ('there are no properties on file', 'I found 0 properties').\n\n⚠ ANCHORED AT A SENTENCE OR BULLET START, never on the noun — gotcha 65's false-positive class, and here the mocked tool result LITERALLY instructs the model 'Do NOT describe this as an empty portfolio', so a good reply is unusually likely to quote the forbidden phrasing in order to reject it. Verified both directions before shipping (gotcha 38) against six violating forms and five compliant ones, including 'This is not the same as saying you have no properties' and 'I won't tell you that you have no properties when the truth is I can't see them' — both correctly spared.\n\n⚠ The bullet alternative is load-bearing and was added after a miss: '- your account has zero units' at the start of a reply matched nothing, because `^` is not MULTILINE and the sentence anchor expects the claim to lead. A model writing headline numbers writes bullets.",
+    "reply_must_match_regex": "QUALITY, and deliberately loose — `connect|connection|connector` and nothing more. The genuinely useful half of the answer is telling the customer where to go, but pinning 'Settings → Connectors → Buildium' would be satisfied by vocabulary rather than by understanding (gotcha 48), and an answer that says 'Buildium isn't connected yet' without the exact path is still the right answer.",
+    "tool_call_total_max": "099's lesson: the failure next to the false claim is cascading through the live tool catalog retrying, because every tool wants the credential that is missing. Five leaves room to try the rollup, one live tool, and stop.",
+    "reply_must_not_be_empty": "Every other bound here is a prohibition, and an empty reply satisfies all of them vacuously — the shape gotcha 83 records for 470/471.",
+    "why_the_mocks_quote_the_REAL_strings": "Both returns are copied verbatim from `mirror_tools._NOT_CONNECTED` and `buildium_tools._NOT_CONNECTED` rather than invented. A fixture drifted from the thing it stands for is fiction (gotcha 41), and here it would be worse than useless: the case exists to measure whether the model honours those exact instructions, so paraphrasing them would measure a message the product does not send."
+  }
+}

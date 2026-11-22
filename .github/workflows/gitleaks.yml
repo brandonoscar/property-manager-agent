@@ -1,0 +1,81 @@
+name: Secret scan (gitleaks)
+
+# Catch a secret BEFORE it lands. The audit found no committed secrets and no
+# scanner — this closes the "a future accidental commit leaks a key" gap. On a
+# PR, gitleaks-action scans only the PR's commits (so pre-existing audited
+# placeholders don't false-positive); a weekly full-history sweep is the
+# backstop. Config + allowlist live in .gitleaks.toml.
+#
+# Note: gitleaks-action is free for personal-account repos (a GITLEAKS_LICENSE
+# is only required for GitHub Organizations). If this repo ever moves under an
+# org, add the license as a secret.
+
+on:
+  pull_request: {}
+  push:
+    branches: [main]
+  schedule:
+    - cron: "23 13 * * 1" # weekly Mon — alongside the other Monday routines
+  workflow_dispatch: {}
+
+permissions:
+  contents: read # the scan runs the gitleaks BINARY over the local git range,
+                 # so it needs no GitHub API access (no pull-requests scope).
+
+jobs:
+  gitleaks:
+    name: Scan for committed secrets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # full history so the weekly sweep + PR range both work
+
+      # Skip on Dependabot PRs: a Dependabot version bump can't introduce one of
+      # OUR committed secrets, and the push-to-main scan + weekly full-history
+      # sweep + PR scans on human/Claude branches keep the real surface covered.
+      # Gate the STEP (not the job) so the job still reports success (green) on
+      # Dependabot PRs.
+      #
+      # We invoke the gitleaks BINARY directly instead of gitleaks/gitleaks-action@v2.
+      # The action's PR mode calls the GitHub REST API (GET /pulls/{n}/commits) to
+      # compute the commit range, and that call has NO retry — so a transient
+      # GitHub-side 503 (#661) or a restricted-token 403 crashes the whole check
+      # with a red gate that has nothing to do with a real secret. Scanning the
+      # git range locally removes that API dependency entirely: durable, and
+      # equivalent (fetch-depth: 0 gives us both base and head commits).
+      - name: Run gitleaks
+        if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
+        env:
+          # base..head range of the PR's own commits (empty on push/schedule/
+          # dispatch → we scan full history instead, matching the weekly sweep).
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          VERSION=8.24.3
+          # --retry so a flaky download can't red-gate either.
+          curl -sSL --retry 3 --retry-delay 2 \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /tmp gitleaks
+          if [ -n "${PR_BASE_SHA}" ] && [ -n "${PR_HEAD_SHA}" ]; then
+            echo "Scanning PR commit range ${PR_BASE_SHA}..${PR_HEAD_SHA}"
+            LOG_OPTS="--log-opts=${PR_BASE_SHA}..${PR_HEAD_SHA}"
+          else
+            echo "Scanning full history"
+            LOG_OPTS=""
+          fi
+          # gitleaks exits 1 when a leak is found, 0 when clean → the step
+          # fails only on a REAL finding, never on a GitHub API blip.
+          # --verbose enumerates each finding (rule, file, commit) with the
+          # secret VALUE masked by --redact — without it a red run says only
+          # "leaks found: N", which is undiagnosable from the log (bit the
+          # 2026-07-22 full-history runs: 29 findings, zero detail).
+          /tmp/gitleaks detect \
+            --source . \
+            --config .gitleaks.toml \
+            --redact \
+            --verbose \
+            --no-banner \
+            ${LOG_OPTS}

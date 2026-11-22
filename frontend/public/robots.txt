@@ -1,0 +1,22 @@
+# Occupella (the web app) — https://app.occupella.com
+#
+# There was no robots.txt at all until 2026-09-15. That is not fatal on its
+# own (a crawler with no robots.txt crawls everything), but it meant nothing
+# ever pointed at a sitemap, and a request for /robots.txt fell through to the
+# SPA rewrite in vercel.json — so a crawler asking for a plain-text policy file
+# got an HTML document with a 200 on it.
+#
+# Every path this app does not explicitly exclude renders the same shell, so
+# there is exactly ONE indexable application URL. The <link rel="canonical">
+# in index.html says the same thing to a crawler that has already fetched a
+# page; this file is what one reads before it fetches anything.
+
+User-agent: *
+Allow: /
+
+# /api/* is rewritten to the backend (vercel.json). Nothing there is
+# indexable — every route needs a bearer token and answers 401 without one —
+# so a crawler following a stray link spends our rate limit to learn nothing.
+Disallow: /api/
+
+Sitemap: https://app.occupella.com/sitemap.xml

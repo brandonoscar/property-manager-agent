@@ -1,0 +1,64 @@
+{
+  "id": "005_tenant_complaint_about_neighbor",
+  "description": "Tenant-to-tenant interpersonal complaint (noise / disturbance from neighbor). Not a property defect — there is nothing for a vendor to fix. Planner should produce a communication-shaped suggestion (e.g. send_tenant_message to the reporter or an internal note), NOT a work order or vendor dispatch.",
+  "input": {
+    "event_time_iso": "2026-02-19T22:14:00+00:00",
+    "payload": {
+      "EventName": "Task.Created",
+      "EventDate": "2026-02-19T22:14:00Z",
+      "EventEntityId": 52580,
+      "EventEntityType": "Task"
+    },
+    "enrichment": {
+      "schema_version": 1,
+      "event_name": "Task.Created",
+      "company_id": "company-eval",
+      "task": {
+        "id": 52580,
+        "title": "Noise complaint about upstairs neighbor",
+        "description": "Tenant in unit 5 reports loud thumping and stomping from the unit above (unit 4) most evenings between 10pm and midnight. Says it has been going on for two weeks. He has not spoken to the neighbor directly and would like the property manager to handle it.",
+        "status": "New",
+        "category": "Tenant Issue",
+        "priority": "Normal",
+        "property_id": 4820,
+        "unit_id": 9461,
+        "requested_by_tenant_id": 7522,
+        "requested_by_first_name": "Aaron",
+        "requested_by_last_name": "Burke",
+        "raw": {}
+      },
+      "unit": {
+        "id": 9461,
+        "property_id": 4820,
+        "unit_number": "5",
+        "address_line1": "17 Maple Court"
+      },
+      "active_lease": {
+        "id": 15110,
+        "unit_id": 9461,
+        "status": "Active",
+        "tenants": [
+          {
+            "id": 7522,
+            "first_name": "Aaron",
+            "last_name": "Burke",
+            "email": "aaron.burke@example.test",
+            "phone": "555-0207"
+          }
+        ]
+      },
+      "history_unit": [],
+      "history_property": [],
+      "errors": [],
+      "fetched_at": "2026-02-19T22:16:00+00:00"
+    }
+  },
+  "expected": {
+    "summary_must_mention": ["noise"],
+    "summary_must_not_mention": ["Task #", "Tenant #", "Property ID", "Unit ID", "Property #", "Lease #", "plumber", "vendor dispatch"],
+    "summary_max_words": 100,
+    "action_surface_must_contain_action_type_one_of": ["send_tenant_message", "add_internal_note", "create_followup_task"],
+    "action_surface_must_not_suggest": ["dispatch a plumber", "dispatch a vendor", "work order", "raise priority", "recategorize"],
+    "signals_must_reference": []
+  }
+}

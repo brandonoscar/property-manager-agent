@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Occupella's indexable surface, in full.
+
+  The application itself is ONE url. app.occupella.com is a single-page app
+  a sign-in wall: every path vercel.json does not exclude returns the same
+  index.html, so listing /inbox, /properties and the rest would be listing the
+  same document six times under six names. The canonical tag in index.html
+  collapses them for a crawler that arrives at one directly.
+
+  The /legal/*.html files are the exception and the reason this file is worth
+  having: they are REAL static documents with their own titles and their own
+  text, served straight off the filesystem, and they are the only pages on the
+  domain a crawler can read without an account.
+
+  DELIBERATELY NO <lastmod>. It is optional, and a date nothing measures is a
+  date that is wrong the day after it is written — a crawler told a page
+  changed and finding it unchanged learns to discount the field, which is the
+  cost of every fabricated freshness stamp in this product. These documents
+  change when the policies change, and nothing in the build can observe that.
+  Add real dates here the day something generates them from the files.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://app.occupella.com/</loc>
+  </url>
+  <url>
+    <loc>https://app.occupella.com/legal/terms.html</loc>
+  </url>
+  <url>
+    <loc>https://app.occupella.com/legal/privacy.html</loc>
+  </url>
+  <url>
+    <loc>https://app.occupella.com/legal/sms.html</loc>
+  </url>
+  <url>
+    <loc>https://app.occupella.com/legal/billing.html</loc>
+  </url>
+  <url>
+    <loc>https://app.occupella.com/legal/subprocessors.html</loc>
+  </url>
+  <url>
+    <loc>https://app.occupella.com/legal/accessibility.html</loc>
+  </url>
+</urlset>

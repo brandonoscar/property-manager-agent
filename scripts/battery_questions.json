@@ -1,0 +1,14 @@
+[
+  "How many properties do I have?",
+  "What's my total unpaid vendor bill exposure right now?",
+  "Which tenants are behind on rent, and how much in total?",
+  "Show me every open work order grouped by how overdue it is.",
+  "It's month-end. Build me a collections plan: who's behind, how far, and what you'd send each one. Before recommending a late notice on anyone, check whether they have open maintenance at their unit.",
+  "I'm about to run payables. Audit what's unpaid and tell me what NOT to pay yet — duplicates, anything with no work order behind it, and what's genuinely past due. Give me a dollar total for what's safe to release.",
+  "I've got leases expiring in about three weeks. For each, give me a renew / renew-with-increase / don't-renew call, backed by how they've paid and what maintenance is open at their unit.",
+  "There's a noise complaint at my Phoenix property about the unit above. How should I handle it?",
+  "Look at the water heater task in Montgomery — is the priority right?",
+  "A tenant in Sacramento wants the deadbolt replaced but keeps the same keys. Can we do that?",
+  "Are any of my maintenance requests duplicates?",
+  "Which state has the most past-due rent, and what's driving it?"
+]

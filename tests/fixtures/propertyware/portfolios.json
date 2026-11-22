@@ -1,0 +1,23 @@
+{
+  "_synthetic": true,
+  "_about": "Hand-built from PortfolioDTO and OwnerDTO in Propertyware's official spec. Never exported from any Propertyware account (terms rule 17). Quirks: a company owner with no person's name; one owner (990450002) on two portfolios; a portfolio with no owners.",
+  "rows": [
+    {"id": 990300001, "name": "Synthetic Holdings - Maple", "abbreviation": "SHM", "active": true,
+     "owners": [
+       {"id": 990450001, "name": "Synthetic Holdings LLC", "firstName": null, "lastName": null,
+        "email": "holdings@example.com", "workPhone": "555-0110", "percentageOwnership": 60.0},
+       {"id": 990450002, "name": "Avery Fixture", "firstName": "Avery", "lastName": "Fixture",
+        "email": "avery.fixture@example.com", "homePhone": "555-0112", "mobilePhone": "555-0111",
+        "percentageOwnership": 40.0}
+     ],
+     "lastModifiedDateTime": "2026-09-07T10:00:00Z"},
+    {"id": 990300002, "name": "Synthetic Birch Trust", "abbreviation": "SBT", "active": true,
+     "owners": [
+       {"id": 990450002, "name": "Avery Fixture", "firstName": "Avery", "lastName": "Fixture",
+        "email": "avery.fixture@example.com", "mobilePhone": "555-0111", "percentageOwnership": 100.0}
+     ],
+     "lastModifiedDateTime": "2026-09-07T10:00:00Z"},
+    {"id": 990300003, "name": "Synthetic Empty Portfolio", "abbreviation": "SEP", "active": true,
+     "owners": [], "lastModifiedDateTime": "2026-09-07T10:00:00Z"}
+  ]
+}

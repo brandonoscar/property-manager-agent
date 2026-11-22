@@ -1,0 +1,9 @@
+PHOTO (described in text for the deterministic eval harness — production
+sends the real image to Gemini's multimodal endpoint):
+
+A close-up photo taken inside a kitchen sink base cabinet. Water is actively
+dripping from the P-trap joint of the white PVC drain pipe. The particleboard
+cabinet floor directly beneath the joint is dark, swollen, and visibly water-
+damaged, and a small puddle has collected around a plastic bucket that someone
+placed underneath to catch the drips. A wrench and a roll of plumber's tape sit
+nearby, unused. No electrical outlets or wiring are visible near the water.

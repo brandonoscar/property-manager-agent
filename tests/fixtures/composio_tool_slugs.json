@@ -1,0 +1,2429 @@
+{
+  "toolkits": {
+    "GMAIL": [
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_ADD_LABEL_TO_EMAIL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_BATCH_DELETE_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_BATCH_MODIFY_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_CREATE_EMAIL_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_CREATE_FILTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_CREATE_LABEL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_CREATE_PROMPT_POST"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_DELETE_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_DELETE_FILTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_DELETE_LABEL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_DELETE_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_DELETE_THREAD"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_FETCH_EMAILS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_FETCH_MESSAGE_BY_MESSAGE_ID"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_FETCH_MESSAGE_BY_THREAD_ID"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_FORWARD_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_GET_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_GET_AUTO_FORWARDING"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_GET_CONTACTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_GET_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_GET_FILTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_GET_LABEL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_GET_LANGUAGE_SETTINGS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_GET_PEOPLE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_GET_PROFILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_GET_VACATION_SETTINGS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_IMPORT_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_INSERT_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_CSE_IDENTITIES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_CSE_KEYPAIRS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_DRAFTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_FILTERS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_FORWARDING_ADDRESSES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_HISTORY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_LABELS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_SEND_AS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_SMIME_INFO"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_LIST_THREADS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_MODIFY_THREAD_LABELS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_MOVE_THREAD_TO_TRASH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_MOVE_TO_TRASH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_PATCH_LABEL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_PATCH_SEND_AS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_REMOVE_LABEL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_REPLY_TO_THREAD"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_SEARCH_PEOPLE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_SEND_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_SEND_EMAIL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_SETTINGS_GET_IMAP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_SETTINGS_GET_POP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_SETTINGS_SEND_AS_GET"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_STOP_WATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_UNTRASH_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_UNTRASH_THREAD"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_UPDATE_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_UPDATE_IMAP_SETTINGS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_UPDATE_LABEL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_UPDATE_LANGUAGE_SETTINGS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_UPDATE_POP_SETTINGS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_UPDATE_SEND_AS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_UPDATE_USER_ATTRIBUTES_VALUES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GMAIL_UPDATE_VACATION_SETTINGS"
+      }
+    ],
+    "GOOGLECALENDAR": [
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_ACL_DELETE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_ACL_GET"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_ACL_INSERT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_ACL_LIST"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_ACL_PATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_ACL_UPDATE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_ACL_WATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_BATCH_EVENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CALENDARS_DELETE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CALENDARS_UPDATE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CALENDAR_LIST_DELETE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CALENDAR_LIST_GET"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CALENDAR_LIST_INSERT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CALENDAR_LIST_PATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CALENDAR_LIST_UPDATE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CALENDAR_LIST_WATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CHANNELS_STOP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CLEAR_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_COLORS_GET"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CREATE_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_CREATE_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_DELETE_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_DUPLICATE_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_EVENTS_GET"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_EVENTS_IMPORT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_EVENTS_INSTANCES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_EVENTS_LIST"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_EVENTS_LIST_ALL_CALENDARS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_EVENTS_MOVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_EVENTS_WATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_FIND_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_FIND_FREE_SLOTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_FREE_BUSY_QUERY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_GET_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_GET_CALENDAR_PROFILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_GET_CURRENT_DATE_TIME"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_LIST_BUILDINGS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_LIST_CALENDARS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_LIST_CALENDAR_RESOURCES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_LIST_SETTINGS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_PATCH_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_PATCH_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_QUICK_ADD"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_REMOVE_ATTENDEE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_SETTINGS_GET"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_SETTINGS_LIST"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_SETTINGS_WATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_SYNC_EVENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLECALENDAR_UPDATE_EVENT"
+      }
+    ],
+    "GOOGLEDOCS": [
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_COPY_DOCUMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_CREATE_AND_POPULATE_TABLE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_CREATE_DOCUMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_CREATE_DOCUMENT2"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_CREATE_DOCUMENT_MARKDOWN"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_CREATE_FOOTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_CREATE_FOOTNOTE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_CREATE_HEADER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_CREATE_NAMED_RANGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_CREATE_PARAGRAPH_BULLETS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_CREATE_TAB"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_DELETE_CONTENT_RANGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_DELETE_FOOTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_DELETE_HEADER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_DELETE_NAMED_RANGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_DELETE_PARAGRAPH_BULLETS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_DELETE_TAB"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_DELETE_TABLE_COLUMN"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_DELETE_TABLE_ROW"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_EXPORT_DOCUMENT_AS_PDF"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_GET_DOCUMENT_BY_ID"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_GET_DOCUMENT_END_INDEX"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_GET_DOCUMENT_PLAINTEXT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_INSERT_IMAGE_IN_TABLE_CELL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_INSERT_INLINE_IMAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_INSERT_PAGE_BREAK"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_INSERT_TABLE_ACTION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_INSERT_TABLE_COLUMN"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_INSERT_TABLE_ROW"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_INSERT_TEXT_ACTION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_INSERT_TEXT_IN_TABLE_CELL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_LIST_SPREADSHEET_CHARTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_REPLACE_ALL_TEXT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_REPLACE_IMAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_SEARCH_DOCUMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_UNMERGE_TABLE_CELLS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_UPDATE_DOCUMENT_BATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_UPDATE_DOCUMENT_MARKDOWN"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_UPDATE_DOCUMENT_SECTION_MARKDOWN"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_UPDATE_DOCUMENT_STYLE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_UPDATE_EXISTING_DOCUMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_UPDATE_TABLE_ROW_STYLE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDOCS_UPDATE_TAB_PROPERTIES"
+      }
+    ],
+    "GOOGLEDRIVE": [
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_ADD_FILE_SHARING_PREFERENCE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_ADD_PARENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_ADD_PROPERTY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_COPY_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_COPY_FILE_ADVANCED"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_CREATE_COMMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_CREATE_DRIVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_CREATE_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_CREATE_FILE_FROM_TEXT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_CREATE_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_CREATE_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_CREATE_PERMISSIONS_BATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_CREATE_REPLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_CREATE_SHORTCUT_TO_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_CREATE_TEAM_DRIVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DELETE_CHILD"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DELETE_COMMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DELETE_DRIVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DELETE_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DELETE_PARENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DELETE_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DELETE_PROPERTY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DELETE_REPLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DELETE_REVISION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DELETE_TEAM_DRIVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DOWNLOAD_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DOWNLOAD_FILE2"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_DOWNLOAD_FILE_OPERATION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_EDIT_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_EMPTY_TRASH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_EXPORT_GOOGLE_WORKSPACE_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_FIND_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_FIND_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GENERATE_IDS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_ABOUT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_APP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_CHANGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_CHANGES_START_PAGE_TOKEN"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_CHILD"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_COMMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_DRIVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_FILE_METADATA"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_FILE_PROPERTY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_FILE_V2"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_PARENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_PERMISSION_ID_FOR_EMAIL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_REPLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_REVISION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GET_TEAM_DRIVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_GOOGLE_DRIVE_DELETE_FOLDER_OR_FILE_ACTION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_HIDE_DRIVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_INSERT_CHILD"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_ACCESS_PROPOSALS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_APPROVALS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_CHANGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_CHILDREN_V2"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_COMMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_FILES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_FILE_LABELS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_FILE_PROPERTIES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_PERMISSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_REPLIES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_REVISIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_SHARED_DRIVES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_LIST_TEAM_DRIVES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_MODIFY_FILE_LABELS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_MOVE_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_PARSE_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_PATCH_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_PATCH_PROPERTY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_RESUMABLE_UPLOAD"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_STOP_WATCH_CHANNEL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_TRASH_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UNHIDE_DRIVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UNTRASH_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPDATE_COMMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPDATE_DRIVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPDATE_FILE_METADATA_PATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPDATE_FILE_PROPERTY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPDATE_FILE_PUT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPDATE_FILE_REVISION_METADATA"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPDATE_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPDATE_REPLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPDATE_TEAM_DRIVE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPLOAD_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPLOAD_FROM_URL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_UPLOAD_UPDATE_FILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_WATCH_CHANGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLEDRIVE_WATCH_FILE"
+      }
+    ],
+    "GOOGLESHEETS": [
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_ADD_SHEET"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_AGGREGATE_COLUMN_DATA"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_APPEND_DIMENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_AUTO_RESIZE_DIMENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_BATCH_CLEAR_VALUES_BY_DATA_FILTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_BATCH_GET"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_BATCH_UPDATE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_BATCH_UPDATE_VALUES_BY_DATA_FILTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_CLEAR_BASIC_FILTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_CLEAR_VALUES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_CREATE_CHART"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_CREATE_GOOGLE_SHEET1"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_CREATE_SPREADSHEET_COLUMN"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_CREATE_SPREADSHEET_ROW"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_DELETE_CHART"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_DELETE_DIMENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_DELETE_SHEET"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_EXECUTE_SQL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_FIND_REPLACE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_FIND_WORKSHEET_BY_TITLE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_FORMAT_CELL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_GET_BATCH_VALUES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_GET_CONDITIONAL_FORMAT_RULES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_GET_DATA_VALIDATION_RULES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_GET_SHEET_NAMES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_GET_SPREADSHEET_BY_DATA_FILTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_GET_SPREADSHEET_INFO"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_GET_TABLE_SCHEMA"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_INSERT_DIMENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_LIST_CHARTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_LIST_TABLES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_LOOKUP_SPREADSHEET_ROW"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_MOVE_CHART"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_MUTATE_CONDITIONAL_FORMAT_RULES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_QUERY_TABLE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_SEARCH_DEVELOPER_METADATA"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_SEARCH_SPREADSHEETS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_SET_BASIC_FILTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_SET_DATA_VALIDATION_RULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_SHEET_FROM_JSON"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_SORT_RANGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_SPREADSHEETS_SHEETS_COPY_TO"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_SPREADSHEETS_VALUES_APPEND"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_SPREADSHEETS_VALUES_BATCH_CLEAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_SPREADSHEETS_VALUES_BATCH_GET_BY_DATA_FILTER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_UPDATE_CHART"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_UPDATE_DIMENSION_PROPERTIES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_UPDATE_SHEET_PROPERTIES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_UPDATE_SPREADSHEET_PROPERTIES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_UPDATE_VALUES_BATCH"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_UPSERT_ROWS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_VALUES_GET"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "GOOGLESHEETS_VALUES_UPDATE"
+      }
+    ],
+    "OUTLOOK": [
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_ACCEPT_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_ADD_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_ADD_MAIL_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_BATCH_MOVE_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_BATCH_UPDATE_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CALENDAR_CREATE_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CANCEL_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CANCEL_CALENDAR_GROUP_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CANCEL_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_COPY_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_COPY_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_COPY_MESSAGE_FROM_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_COPY_MESSAGE_FROM_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_COPY_ME_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ATTACHMENT_UPLOAD_SESSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ATTACHMENT_UPLOAD_SESSION_IN_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CALENDAR_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CALENDAR_EVENT_ATTACHMENT_UPLOAD_SESSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CALENDAR_EVENT_IN_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CALENDAR_GROUP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CALENDAR_GROUP_CALENDAR_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CALENDAR_GROUP_CALENDAR_EVENT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CAL_GROUP_EVENT_ATTACH_UPLOAD"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CONTACT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CONTACT_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_CONTACT_FOLDER_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_DRAFT_REPLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_EMAIL_RULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_EVENT_ATTACHMENT_UPLOAD_SESSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_FORWARD_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_MAIL_FOLDER_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_MAIL_FOLDER_MESSAGE_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_MAIL_FOLDER_MESSAGE_ATTACHMENT_UPLOAD_SESSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_MAIL_FOLDER_MESSAGE_RULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_MASTER_CATEGORY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_MESSAGE_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_CALENDAR_EVENT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_CHILD_FOLDER_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_CONTACT_FOLDERS_CONTACTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_CONTACT_FOLDERS_CONTACTS_EXTENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_CONTACT_FOLDERS_EXTENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_CONTACT_IN_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_EVENT_ATTACHMENT_UPLOAD_SESSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_FORWARD_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_INFERENCE_CLASSIFICATION_OVERRIDE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_MAIL_FOLDER_MESSAGE_REPLY_ALL_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_MESSAGE_REPLY_ALL_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_REPLY_ALL_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_ME_REPLY_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_REPLY_ALL_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_TASK"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_CALENDAR_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_CALENDAR_GROUP_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_CALENDAR_GROUP_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_CONTACTS_EXTENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_EVENT_ATTACHMENT_UPLOAD_SESSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_EVENT_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_MAIL_CHILD_FOLDER_MSG_EXT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_MAIL_FOLDERS_CHILD_FOLDERS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_MAIL_FOLDER_MESSAGE_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_MAIL_FOLDER_MESSAGE_REPLY_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_MASTER_CATEGORY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_CREATE_USER_MESSAGE_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DECLINE_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR_EVENT_FROM_SPECIFIC_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR_FROM_GROUP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR_GROUP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR_GROUP_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR_GROUP_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR_GROUP_EVENT_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CHILD_CONTACT_FOLDER_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CHILD_FOLDER_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CONTACT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CONTACTS_EXTENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CONTACT_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CONTACT_FOLDER_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CONTACT_FOLDER_CONTACT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CONTACT_FOLDER_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CONTACT_FROM_CHILD_FOLDER_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CONTACT_FROM_FOLDER_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_CONTACT_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_EMAIL_RULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_EVENT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_EVENT_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_MAIL_FOLDER_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_MASTER_CATEGORY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_MESSAGE_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_MESSAGE_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_MESSAGE_PERMANENTLY_FROM_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_CONTACT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_CONTACT_FOLDER_CONTACT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_EVENTS_ATTACHMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_EVENT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_INFERENCE_CLASSIFICATION_OVERRIDE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_MAIL_FOLDERS_CHILD_FOLDERS_MESSAGES_EXTENS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_MAIL_FOLDERS_MESSAGES_ATTACHMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_MAIL_FOLDERS_MESSAGES_EXTENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_MAIL_FOLDER_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_MAIL_FOLDER_CHILD_FOLDER_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_MAIL_FOLDER_MESSAGE_RULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_ME_MESSAGES_ATTACHMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_PRIMARY_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_TODO_TASK"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_USER_CALENDAR_EVENT_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_USER_CHILD_FOLDER_CONTACT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_USER_CHILD_FOLDER_MESSAGE_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_USER_CONTACT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_USER_EVENT_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_USER_MAIL_FOLDER_PERMANENTLY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DELETE_USER_MESSAGE_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DISMISS_CALENDAR_EVENT_REMINDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DISMISS_EVENT_REMINDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DISMISS_EVENT_REMINDER_FROM_GROUP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DISMISS_USER_EVENT_REMINDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_DOWNLOAD_OUTLOOK_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_FIND_MEETING_TIMES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_FORWARD_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_FORWARD_USER_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_FROM_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_FROM_GROUP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_GROUP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_GROUP_CALENDAR_EVENT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_GROUP_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_GROUP_SCHEDULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_PERMISSION_FROM_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_SCHEDULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CALENDAR_VIEW"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CHILD_FOLDER_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CHILD_FOLDER_MESSAGE_CONTENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CHILD_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CONTACT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CONTACT_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CONTACT_FOLDERS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_CONTACT_FROM_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_DRAFTS_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_EVENT_CALENDAR_FROM_GROUP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_INFERENCE_CLASSIFICATION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_MAILBOX_SETTINGS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_MAIL_DELTA"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_MAIL_FOLDER_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_MAIL_FOLDER_MESSAGE_RULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_MAIL_TIPS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_MASTER_CATEGORIES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_MASTER_CATEGORY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_MESSAGE_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_CONTACTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_CONTACTS_EXTENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_CONTACT_FOLDERS_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_CONTACT_FROM_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_CONTACT_PHOTO"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_EVENT_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_MAIL_FOLDERS_MESSAGES_EXTENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_MAIL_FOLDER_MESSAGE_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_MESSAGE_MIME_CONTENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_ME_OUTLOOK"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_NESTED_FOLDER_MESSAGE_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_PROFILE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_SCHEDULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_SUPPORTED_LANGUAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_SUPPORTED_TIME_ZONES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_USER_BY_EMAIL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_USER_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_USER_CALENDAR_ALLOWED_SHARING_ROLES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_USER_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_USER_CALENDAR_GROUP_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_USER_CALENDAR_GROUP_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_USER_CALENDAR_GROUP_EVENT_ATTACHMENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_USER_CHILD_FOLDER_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_USER_EVENT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_GET_USER_MESSAGES_ATTACHMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CALENDARS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CALENDAR_CALENDAR_VIEW"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CALENDAR_EVENT_ATTACHMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CALENDAR_GROUPS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CALENDAR_GROUP_CALENDARS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CALENDAR_GROUP_CALENDAR_EVENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CALENDAR_GROUP_EVENT_ATTACHMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CALENDAR_PERMISSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CALENDAR_VIEW_DELTA"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CHATS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CHAT_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CHILD_FOLDER_CONTACTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CHILD_FOLDER_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CHILD_MAIL_FOLDERS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CONTACTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CONTACTS_DELTA"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CONTACT_FOLDERS_DELTA"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_CONTACT_FOLDER_CHILD_FOLDERS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_EMAIL_RULES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_EVENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_EVENT_ATTACHMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_EVENT_CALENDAR_CALENDAR_PERMISSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_EVENT_INSTANCES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_INFERENCE_CLASSIFICATION_OVERRIDES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_MAIL_FOLDERS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_MAIL_FOLDERS_DELTA"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_MAIL_FOLDER_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_MAIL_FOLDER_MESSAGE_ATTACHMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_MAIL_FOLDER_MESSAGE_RULES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_MASTER_CATEGORIES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_MESSAGE_ATTACHMENTS_FROM_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_ME_CALENDAR_PERMISSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_ME_EVENT_INSTANCES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_OUTLOOK_ATTACHMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_PLACES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_PRIMARY_CALENDAR_PERMISSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_REMINDERS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_SENT_ITEMS_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_TODO_TASKS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_TO_DO_LISTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_USERS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_USER_CALENDARS_CALENDAR_PERMISSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_USER_CALENDARS_EVENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_USER_CALENDAR_EVENTS_ATTACHMENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_USER_CALENDAR_EVENT_INSTANCES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_USER_CALENDAR_GROUPS_CALENDAR_VIEW"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_USER_CALENDAR_GROUP_EVENT_INSTANCES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_USER_CALENDAR_VIEW"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_LIST_USER_CONTACTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_MOVE_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_MOVE_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_MOVE_MESSAGE_FROM_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_MOVE_MESSAGE_FROM_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_MOVE_ME_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_PERMANENT_DELETE_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_PIN_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_QUERY_EMAILS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_REPLY_EMAIL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_SEARCH_EVENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_SEARCH_MESSAGES"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_SEND_DRAFT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_SEND_EMAIL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_SNOOZE_CALENDAR_GROUP_EVENT_REMINDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_SNOOZE_EVENT_REMINDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_SNOOZE_USER_CALENDAR_EVENT_REMINDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_SNOOZE_USER_EVENT_REMINDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CALENDAR_EVENT_IN_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CALENDAR_GROUP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CALENDAR_GROUPS_CALENDARS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CALENDAR_GROUPS_CALENDARS_EVENTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CALENDAR_GROUP_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CHILD_FOLDER_CONTACT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CONTACT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CONTACT_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CONTACT_FOLDERS_CONTACTS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_CONTACT_FOLDER_CHILD_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_EMAIL"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_EMAIL_RULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_EVENT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_EVENT_EXTENSION_IN_CALENDAR_GROUP"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_INFERENCE_CLASSIFICATION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_MAILBOX_SETTINGS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_MAIL_FOLDER"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_MASTER_CATEGORY"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_ME_CONTACTS_EXTENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_TODO_TASK"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_CALENDAR"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_CALENDARS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_CALENDAR_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_CALENDAR_EVENT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_CALENDAR_PERMISSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_CHILD_FOLDER_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_CONTACTS_EXTENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_CONTACTS_EXTENSIONS_DIRECT"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_CONTACT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_EVENTS_EXTENSIONS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_EVENT_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_INFERENCE_CLASSIFICATION_OVERRIDE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_MAIL_FOLDERS_CHILD_FOLDERS"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_MAIL_FOLDER_MESSAGE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_MAIL_FOLDER_MESSAGE_EXTENSION"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_MAIL_FOLDER_MESSAGE_RULE"
+      },
+      {
+        "description": "dict() -> new empty dictionary dict(mapping) -> new dictionary initialized from a mapping object's (key, value) pairs dict(iterable) -> new dictionary initialized as if via: d = {} for k, v in iterabl",
+        "slug": "OUTLOOK_UPDATE_USER_MESSAGE_EXTENSION"
+      }
+    ]
+  },
+  "unreadable": {}
+}

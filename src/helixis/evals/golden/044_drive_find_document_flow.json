@@ -1,0 +1,29 @@
+{
+  "id": "044_drive_find_document_flow",
+  "case_type": "agent_flow",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Closes #298 (Drive leg). The Drive agent's first step is now the INDEXED search (drive_find_files, agents/drive_lookup_tools) — a title lookup against the daily drive_index that costs no Drive API call — and only then does it open the match with a Composio tool. Both are mocked here. Asserts it one-shots the search and surfaces the match (Drive reads run without confirmation per its prompt). Quality/K-of-N — a Drive lookup result surfaced to the user carries no must-never.",
+  "input": {
+    "user_message": "Find our move-out inspection checklist in Google Drive.",
+    "agent": "Drive Agent",
+    "tool_mocks": {
+      "drive_find_files": [
+        {
+          "return": "Drive index search for \"move-out inspection checklist\" — 209 indexed file(s) in this company's connected Drive.\n\n- Move-Out Inspection Checklist 2026\n  Google Doc · in /Operations/SOPs · modified 2026-05-02\n  file_id: 1MoveOutChk\n- Unit Turnover Punch List\n  Google Doc · in /Operations/SOPs · modified 2026-04-18\n  file_id: 1TurnoverPunch\n\nThese are TITLE matches from the daily index, not file contents — open the one you need with your Drive/Docs/Sheets tools using its file_id, and quote only what you actually read.",
+          "repeat": 4
+        }
+      ],
+      "GOOGLEDRIVE_FIND_FILE": [
+        {
+          "return": "Matches:\n- \"Move-Out Inspection Checklist 2026.pdf\" — /Operations/SOPs — modified May 2, 2026\n- \"Unit Turnover Punch List.docx\" — /Operations/SOPs — modified Apr 18, 2026",
+          "repeat": 4
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": ["drive_find_files"],
+    "reply_must_not_be_empty": true,
+    "reply_must_match_regex": ["(?i)(move-out|inspection|checklist|turnover|punch)"]
+  }
+}

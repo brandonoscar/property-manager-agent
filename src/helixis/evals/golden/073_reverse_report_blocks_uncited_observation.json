@@ -1,0 +1,20 @@
+{
+  "id": "073_reverse_report_blocks_uncited_observation",
+  "case_type": "reverse_report_enforcement",
+  "description": "#271 enforcement: a write is blocked when an observed fact carries no source citation, even at high confidence — the no-invention floor. Deterministic.",
+  "input": {
+    "report": {
+      "observed": ["Unit 4B has one open work order"],
+      "inferred": [],
+      "unknown": [],
+      "confidence": 0.9,
+      "next_action": {"kind": "tool_call", "why": "close the open work order"}
+    },
+    "tool_call_trail": ["buildium_list_work_orders_for_unit"]
+  },
+  "expected": {
+    "write_allowed": false,
+    "reasons_contain": ["uncited observations"],
+    "ungrounded_empty": true
+  }
+}

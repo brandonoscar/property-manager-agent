@@ -1,0 +1,13 @@
+{
+  "id": "037_email_query_routes_to_gmail",
+  "case_type": "orchestrator_routing",
+  "requires_env": ["HELIXIS_LLM__ANTHROPIC_API_KEY"],
+  "description": "Routing case — an email-drafting request routes to Gmail Agent, the last high-volume specialist with no routing coverage (#177). Real Gemini drives the routing decision. Gmail Agent registers as a handoff target even without Composio tools (orchestrator.py), so the terminal-agent assertion holds; the specialist replies with a connect prompt rather than calling a tool. must_not_route_to keeps the Buildium/Web/Browser/Document lanes explicitly forbidden so 'late rent payment' doesn't drift to the accounting-flavored Buildium Agent.",
+  "input": {
+    "user_message": "Draft an email to the tenant in unit 4B about their late rent payment"
+  },
+  "expected": {
+    "must_route_to": "gmail_agent",
+    "must_not_route_to": ["buildium_agent", "web_agent", "browser_agent", "document_agent"]
+  }
+}

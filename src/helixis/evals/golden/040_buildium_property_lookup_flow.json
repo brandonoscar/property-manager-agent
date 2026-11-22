@@ -1,0 +1,35 @@
+{
+  "id": "040_buildium_property_lookup_flow",
+  "case_type": "agent_flow",
+  "requires_env": [
+    "HELIXIS_LLM__ANTHROPIC_API_KEY"
+  ],
+  "description": "Closes #202 — the first Buildium agent_flow case, making the Buildium tool-call path visible to the harness (until now only Browser Agent had agent_flow coverage). DESIGN NOTE: two earlier attempts to test a *write* (buildium_create_to_do_task) both failed with trail=[] on live Gemini. That's not a harness gap — the Buildium agent's prompt is deliberately confirm/ask-first for writes ('Before a write: ask for missing details ... and stop'; 'never just an ID and title'), so it will not one-shot a write tool call in the single-turn agent_flow harness, unlike the browser agent whose prompt is action-oriented (why 064's submit_form works). This case therefore covers the READ path, which the agent does one-shot: a direct property lookup must reach buildium_get_property. The write/confirm-flow case is a separate follow-up that needs multi-turn or confirm-gate modeling plus live tuning. Assertions are quality/K-of-N; no must-never applies — the Buildium agent legitimately surfaces property details to the user. UPDATE 2026-07-07 (#500): the mirror tools (#488) steer 'tell me about property X' to property_snapshot FIRST, which was unmocked — live Gemini called it, the trail never reached buildium_get_property, and the case went 3/3 fail overnight. Now property_snapshot is mocked with the mirror-empty message, so the case exercises the documented fallback: mirror empty -> live buildium_get_property. The trail assertion is unchanged and now also guards the fallback behavior.",
+  "input": {
+    "user_message": "Look up the rental property 'Maple Court Apartments' in Buildium and tell me about it.",
+    "agent": "Buildium Agent",
+    "tool_mocks": {
+      "buildium_get_property": [
+        {
+          "return": "Maple Court Apartments — 12 units, 50 Maple Street, Springfield. Owner: Jane Doe. 2 open work orders.",
+          "repeat": 5
+        }
+      ],
+      "property_snapshot": [
+        {
+          "return": "The local Buildium mirror is empty for this company — no data has been synced yet. Use the live Buildium tools for this question, and suggest running Sync data on the Buildium connector (Settings → Connectors).",
+          "repeat": 5
+        }
+      ]
+    }
+  },
+  "expected": {
+    "tool_call_trail_must_contain": [
+      "buildium_get_property"
+    ],
+    "reply_must_match_regex": [
+      "(?i)(maple|unit|propert|street)"
+    ],
+    "reply_must_not_be_empty": true
+  }
+}
