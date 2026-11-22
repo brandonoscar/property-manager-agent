@@ -90,7 +90,7 @@ dependencies = [
     # prod-only reason. The pin is now guarded by
     # tests/unit/test_dependency_pins.py AND a dependabot.yml ignore rule;
     # do not widen past <3 without actually migrating the LiteLLM callback.
-    "langfuse>=2.0.0,<3.0.0",
+    "langfuse>=2.0.0,<4.0.0",
 
     # Static chat maps, self-rendered over OSM tiles (MIT). Replaces the
     # Google Static Maps dependency (2026-08-17 Google-Maps-exit): the
