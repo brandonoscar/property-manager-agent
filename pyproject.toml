@@ -60,7 +60,7 @@ dependencies = [
     # ValidationErrors. openai comes in transitively (unpinned), so a fresh
     # install grabbed 2.45.0. 2.16.0 is the verified-good version (only
     # `cached_tokens`). Bump alongside the [deps] follow-up, not under P0.
-    "openai==2.51.0",
+    "openai==3.55.1",
 
     # LLM routing (pinned with openai-agents above — same InputTokensDetails
     # incompatibility; 1.83.0 is the verified-good version).
