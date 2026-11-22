@@ -51,7 +51,7 @@ dependencies = [
     # ("cache_write_tokens Field required"), taking down CI evals AND prod on
     # redeploy. Pin to the verified-good pair the gemini-3.5-flash migration was
     # dogfooded on. See the [deps] follow-up to re-evaluate + add a lockfile.
-    "openai-agents[litellm]==0.19.1",
+    "openai-agents[litellm]==0.25.0",
 
     # PINNED with openai-agents/litellm: the openai package is the ACTUAL source
     # of the InputTokensDetails breakage. openai 2.45.0 added a REQUIRED
@@ -64,7 +64,7 @@ dependencies = [
 
     # LLM routing (pinned with openai-agents above — same InputTokensDetails
     # incompatibility; 1.83.0 is the verified-good version).
-    "litellm==1.100.4",
+    "litellm==1.110.1",
 
     # Utilities
     "structlog>=24.0.0",
@@ -168,7 +168,7 @@ memory = [
     # bypasses it via ``EmbedderConfig.model_construct`` (see
     # memory/manager.py::initialize). Bump deliberately: re-verify that
     # bypass + the factory seam against the new version first.
-    "mem0ai==2.0.14",
+    "mem0ai==2.2.1",
     # mem0's pgvector vector store driver. The rest of Helixis uses asyncpg,
     # so psycopg isn't otherwise installed — without it Mem0 raises "Neither
     # 'psycopg' nor 'psycopg2' library is available" and disables memory.
